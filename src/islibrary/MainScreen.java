@@ -48,8 +48,8 @@ static void showModel () {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        menuRegister = new javax.swing.JMenuItem();
+        menuReaders = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,11 +94,21 @@ static void showModel () {
 
         jMenu2.setText("Читатели");
 
-        jMenuItem6.setText("Регистрация");
-        jMenu2.add(jMenuItem6);
+        menuRegister.setText("Регистрация");
+        menuRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRegisterActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuRegister);
 
-        jMenuItem7.setText("Карточка читателя");
-        jMenu2.add(jMenuItem7);
+        menuReaders.setText("Карточка читателя");
+        menuReaders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReadersActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuReaders);
 
         jMenuBar1.add(jMenu2);
 
@@ -122,6 +132,14 @@ static void showModel () {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void menuRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRegisterActionPerformed
+        RegisterReader.showDialog();
+    }//GEN-LAST:event_menuRegisterActionPerformed
+
+    private void menuReadersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReadersActionPerformed
+        ReadersList.showDialog();
+    }//GEN-LAST:event_menuReadersActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -131,9 +149,9 @@ static void showModel () {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem menuReaders;
+    private javax.swing.JMenuItem menuRegister;
     // End of variables declaration//GEN-END:variables
 }

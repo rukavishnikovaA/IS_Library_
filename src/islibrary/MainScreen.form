@@ -44,15 +44,21 @@
             <Property name="text" type="java.lang.String" value="&#x427;&#x438;&#x442;&#x430;&#x442;&#x435;&#x43b;&#x438;"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="menuRegister">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x420;&#x435;&#x433;&#x438;&#x441;&#x442;&#x440;&#x430;&#x446;&#x438;&#x44f;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuRegisterActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+            <MenuItem class="javax.swing.JMenuItem" name="menuReaders">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x41a;&#x430;&#x440;&#x442;&#x43e;&#x447;&#x43a;&#x430; &#x447;&#x438;&#x442;&#x430;&#x442;&#x435;&#x43b;&#x44f;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuReadersActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

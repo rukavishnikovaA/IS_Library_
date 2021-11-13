@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JLabel" name="jLabel8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel8"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="jTextArea1">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="labelFather" max="32767" attributes="0"/>
+                      <Component id="labelLimit" alignment="1" max="32767" attributes="0"/>
+                      <Component id="labelDateOfBirth" alignment="1" pref="88" max="32767" attributes="0"/>
+                      <Component id="labelPhoneNumber" alignment="1" max="32767" attributes="0"/>
+                      <Component id="labelAdress" alignment="1" max="32767" attributes="0"/>
+                      <Component id="labelSekondName" alignment="1" max="32767" attributes="0"/>
+                      <Component id="labelNumberBilet" alignment="1" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="labelFirstName" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="textFieldNumberBilet" pref="120" max="32767" attributes="0"/>
+                  <Component id="textFieldFirstName" pref="120" max="32767" attributes="0"/>
+                  <Component id="textFieldSecondName" pref="120" max="32767" attributes="0"/>
+                  <Component id="textFieldAdress" max="32767" attributes="0"/>
+                  <Component id="textFieldPhoneNumber" pref="120" max="32767" attributes="0"/>
+                  <Component id="textFieldDateOfBirth" pref="120" max="32767" attributes="0"/>
+                  <Component id="textFieldLomit" pref="120" max="32767" attributes="0"/>
+                  <Component id="textFieldFather" pref="120" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelSettings" min="-2" pref="118" max="-2" attributes="0"/>
+                  <Component id="labelBooksIssued" min="-2" pref="92" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                  <Component id="textFieldNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="labelSettings" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textFieldFirstName" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="labelFirstName" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textFieldFather" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="labelFather" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textFieldSecondName" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="labelSekondName" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelAdress" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="textFieldAdress" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelPhoneNumber" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="textFieldPhoneNumber" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelDateOfBirth" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="textFieldDateOfBirth" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelLimit" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="textFieldLomit" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelNumberBilet">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41d;&#x43e;&#x43c;&#x435;&#x440; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldNumberBilet">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelFirstName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x418;&#x43c;&#x44f;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldFirstName">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textFieldFirstNameActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSekondName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x424;&#x430;&#x43c;&#x438;&#x43b;&#x438;&#x44f; "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldSecondName">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelAdress">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x410;&#x434;&#x440;&#x435;&#x441;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldAdress">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelPhoneNumber">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x422;&#x435;&#x43b;&#x435;&#x444;&#x43e;&#x43d;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldPhoneNumber">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textFieldPhoneNumberActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDateOfBirth">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x414;&#x430;&#x442;&#x430; &#x440;&#x43e;&#x436;&#x434;&#x435;&#x43d;&#x438;&#x44f; "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldDateOfBirth">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelLimit">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41b;&#x438;&#x43c;&#x438;&#x442;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldLomit">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSettings">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x421;&#x432;&#x435;&#x434;&#x435;&#x43d;&#x438;&#x44f;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelBooksIssued">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x434;&#x430;&#x43d;&#x43e; &#x43a;&#x43d;&#x438;&#x433;: "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelFather">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x447;&#x435;&#x441;&#x442;&#x432;&#x43e;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldFather">
+    </Component>
+  </SubComponents>
+</Form>
