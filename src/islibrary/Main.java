@@ -7,6 +7,7 @@ public class Main {
                 LoginUI dialog = new LoginUI();
         dialog.pack();
         dialog.setVisible(true);
+        dialog.setSize(400, 300);
                 
             }
         });
