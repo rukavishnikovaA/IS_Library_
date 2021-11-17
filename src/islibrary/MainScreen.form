@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="menuIssuedBooks">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x41a;&#x43d;&#x438;&#x433;&#x438;"/>
           </Properties>
@@ -27,15 +27,21 @@
                 <Property name="text" type="java.lang.String" value="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c;"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemIssueBook">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x434;&#x430;&#x442;&#x44c;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemIssueBookActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemIssuedBooks">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x435; &#x44d;&#x43a;&#x437;&#x435;&#x43c;&#x43f;&#x43b;&#x44f;&#x440;&#x44b;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemIssuedBooksActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

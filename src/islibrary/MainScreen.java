@@ -41,12 +41,12 @@ static void showModel () {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuIssuedBooks = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menuItemIssueBook = new javax.swing.JMenuItem();
+        menuItemIssuedBooks = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuRegister = new javax.swing.JMenuItem();
         menuReaders = new javax.swing.JMenuItem();
@@ -68,7 +68,7 @@ static void showModel () {
         jTable1.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTable1);
 
-        jMenu1.setText("Книги");
+        menuIssuedBooks.setText("Книги");
 
         jMenuItem1.setText("Добавить");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -76,21 +76,31 @@ static void showModel () {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuIssuedBooks.add(jMenuItem1);
 
         jMenuItem2.setText("Изменить");
-        jMenu1.add(jMenuItem2);
+        menuIssuedBooks.add(jMenuItem2);
 
         jMenuItem3.setText("Удалить");
-        jMenu1.add(jMenuItem3);
+        menuIssuedBooks.add(jMenuItem3);
 
-        jMenuItem4.setText("Выдать");
-        jMenu1.add(jMenuItem4);
+        menuItemIssueBook.setText("Выдать");
+        menuItemIssueBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemIssueBookActionPerformed(evt);
+            }
+        });
+        menuIssuedBooks.add(menuItemIssueBook);
 
-        jMenuItem5.setText("Выданные экземпляры");
-        jMenu1.add(jMenuItem5);
+        menuItemIssuedBooks.setText("Выданные экземпляры");
+        menuItemIssuedBooks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemIssuedBooksActionPerformed(evt);
+            }
+        });
+        menuIssuedBooks.add(menuItemIssuedBooks);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuIssuedBooks);
 
         jMenu2.setText("Читатели");
 
@@ -140,17 +150,25 @@ static void showModel () {
         ReadersList.showDialog();
     }//GEN-LAST:event_menuReadersActionPerformed
 
+    private void menuItemIssueBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssueBookActionPerformed
+        IssueBook.showDialog();
+    }//GEN-LAST:event_menuItemIssueBookActionPerformed
+
+    private void menuItemIssuedBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssuedBooksActionPerformed
+        IssuedBooks.showDialog();
+    }//GEN-LAST:event_menuItemIssuedBooksActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenu menuIssuedBooks;
+    private javax.swing.JMenuItem menuItemIssueBook;
+    private javax.swing.JMenuItem menuItemIssuedBooks;
     private javax.swing.JMenuItem menuReaders;
     private javax.swing.JMenuItem menuRegister;
     // End of variables declaration//GEN-END:variables
