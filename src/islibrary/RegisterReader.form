@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
@@ -22,6 +22,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
+    </Component>
+    <Component class="com.toedter.calendar.JCalendar" name="jCalendar2">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -45,61 +49,90 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="labelFather" max="32767" attributes="0"/>
-                      <Component id="labelLimit" alignment="1" max="32767" attributes="0"/>
-                      <Component id="labelDateOfBirth" alignment="1" pref="88" max="32767" attributes="0"/>
-                      <Component id="labelPhoneNumber" alignment="1" max="32767" attributes="0"/>
-                      <Component id="labelAdress" alignment="1" max="32767" attributes="0"/>
-                      <Component id="labelSekondName" alignment="1" max="32767" attributes="0"/>
-                      <Component id="labelNumberBilet" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="labelFirstName" min="-2" pref="88" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="textFieldFirstName" min="-2" pref="120" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelSettings" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="labelFirstName" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="labelFather" max="32767" attributes="0"/>
+                          <Component id="labelLimit" alignment="1" max="32767" attributes="0"/>
+                          <Component id="labelDateOfBirth" alignment="1" pref="88" max="32767" attributes="0"/>
+                          <Component id="labelPhoneNumber" alignment="1" max="32767" attributes="0"/>
+                          <Component id="labelAdress" alignment="1" max="32767" attributes="0"/>
+                          <Component id="labelSekondName" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="textFieldSecondName" pref="120" max="32767" attributes="0"/>
+                          <Component id="textFieldAdress" max="32767" attributes="0"/>
+                          <Component id="textFieldPhoneNumber" pref="120" max="32767" attributes="0"/>
+                          <Component id="textFieldLomit" pref="120" max="32767" attributes="0"/>
+                          <Component id="textFieldFather" pref="120" max="32767" attributes="0"/>
+                          <Component id="buttonSelectDateBirth" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="buttonSave" max="32767" attributes="0"/>
+                          <Component id="textFieldSelectedDate" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="buttonCancel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelSelectedDateBirth" min="-2" pref="127" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="labelNumberBilet" min="-2" pref="88" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="textFieldNumberBilet" min="-2" pref="120" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="textFieldNumberBilet" pref="120" max="32767" attributes="0"/>
-                  <Component id="textFieldFirstName" pref="120" max="32767" attributes="0"/>
-                  <Component id="textFieldSecondName" pref="120" max="32767" attributes="0"/>
-                  <Component id="textFieldAdress" max="32767" attributes="0"/>
-                  <Component id="textFieldPhoneNumber" pref="120" max="32767" attributes="0"/>
-                  <Component id="textFieldDateOfBirth" pref="120" max="32767" attributes="0"/>
-                  <Component id="textFieldLomit" pref="120" max="32767" attributes="0"/>
-                  <Component id="textFieldFather" pref="120" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="labelSettings" min="-2" pref="118" max="-2" attributes="0"/>
-                  <Component id="labelBooksIssued" min="-2" pref="92" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="textFieldNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="labelSettings" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textFieldFirstName" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="labelFirstName" alignment="3" max="32767" attributes="0"/>
+                          <Component id="labelNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="textFieldNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelFirstName" pref="36" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="textFieldFirstName" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                      <Component id="labelSettings" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
+                      <Component id="labelSelectedDateBirth" min="-2" pref="22" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="textFieldFather" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
@@ -123,14 +156,17 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelDateOfBirth" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="textFieldDateOfBirth" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="buttonSelectDateBirth" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textFieldSelectedDate" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelLimit" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="textFieldLomit" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="buttonSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -184,8 +220,6 @@
         <Property name="text" type="java.lang.String" value="&#x414;&#x430;&#x442;&#x430; &#x440;&#x43e;&#x436;&#x434;&#x435;&#x43d;&#x438;&#x44f; "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textFieldDateOfBirth">
-    </Component>
     <Component class="javax.swing.JLabel" name="labelLimit">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x41b;&#x438;&#x43c;&#x438;&#x442;"/>
@@ -209,6 +243,34 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textFieldFather">
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonSave">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x421;&#x43e;&#x445;&#x440;&#x430;&#x43d;&#x438;&#x442;&#x44c;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonCancel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x43c;&#x435;&#x43d;&#x430;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonSelectDateBirth">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x431;&#x440;&#x430;&#x442;&#x44c;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSelectDateBirthActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSelectedDateBirth">
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldSelectedDate">
     </Component>
   </SubComponents>
 </Form>

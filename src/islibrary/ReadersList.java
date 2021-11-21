@@ -5,6 +5,8 @@
  */
 package islibrary;
 
+import java.awt.List;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,8 +20,13 @@ public class ReadersList extends javax.swing.JFrame {
      */
     public ReadersList() {
         initComponents();
-        DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Имя","Отчество", "Фамилия" ,"Номер билета", "Телефон", "Дата рождения","Адрес"},8);
+        ArrayList <DataReaders> list = GetReaders();
+        DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Имя","Отчество", "Фамилия" ,"Номер билета", "Телефон", "Дата рождения","Адрес"},0);
         jTable1.setModel(modelTable);
+        
+        for (DataReaders data: list) {
+        modelTable.addRow(new Object[]{data.firstName, data.secondName, data.lastName, data.numberBilet, data.numberPhone, data.dateOfBirth, data.adress});
+    }
     }
 
     /**
@@ -110,6 +117,31 @@ static void showDialog() {
     readerList.setVisible(true);
     readerList.setSize(700, 400);
     readerList.setTitle("Читатели");
+}
+
+ArrayList<DataReaders> GetReaders() {
+    ArrayList <DataReaders> list = new ArrayList<DataReaders>();
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+     list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+     list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+     list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
+    return list;
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
