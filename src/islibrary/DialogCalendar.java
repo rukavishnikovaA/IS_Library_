@@ -8,6 +8,7 @@ package islibrary;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -25,7 +26,9 @@ public class DialogCalendar extends javax.swing.JFrame {
         jCalendar1.addPropertyChangeListener(new PropertyChangeListener(){
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-            date = (Date) evt.getNewValue();
+            GregorianCalendar calendar = (GregorianCalendar) evt.getNewValue();
+            date = calendar.getTime();
+            
             }
             
         });
@@ -100,7 +103,10 @@ public class DialogCalendar extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectActionPerformed
+        if (callBack != null) {
         callBack.onSelectDate(date.getTime());
+        dispose();
+        }
     }//GEN-LAST:event_buttonSelectActionPerformed
 
    
