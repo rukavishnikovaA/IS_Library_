@@ -330,7 +330,7 @@ public class RegisterReader extends javax.swing.JFrame {
         );
         
         try {
-            DataSaver.writeObject(data);
+            DataSaver.DataReadersSaver.writeObject(data);
             dispose();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(RegisterReader.class.getName()).log(Level.SEVERE, null, ex);

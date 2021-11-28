@@ -5,6 +5,12 @@
  */
 package islibrary.screen;
 
+import islibrary.models.BookModel;
+import islibrary.util.DataSaver;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,17 +24,54 @@ public class MainScreen extends javax.swing.JFrame {
      */
     public MainScreen() {
         initComponents();
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"№", "Наименование" ,"Автор","Год","Остаток","Количество","Издательство"},8);
-        jTable1.setModel(model);
-        
-                
+        setListByQuery("");
     }
-public static void showModel () {
-    MainScreen mainScreen = new MainScreen();
-    mainScreen.setVisible(true);
-    mainScreen.setSize(680, 420);
-    mainScreen.setTitle("Библиотека");
-}
+    
+    private void setListByQuery(String query) {
+        ArrayList<BookModel> list = getListByQuery(query);
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"№", "Наименование" ,"Автор", "Год", "Количетво страниц", "Издательство"},0);
+        
+        list.forEach((book) -> {
+            model.addRow(new Object[]{
+                book.number,
+                book.name,
+                book.author,
+                book.yearBook,
+                book.pages,
+                book.publis
+            });
+        });
+        
+        jTable1.setModel(model);
+    }
+    
+    private ArrayList<BookModel> getListByQuery(String query) {
+        ArrayList<BookModel> list = getList();
+        ArrayList<BookModel> result = new ArrayList<>();
+        
+        list.forEach((book) -> {
+            if(book.isMatchByQuery(query)) result.add(book);
+        });
+        
+        return result;
+    }
+
+    private ArrayList<BookModel> getList() {
+        try {
+            return DataSaver.BookSaver.readObject();
+        } catch (ClassNotFoundException | IOException ex) {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return new ArrayList<>();
+    }
+    
+    public static void showModel () {
+        MainScreen mainScreen = new MainScreen();
+        mainScreen.setVisible(true);
+        mainScreen.setSize(680, 420);
+        mainScreen.setTitle("Библиотека");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +83,9 @@ public static void showModel () {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        textFieldSearchBooks = new javax.swing.JTextField();
+        labelSearch = new javax.swing.JLabel();
+        buttonSearch = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuIssuedBooks = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -67,6 +113,15 @@ public static void showModel () {
         jTable1.setMinimumSize(new java.awt.Dimension(60, 100));
         jTable1.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTable1);
+
+        labelSearch.setText("Поиск");
+
+        buttonSearch.setText("Найти");
+        buttonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSearchActionPerformed(evt);
+            }
+        });
 
         menuIssuedBooks.setText("Книги");
 
@@ -128,18 +183,39 @@ public static void showModel () {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelSearch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textFieldSearchBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonSearch)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelSearch)
+                    .addComponent(textFieldSearchBooks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        AddBook.showDialog();
+        AddBook.showDialog(() -> {
+            setListByQuery("");
+        });
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRegisterActionPerformed
@@ -158,7 +234,13 @@ public static void showModel () {
         IssuedBooks.showDialog();
     }//GEN-LAST:event_menuItemIssuedBooksActionPerformed
 
+    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
+        String query = textFieldSearchBooks.getText();
+        setListByQuery(query);
+    }//GEN-LAST:event_buttonSearchActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonSearch;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -166,10 +248,12 @@ public static void showModel () {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelSearch;
     private javax.swing.JMenu menuIssuedBooks;
     private javax.swing.JMenuItem menuItemIssueBook;
     private javax.swing.JMenuItem menuItemIssuedBooks;
     private javax.swing.JMenuItem menuReaders;
     private javax.swing.JMenuItem menuRegister;
+    private javax.swing.JTextField textFieldSearchBooks;
     // End of variables declaration//GEN-END:variables
 }

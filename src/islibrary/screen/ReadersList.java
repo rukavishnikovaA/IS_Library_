@@ -46,8 +46,8 @@ public class ReadersList extends javax.swing.JFrame {
                 data.numberBilet,
                 data.numberPhone, 
                 Util.longToDateString(data.dateOfBirth) ,
-                data.adress}
-            );
+                data.adress
+            });
         });
     }
     
@@ -173,7 +173,7 @@ public class ReadersList extends javax.swing.JFrame {
 
     ArrayList<DataReaders> GetReaders() {
         try {
-            return DataSaver.readObject();
+            return DataSaver.DataReadersSaver.readObject();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ReadersList.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
