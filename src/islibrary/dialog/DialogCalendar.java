@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.dialog;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,30 +15,36 @@ import java.util.GregorianCalendar;
  * @author АРИНА
  */
 public class DialogCalendar extends javax.swing.JFrame {
- callBack callBack;
- Date date;
+
+    callBack callBack;
+    long date;
+
     /**
      * Creates new form DialogCalendar
      */
     public DialogCalendar(callBack callback) {
+
         initComponents();
-        this.callBack = callBack;
-        jCalendar1.addPropertyChangeListener(new PropertyChangeListener(){
+        this.callBack = callback;
+        jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-            GregorianCalendar calendar = (GregorianCalendar) evt.getNewValue();
-            date = calendar.getTime();
-            
+                GregorianCalendar calendar = (GregorianCalendar) evt.getNewValue();
+                if (calendar != null) {
+                    date = calendar.getTimeInMillis();
+                }
+
+                System.out.println("Hello");
             }
-            
+
         });
     }
 
-   public static void Pickdate (callBack callBack) {
+    public static void Pickdate(callBack callBack) {
         DialogCalendar dialog = new DialogCalendar(callBack);
         dialog.setVisible(true);
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,15 +110,15 @@ public class DialogCalendar extends javax.swing.JFrame {
 
     private void buttonSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectActionPerformed
         if (callBack != null) {
-        callBack.onSelectDate(date.getTime());
-        dispose();
+            callBack.onSelectDate(date);
+            dispose();
         }
     }//GEN-LAST:event_buttonSelectActionPerformed
 
-   
-interface callBack {
-    void onSelectDate (long Date);
-}
+   public interface callBack {
+
+        void onSelectDate(long Date);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;

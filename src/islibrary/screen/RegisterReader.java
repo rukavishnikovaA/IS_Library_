@@ -3,11 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.screen;
 
-import com.sun.xml.internal.ws.util.StringUtils;
+import islibrary.models.DataReaders;
+import islibrary.util.Util;
+import islibrary.dialog.DialogCalendar;
+import islibrary.dialog.DialogMessage;
+import islibrary.util.DataSaver;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,12 +24,13 @@ import java.util.Date;
 public class RegisterReader extends javax.swing.JFrame {
 
     long date;
+
     /**
      * Creates new form RegisterReader
      */
     public RegisterReader() {
         initComponents();
-        
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -235,7 +244,7 @@ public class RegisterReader extends javax.swing.JFrame {
     }//GEN-LAST:event_textFieldPhoneNumberActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        
+       saveReader();
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
@@ -243,63 +252,98 @@ public class RegisterReader extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSelectDateBirthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectDateBirthActionPerformed
-        DialogCalendar.Pickdate(new DialogCalendar.callBack(){
+        DialogCalendar.Pickdate(new DialogCalendar.callBack() {
             @Override
             public void onSelectDate(long Date) {
-            date = Date;   
-            textFieldSelectedDate.setText(Util.longToDateString(Date));
+                date = Date;
+                textFieldSelectedDate.setText(Util.longToDateString(Date));
             }
-                
         });
     }//GEN-LAST:event_buttonSelectDateBirthActionPerformed
-static void showDialog () {
-    RegisterReader dialog = new RegisterReader();
-    dialog.setVisible(true);
-    dialog.setSize(640, 480);
-    dialog.setTitle("Регистрация читателя");
-}
-
-
-void saveReader () {
-    int NumberBilet;
-    if (numberBiletIsValid()) { 
-        NumberBilet = Integer.parseInt(textFieldNumberBilet.getText());
-    }else{
-        //сообщение о том, что число должно быть int
-        return;   
-    }  
-    if (date == 0){
-        //сообщение о том, что нужно ввести дату
-        return;
+    public static void showDialog() {
+        RegisterReader dialog = new RegisterReader();
+        dialog.setVisible(true);
+        dialog.setSize(640, 480);
+        dialog.setTitle("Регистрация читателя");
     }
-    int limit;
-    if (limitIsValid()){
-        limit = Integer.parseInt(textFieldLomit.getText());
-    }else {
-        //сообщение о том, что лимит должен быть задан
-        return;
+
+    void saveReader() {
+        int NumberBilet;
+        if (numberBiletIsValid()) {
+            NumberBilet = Integer.parseInt(textFieldNumberBilet.getText());
+        } else {
+            DialogMessage.showMessage("Номер билета должен быть введенн корректно!");
+            return;
+        }
+        if (date == 0) {
+            DialogMessage.showMessage("Не была введенна дата!");
+            return;
+        }
+        int limit;
+        if (limitIsValid()) {
+            limit = Integer.parseInt(textFieldLomit.getText());
+        } else {
+            DialogMessage.showMessage("Неправильно задан лимит!");
+            return;
+        }
+        
+        if(limit > 20) {
+            DialogMessage.showMessage("Лимит книг не должен превышать 20!");
+            return;
+        }
+        
+        if(!Util.stringIsLetters(textFieldFirstName.getText())) {
+            DialogMessage.showMessage("Введите корректное имя!");
+            return;
+        }
+        
+        if(textFieldFirstName.getText().isEmpty()) {
+            DialogMessage.showMessage("Поле Имя не может быть пустым!");
+            return;
+        }
+        
+        if(!Util.stringIsLetters(textFieldSecondName.getText())) {
+            DialogMessage.showMessage("Введите корректную фамилию!");
+            return;
+        }
+ 
+        if(textFieldSecondName.getText().isEmpty()) {
+            DialogMessage.showMessage("Поле Фамилия не может быть пустым!");
+            return;
+        }
+        
+        if(!Util.stringIsNumberPhone(textFieldPhoneNumber.getText())) {
+            DialogMessage.showMessage("Введите номер телефона в формате: 9999999999, 1-999-999-9999 или 999-999-9999!");
+            return;
+        }
+        
+        DataReaders data = new DataReaders(
+                NumberBilet,
+                textFieldFirstName.getText(),
+                textFieldFather.getText(),
+                textFieldSecondName.getText(),
+                textFieldAdress.getText(),
+                textFieldPhoneNumber.getText(),
+                date,
+                limit,
+                0
+        );
+        
+        try {
+            DataSaver.writeObject(data);
+            dispose();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(RegisterReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    DataReaders data = new DataReaders(
-            NumberBilet,
-            textFieldFirstName.getText(),
-            textFieldFather.getText(),
-            textFieldSecondName.getText(),
-            textFieldAdress.getText(),
-            textFieldPhoneNumber.getText(),
-            date,
-            limit,
-            0
-    );
-    
-}
 
-boolean numberBiletIsValid () {
-    return Util.isInteger(textFieldNumberBilet.getText());
-}
+    boolean numberBiletIsValid() {
+        return Util.isInteger(textFieldNumberBilet.getText());
+    }
 
-boolean limitIsValid () {
-    return Util.isInteger(textFieldLomit.getText());
-}
+    boolean limitIsValid() {
+        return Util.isInteger(textFieldLomit.getText());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;

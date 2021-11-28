@@ -3,10 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.screen;
 
+import islibrary.models.DataReaders;
+import islibrary.util.DataSaver;
+import islibrary.util.Util;
 import java.awt.List;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,13 +27,39 @@ public class ReadersList extends javax.swing.JFrame {
      */
     public ReadersList() {
         initComponents();
-        ArrayList <DataReaders> list = GetReaders();
-        DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Имя","Отчество", "Фамилия" ,"Номер билета", "Телефон", "Дата рождения","Адрес"},0);
-        jTable1.setModel(modelTable);
-        
-        for (DataReaders data: list) {
-        modelTable.addRow(new Object[]{data.firstName, data.secondName, data.lastName, data.numberBilet, data.numberPhone, data.dateOfBirth, data.adress});
+        showList("");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
+    
+    
+    private void showList(String query) {
+        ArrayList<DataReaders> list = getListByQuery(query);
+        
+        DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Имя", "Отчество", "Фамилия", "Номер билета", "Телефон", "Дата рождения", "Адрес"}, 0);
+        jTable1.setModel(modelTable);
+
+        list.forEach(data -> {
+            modelTable.addRow(new Object[]{
+                data.firstName,
+                data.secondName,
+                data.lastName,
+                data.numberBilet,
+                data.numberPhone, 
+                Util.longToDateString(data.dateOfBirth) ,
+                data.adress}
+            );
+        });
+    }
+    
+    private ArrayList<DataReaders> getListByQuery(String query) {
+        ArrayList<DataReaders> list = GetReaders();
+        ArrayList<DataReaders> result = new ArrayList<>();
+        
+        list.forEach((data) -> {
+            if(data.isMathByQuery(query)) result.add(data);
+        });
+        
+        return result; 
     }
 
     /**
@@ -54,6 +87,11 @@ public class ReadersList extends javax.swing.JFrame {
         labelSearch.setText("Поиск");
 
         buttonSearch.setText("Найти");
+        buttonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSearchActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,6 +109,11 @@ public class ReadersList extends javax.swing.JFrame {
         buttonCoice.setText("Выбрать");
 
         buttonCancel.setText("Отмена");
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,37 +155,33 @@ public class ReadersList extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-static void showDialog() {
-    ReadersList readerList = new ReadersList();
-    readerList.setVisible(true);
-    readerList.setSize(700, 400);
-    readerList.setTitle("Читатели");
-}
 
-ArrayList<DataReaders> GetReaders() {
-    ArrayList <DataReaders> list = new ArrayList<DataReaders>();
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-     list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-     list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-     list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Анна", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    list.add(new DataReaders(6724, "Вася", " Александрович", "Путин", "Бездомный", "Отсутсвует", 0, 10, 6));
-    return list;
-}
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_buttonCancelActionPerformed
+
+    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
+        String query = textFieldSearchReaders.getText();
+        showList(query);
+    }//GEN-LAST:event_buttonSearchActionPerformed
+    public static void showDialog() {
+        ReadersList readerList = new ReadersList();
+        readerList.setVisible(true);
+        readerList.setSize(700, 400);
+        readerList.setTitle("Читатели");
+    }
+
+    ArrayList<DataReaders> GetReaders() {
+        try {
+            return DataSaver.readObject();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ReadersList.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ReadersList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new ArrayList<>();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;

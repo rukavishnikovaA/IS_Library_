@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.screen;
+
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,6 +18,7 @@ public class AddBook extends javax.swing.JFrame {
      */
     public AddBook() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -191,7 +194,7 @@ public class AddBook extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- static void showDialog () {
+ public static void showDialog () {
     AddBook dialog = new AddBook();
     dialog.setVisible(true);
     dialog.setSize(550, 360);

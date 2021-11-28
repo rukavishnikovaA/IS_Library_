@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.screen;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +23,7 @@ public class MainScreen extends javax.swing.JFrame {
         
                 
     }
-static void showModel () {
+public static void showModel () {
     MainScreen mainScreen = new MainScreen();
     mainScreen.setVisible(true);
     mainScreen.setSize(680, 420);

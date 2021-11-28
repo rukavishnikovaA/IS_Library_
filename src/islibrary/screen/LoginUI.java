@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.screen;
+
+import islibrary.screen.MainScreen;
+import islibrary.dialog.DialogMessage;
 
 /**
  *

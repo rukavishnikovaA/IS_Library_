@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary;
+package islibrary.screen;
 
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,6 +21,7 @@ public class IssuedBooks extends javax.swing.JFrame {
         initComponents();
         DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Билет","ФИО", "Дата выдачи" ,"Дата возврата", "Возвращена"},8);
         jTable1.setModel(modelTable);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -91,7 +93,7 @@ public class IssuedBooks extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-static void showDialog() {
+public static void showDialog() {
     IssuedBooks issuedBooks = new IssuedBooks();
     issuedBooks.setVisible(true);
     issuedBooks.setSize(700, 400);
