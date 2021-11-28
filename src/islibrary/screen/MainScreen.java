@@ -9,6 +9,7 @@ import islibrary.models.BookModel;
 import islibrary.util.DataSaver;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -57,13 +58,16 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     private ArrayList<BookModel> getList() {
-        try {
-            return DataSaver.BookSaver.readObject();
-        } catch (ClassNotFoundException | IOException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return DataSaver.BookSaver.readObject();
+    }
+    
+    private void deleteSelectedBook() {
+        int selectedRow = jTable1.getSelectedColumn();
+        Vector book = ((DefaultTableModel) jTable1.getModel()).getDataVector().elementAt(selectedRow);
+        int bookNumber = (int) book.get(0);
         
-        return new ArrayList<>();
+        DataSaver.BookSaver.deleteBookByNumber(bookNumber);
+        setListByQuery("");
     }
     
     public static void showModel () {
@@ -137,6 +141,11 @@ public class MainScreen extends javax.swing.JFrame {
         menuIssuedBooks.add(jMenuItem2);
 
         jMenuItem3.setText("Удалить");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         menuIssuedBooks.add(jMenuItem3);
 
         menuItemIssueBook.setText("Выдать");
@@ -238,6 +247,10 @@ public class MainScreen extends javax.swing.JFrame {
         String query = textFieldSearchBooks.getText();
         setListByQuery(query);
     }//GEN-LAST:event_buttonSearchActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        deleteSelectedBook();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSearch;

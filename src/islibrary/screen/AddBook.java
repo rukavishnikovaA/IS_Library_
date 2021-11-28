@@ -24,6 +24,7 @@ public final class AddBook extends javax.swing.JFrame {
 
     /**
      * Creates new form AddBook
+     * @param callback
      */
     public AddBook(Callback callback) {
         this.callback = callback;
@@ -64,14 +65,14 @@ public final class AddBook extends javax.swing.JFrame {
     }
 
     private void addNewBook() {
-        
-        if(!Util.isInteger(textFieldBookNumber.getText())) {
+
+        if (!Util.isInteger(textFieldBookNumber.getText())) {
             DialogMessage.showMessage("Номер книги должен быть корретным!");
             return;
         }
-        
+
         int number = Integer.parseInt(textFieldBookNumber.getText());
-        if(number < 0) {
+        if (number < 0) {
             DialogMessage.showMessage("Номер книги должен быть больше 0!");
             return;
         }
@@ -95,6 +96,11 @@ public final class AddBook extends javax.swing.JFrame {
             DialogMessage.showMessage("Количество книг должно быть больше нуля!");
             return;
         }
+        
+        if(!DataSaver.BookSaver.bookNumberIsUnique(number)) {
+            DialogMessage.showMessage("Книга с данным номером уже существует!!!");
+            return;
+        }
 
         BookModel book = new BookModel(
                 number,
@@ -108,18 +114,13 @@ public final class AddBook extends javax.swing.JFrame {
                 pages
         );
 
-        try {
-            DataSaver.BookSaver.writeObject(book);
-            dispose();
-            callback.onAddNewBook();
-            callback = null;
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(AddBook.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DataSaver.BookSaver.writeObject(book);
+        dispose();
+        callback.onAddNewBook();
+        callback = null;
     }
 
     public interface Callback {
-
         void onAddNewBook();
     }
 

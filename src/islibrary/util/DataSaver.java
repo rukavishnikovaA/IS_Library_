@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -28,6 +29,11 @@ public class DataSaver {
         static public void writeObject(DataReaders obj) throws IOException, ClassNotFoundException {
             ArrayList<DataReaders> list = readObject();
             list.add(obj);
+            writeObjects(list);
+        }
+
+        static public void writeObjects(ArrayList<DataReaders> list) throws IOException, ClassNotFoundException {
+
 
             //Create FileOutputStream to write file
             File file = new File("dataReaders.txt");
@@ -70,30 +76,75 @@ public class DataSaver {
             return listAccount;
         }
     }
-    public static class BookSaver {
 
-        static public void writeObject(BookModel obj) throws IOException, ClassNotFoundException {
+    public static class BookSaver {
+        
+        static public boolean bookNumberIsUnique(int number) {
+            ArrayList<BookModel> list = readObject();
+            
+            for(BookModel book: list) {
+                if (book.number == number) {
+                    return false;
+                } 
+            }
+
+            return true;
+        }
+
+        static public void writeObject(BookModel obj) {
             ArrayList<BookModel> list = readObject();
             list.add(obj);
+            
+            writeObject(list);
+        }
 
+        static public void writeObject(ArrayList<BookModel> list) {
             //Create FileOutputStream to write file
             File file = new File("BookModels.txt");
             if (file.exists()) {
                 file.delete();
             }
 
-            FileOutputStream fos = new FileOutputStream("BookModels.txt");
-            //Create ObjectOutputStream to write object
-            ObjectOutputStream objOutputStream = new ObjectOutputStream(fos);
-            //Write object to file
-            for (BookModel data : list) {
-                objOutputStream.writeObject(data);
-                objOutputStream.reset();
+            try {
+                FileOutputStream fos = new FileOutputStream("BookModels.txt");
+                //Create ObjectOutputStream to write object
+                ObjectOutputStream objOutputStream = new ObjectOutputStream(fos);
+                //Write object to file
+                for (BookModel data : list) {
+                    objOutputStream.writeObject(data);
+                    objOutputStream.reset();
+                }
+                objOutputStream.close();
+            } catch (Exception e) {
+                //
             }
-            objOutputStream.close();
         }
 
-        static public ArrayList<BookModel> readObject() throws ClassNotFoundException, IOException {
+        static public void deleteBookByNumber(Integer number) {
+            ArrayList<BookModel> list = readObject();
+
+            list.forEach((BookModel book) -> {
+                if (book.number == number) {
+                    deleteBook(book);
+                    return;
+                }
+            });
+        }
+
+        static public void deleteBook(BookModel book) {
+            ArrayList<BookModel> list = readObject();
+            ArrayList<BookModel> saveList = new ArrayList<>();
+            
+            list.forEach((b) -> {
+                if(b.number != book.number) {
+                    saveList.add(b);
+                }
+            });
+            
+            writeObject(saveList);
+        }
+
+        static public ArrayList<BookModel> readObject() {
             ArrayList<BookModel> listAccount = new ArrayList();
             //Create new FileInputStream object to read file
 
@@ -111,6 +162,8 @@ public class DataSaver {
                     //ex.printStackTrace();
                 }
             } catch (FileNotFoundException ex) {
+                //ex.printStackTrace();
+            } catch (IOException | ClassNotFoundException ex) {
                 //ex.printStackTrace();
             }
 
