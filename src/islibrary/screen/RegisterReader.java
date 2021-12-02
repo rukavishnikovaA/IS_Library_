@@ -5,7 +5,7 @@
  */
 package islibrary.screen;
 
-import islibrary.models.DataReaders;
+import islibrary.models.ReaderModel;
 import islibrary.util.Util;
 import islibrary.dialog.DialogCalendar;
 import islibrary.dialog.DialogMessage;
@@ -30,17 +30,31 @@ public class RegisterReader extends javax.swing.JFrame {
      */
     public RegisterReader() {
         initComponents();
+        init();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
-    public RegisterReader(DataReaders editReader, Callabck callback) {
+    public RegisterReader(ReaderModel editReader, Callabck callback) {
         this.callback = callback;
         initComponents();
         initComponents(editReader);
+        
+        
+        init();
+        labelIssueBooks.setText(Integer.toString(editReader.issuedBook));
+        
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
-    void initComponents(DataReaders editReader) {
+    void init() {
+        boolean isEdit = isEditMode();
+        
+        labelBooksIssued.setVisible(isEdit);
+        labelSettings.setVisible(isEdit);
+        labelIssueBooks.setVisible(isEdit);
+    }
+    
+    void initComponents(ReaderModel editReader) {
         textFieldNumberBilet.setEditable(false);
         
         date = editReader.dateOfBirth;
@@ -94,6 +108,7 @@ public class RegisterReader extends javax.swing.JFrame {
         buttonSelectDateBirth = new javax.swing.JButton();
         labelSelectedDateBirth = new javax.swing.JLabel();
         textFieldSelectedDate = new javax.swing.JTextField();
+        labelIssueBooks = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
 
@@ -156,6 +171,8 @@ public class RegisterReader extends javax.swing.JFrame {
             }
         });
 
+        labelIssueBooks.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,7 +187,10 @@ public class RegisterReader extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelBooksIssued)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelBooksIssued)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelIssueBooks))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(labelFather, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -220,7 +240,9 @@ public class RegisterReader extends javax.swing.JFrame {
                         .addGap(92, 92, 92)
                         .addComponent(labelSettings)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelBooksIssued)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelBooksIssued)
+                            .addComponent(labelIssueBooks))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(126, 126, 126)
@@ -277,10 +299,10 @@ public class RegisterReader extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSelectDateBirthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectDateBirthActionPerformed
-        DialogCalendar.Pickdate(new DialogCalendar.callBack() {
+        DialogCalendar.pickdate(new DialogCalendar.DateCallback() {
             @Override
             public void onSelectDate(long Date) {
-                date = Date;
+                     date = Date;
                 textFieldSelectedDate.setText(Util.longToDateString(Date));
             }
         });
@@ -293,7 +315,7 @@ public class RegisterReader extends javax.swing.JFrame {
         dialog.setTitle("Регистрация читателя");
     }
     
-    public static void showDialog(DataReaders reader, Callabck callback) {
+    public static void showDialog(ReaderModel reader, Callabck callback) {
         RegisterReader dialog = new RegisterReader(reader, callback);
         dialog.setVisible(true);
         dialog.setSize(640, 480);
@@ -350,7 +372,7 @@ public class RegisterReader extends javax.swing.JFrame {
             return;
         }
         
-        DataReaders data = new DataReaders(
+        ReaderModel data = new ReaderModel(
                 NumberBilet,
                 textFieldFirstName.getText(),
                 textFieldFather.getText(),
@@ -361,14 +383,11 @@ public class RegisterReader extends javax.swing.JFrame {
                 limit,
                 0
         );
-        
-        try {
-            DataSaver.DataReadersSaver.writeObject(data);
-            if(isEditMode()) callback.onReaderEdited();
-            dispose();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(RegisterReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        DataSaver.ReadersModelSaver.getInstance().writeObject(data);
+        if(isEditMode()) callback.onReaderEdited();
+        dispose();
+
     }
 
     boolean numberBiletIsValid() {
@@ -397,6 +416,7 @@ public class RegisterReader extends javax.swing.JFrame {
     private javax.swing.JLabel labelDateOfBirth;
     private javax.swing.JLabel labelFather;
     private javax.swing.JLabel labelFirstName;
+    private javax.swing.JLabel labelIssueBooks;
     private javax.swing.JLabel labelLimit;
     private javax.swing.JLabel labelNumberBilet;
     private javax.swing.JLabel labelPhoneNumber;

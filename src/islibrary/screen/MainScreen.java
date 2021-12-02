@@ -5,13 +5,11 @@
  */
 package islibrary.screen;
 
+import adapter.TableAdapter;
+import islibrary.dialog.DialogMessage;
 import islibrary.models.BookModel;
 import islibrary.util.DataSaver;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,62 +18,65 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainScreen extends javax.swing.JFrame {
 
+    TableAdapter<BookModel> tableAdapter;
+
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
+        tableAdapter = new TableAdapter(jTable1);
+
         setListByQuery("");
     }
-    
+
     private void setListByQuery(String query) {
         ArrayList<BookModel> list = getListByQuery(query);
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"№", "Наименование" ,"Автор", "Год", "Количетво страниц", "Издательство"},0);
-        
-        list.forEach((book) -> {
-            model.addRow(new Object[]{
-                book.number,
-                book.name,
-                book.author,
-                book.yearBook,
-                book.pages,
-                book.publis
-            });
+        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"№", "Наименование", "Автор", "Год", "Количетво страниц", "Издательство", "Количество"}, 0);
+
+        tableAdapter.initItems(list, tableModel, (BookModel model) -> new Object[]{
+            model.number,
+            model.name,
+            model.author,
+            model.yearBook,
+            model.pages,
+            model.publis,
+            model.count
         });
-        
-        jTable1.setModel(model);
+
+        jTable1.setModel(tableModel);
     }
-    
+
     private ArrayList<BookModel> getListByQuery(String query) {
         ArrayList<BookModel> list = getList();
         ArrayList<BookModel> result = new ArrayList<>();
-        
+
         list.forEach((book) -> {
-            if(book.isMatchByQuery(query)) result.add(book);
+            if (book.isMatchByQuery(query)) {
+                result.add(book);
+            }
         });
-        
+
         return result;
     }
 
     private ArrayList<BookModel> getList() {
-        return DataSaver.BookSaver.readObject();
+        return DataSaver.BookSaver.getInstance().readObject();
     }
-    
+
     private void deleteSelectedBook() {
-        int selectedRow = jTable1.getSelectedRow();
-        Vector book = ((DefaultTableModel) jTable1.getModel()).getDataVector().elementAt(selectedRow);
-        int bookNumber = (int) book.get(0);
-        
-        DataSaver.BookSaver.deleteBookByNumber(bookNumber);
+        int bookNumber = tableAdapter.getSelectedModel().number;
+        DataSaver.BookSaver.getInstance().deleteBookByNumber(bookNumber);
         setListByQuery("");
     }
-    
-    public static void showModel () {
+
+    public static void showModel() {
         MainScreen mainScreen = new MainScreen();
         mainScreen.setVisible(true);
         mainScreen.setSize(680, 420);
         mainScreen.setTitle("Библиотека");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -236,7 +237,12 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_menuReadersActionPerformed
 
     private void menuItemIssueBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssueBookActionPerformed
-        IssueBook.showDialog();
+        BookModel book = tableAdapter.getSelectedModel();
+        if(book.count > 0) {
+            IssueBook.showDialog(book, () -> { setListByQuery(""); });
+        } else {
+            DialogMessage.showMessage("Книг больше не осталось!");
+        }
     }//GEN-LAST:event_menuItemIssueBookActionPerformed
 
     private void menuItemIssuedBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssuedBooksActionPerformed

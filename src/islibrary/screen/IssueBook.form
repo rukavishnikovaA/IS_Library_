@@ -33,23 +33,30 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelBook" min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="labelReader" min="-2" pref="101" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelBook" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="labelReader" min="-2" pref="101" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="textFieldReader" pref="315" max="32767" attributes="0"/>
-                              <Component id="textFieldBook" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="labelDateOfIssue" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="labelDateOfIssue" pref="101" max="32767" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="textFieldDateOfIssue" min="-2" pref="315" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelBookName" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxReaders" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelReturnDate" min="-2" pref="70" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="buttonSelectDate" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="183" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="buttomIssue" min="-2" max="-2" attributes="0"/>
@@ -57,7 +64,7 @@
                       <Component id="buttonCancel" min="-2" pref="80" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,19 +72,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="labelBook" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="textFieldBook" min="-2" pref="25" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelBook" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="labelBookName" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelReader" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="textFieldReader" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelReader" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="comboBoxReaders" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelDateOfIssue" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="textFieldDateOfIssue" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="buttonSelectDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelReturnDate" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -95,30 +103,63 @@
         <Property name="text" type="java.lang.String" value="&#x41a;&#x43d;&#x438;&#x433;&#x430;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textFieldBook">
-    </Component>
     <Component class="javax.swing.JLabel" name="labelReader">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x427;&#x438;&#x442;&#x430;&#x442;&#x435;&#x43b;&#x44c;"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="textFieldReader">
     </Component>
     <Component class="javax.swing.JLabel" name="labelDateOfIssue">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x414;&#x430;&#x442;&#x430; &#x432;&#x43e;&#x437;&#x432;&#x440;&#x430;&#x442;&#x430;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textFieldDateOfIssue">
-    </Component>
     <Component class="javax.swing.JButton" name="buttonCancel">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x43c;&#x435;&#x43d;&#x430;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttomIssue">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x434;&#x430;&#x442;&#x44c;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttomIssueActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelBookName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboBoxReaders">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonSelectDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x431;&#x440;&#x430;&#x442;&#x44c;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSelectDateActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelReturnDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=" "/>
       </Properties>
     </Component>
   </SubComponents>

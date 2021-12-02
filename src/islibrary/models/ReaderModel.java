@@ -8,14 +8,12 @@ package islibrary.models;
 import islibrary.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Vector;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author АРИНА
  */
-public class DataReaders implements Serializable {
+public class ReaderModel implements Serializable {
 
     public int numberBilet;
     public String firstName;
@@ -27,7 +25,7 @@ public class DataReaders implements Serializable {
     public int limit;
     public int issuedBook;
 
-    public DataReaders(int numberBilet,
+    public ReaderModel(int numberBilet,
             String firstName,
             String secondName,
             String lastName,
@@ -59,8 +57,12 @@ public class DataReaders implements Serializable {
                 || Util.longToDateString(dateOfBirth).contains(query);
     }
     
-    public static DataReaders getFromListByNumberBilet(int number, ArrayList<DataReaders> list) {
-        for(DataReaders r: list) {
+    public String getFullname() {
+        return firstName + " " + secondName + " " + lastName;
+    }
+    
+    public static ReaderModel getFromListByNumberBilet(int number, ArrayList<ReaderModel> list) {
+        for(ReaderModel r: list) {
             if(r.numberBilet == number) return r;
         }
         

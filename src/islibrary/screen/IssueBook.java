@@ -5,6 +5,15 @@
  */
 package islibrary.screen;
 
+import adapter.ComboBoxAdapter;
+import islibrary.dialog.DialogCalendar;
+import islibrary.dialog.DialogMessage;
+import islibrary.models.BookModel;
+import islibrary.models.ReaderBookPair;
+import islibrary.models.ReaderModel;
+import islibrary.util.DataSaver;
+import islibrary.util.Util;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
@@ -13,13 +22,53 @@ import javax.swing.JFrame;
  */
 public class IssueBook extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IssueBook
-     */
-    public IssueBook() {
+    ComboBoxAdapter<ReaderModel> adapter;
+
+    Callback callback;
+    BookModel book;
+
+    long date;
+
+    public IssueBook(Callback callback, BookModel book) {
+        this.callback = callback;
+        this.book = book;
+
         initComponents();
-          
+
+        adapter = new ComboBoxAdapter(comboBoxReaders);
+
+        initComboBox();
+
+        labelBookName.setText(book.name);
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    void close() {
+        adapter = null;
+        callback = null;
+
+        dispose();
+    }
+
+    void issueBook() {
+        if (date == 0) {
+            DialogMessage.showMessage("Не выбрана дата!");
+            return;
+        }
+
+        ReaderModel reader = adapter.getSelectedItem();
+        reader.issuedBook++;
+        DataSaver.ReadersModelSaver.getInstance().writeObject(reader);
+
+        book.count--;
+        DataSaver.BookSaver.getInstance().writeObject(book);
+
+        ReaderBookPair pair = new ReaderBookPair(reader, book, date);
+        DataSaver.ReaderBookPairSaver.getInstance().writeObject(pair);
+
+        callback.onBookIssued();
+        close();
     }
 
     /**
@@ -33,13 +82,14 @@ public class IssueBook extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         labelBook = new javax.swing.JLabel();
-        textFieldBook = new javax.swing.JTextField();
         labelReader = new javax.swing.JLabel();
-        textFieldReader = new javax.swing.JTextField();
         labelDateOfIssue = new javax.swing.JLabel();
-        textFieldDateOfIssue = new javax.swing.JTextField();
         buttonCancel = new javax.swing.JButton();
         buttomIssue = new javax.swing.JButton();
+        labelBookName = new javax.swing.JLabel();
+        comboBoxReaders = new javax.swing.JComboBox<>();
+        buttonSelectDate = new javax.swing.JButton();
+        labelReturnDate = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -52,8 +102,31 @@ public class IssueBook extends javax.swing.JFrame {
         labelDateOfIssue.setText("Дата возврата");
 
         buttonCancel.setText("Отмена");
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelActionPerformed(evt);
+            }
+        });
 
         buttomIssue.setText("Выдать");
+        buttomIssue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttomIssueActionPerformed(evt);
+            }
+        });
+
+        labelBookName.setText("jLabel1");
+
+        comboBoxReaders.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        buttonSelectDate.setText("Выбрать");
+        buttonSelectDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSelectDateActionPerformed(evt);
+            }
+        });
+
+        labelReturnDate.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,40 +135,46 @@ public class IssueBook extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelBook, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelReader, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textFieldReader, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                                .addComponent(textFieldBook)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(labelDateOfIssue, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(textFieldDateOfIssue, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelBook, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelReader, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelDateOfIssue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(35, 35, 35)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelBookName)
+                            .addComponent(comboBoxReaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelReturnDate, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonSelectDate)))
+                        .addGap(183, 183, 183))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttomIssue)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelBook, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldBook, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBook, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelBookName))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelReader, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldReader, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxReaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelDateOfIssue, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldDateOfIssue, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonSelectDate)
+                    .addComponent(labelReturnDate))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCancel)
@@ -106,22 +185,52 @@ public class IssueBook extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-public static void showDialog() {
-    IssueBook issueBook = new IssueBook();
-    issueBook.setVisible(true);
-    issueBook.setSize(500, 250);
-    issueBook.setTitle("Выдача книги");
-}
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
+        close();
+    }//GEN-LAST:event_buttonCancelActionPerformed
+
+    private void buttomIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttomIssueActionPerformed
+        issueBook();
+    }//GEN-LAST:event_buttomIssueActionPerformed
+
+    private void buttonSelectDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectDateActionPerformed
+        DialogCalendar.pickdate((long Date) -> {
+            date = Date;
+            labelReturnDate.setText(Util.longToDateString(Date));
+        });
+    }//GEN-LAST:event_buttonSelectDateActionPerformed
+
+    final void initComboBox() {
+        ArrayList<ReaderModel> list = getReaders();
+        adapter.initItems(list, (ReaderModel item) -> item.getFullname());
+    }
+
+    ArrayList<ReaderModel> getReaders() {
+        return DataSaver.ReadersModelSaver.getInstance().readObject();
+    }
+
+    public static void showDialog(BookModel book, Callback callback) {
+        IssueBook issueBook = new IssueBook(callback, book);
+        issueBook.setVisible(true);
+        issueBook.setSize(500, 250);
+        issueBook.setTitle("Выдача книги");
+    }
+
+    public interface Callback {
+
+        void onBookIssued();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttomIssue;
     private javax.swing.JButton buttonCancel;
+    private javax.swing.JButton buttonSelectDate;
+    private javax.swing.JComboBox<String> comboBoxReaders;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel labelBook;
+    private javax.swing.JLabel labelBookName;
     private javax.swing.JLabel labelDateOfIssue;
     private javax.swing.JLabel labelReader;
-    private javax.swing.JTextField textFieldBook;
-    private javax.swing.JTextField textFieldDateOfIssue;
-    private javax.swing.JTextField textFieldReader;
+    private javax.swing.JLabel labelReturnDate;
     // End of variables declaration//GEN-END:variables
 }

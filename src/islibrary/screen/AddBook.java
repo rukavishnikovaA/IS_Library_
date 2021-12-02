@@ -97,7 +97,7 @@ public final class AddBook extends javax.swing.JFrame {
             return;
         }
         
-        if(!DataSaver.BookSaver.bookNumberIsUnique(number)) {
+        if(!DataSaver.BookSaver.getInstance().bookNumberIsUnique(number)) {
             DialogMessage.showMessage("Книга с данным номером уже существует!!!");
             return;
         }
@@ -114,7 +114,7 @@ public final class AddBook extends javax.swing.JFrame {
                 pages
         );
 
-        DataSaver.BookSaver.writeObject(book);
+        DataSaver.BookSaver.getInstance().writeObject(book);
         dispose();
         callback.onAddNewBook();
         callback = null;

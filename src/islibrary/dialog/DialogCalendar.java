@@ -7,7 +7,6 @@ package islibrary.dialog;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -16,13 +15,15 @@ import java.util.GregorianCalendar;
  */
 public class DialogCalendar extends javax.swing.JFrame {
 
-    callBack callBack;
+    
+    DateCallback callBack;
     long date;
 
     /**
      * Creates new form DialogCalendar
+     * @param callback
      */
-    public DialogCalendar(callBack callback) {
+    public DialogCalendar(DateCallback callback) {
 
         initComponents();
         this.callBack = callback;
@@ -40,7 +41,8 @@ public class DialogCalendar extends javax.swing.JFrame {
         });
     }
 
-    public static void Pickdate(callBack callBack) {
+  
+    public static void pickdate(DateCallback callBack) {
         DialogCalendar dialog = new DialogCalendar(callBack);
         dialog.setVisible(true);
     }
@@ -115,8 +117,8 @@ public class DialogCalendar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonSelectActionPerformed
 
-   public interface callBack {
-
+     
+    public interface DateCallback {
         void onSelectDate(long Date);
     }
 

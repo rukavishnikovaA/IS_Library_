@@ -5,7 +5,7 @@
  */
 package islibrary.util;
 
-import islibrary.models.DataReaders;
+import islibrary.models.ReaderModel;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

@@ -5,7 +5,7 @@
  */
 package islibrary.screen;
 
-import islibrary.models.DataReaders;
+import islibrary.models.ReaderModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
 import java.awt.List;
@@ -34,7 +34,7 @@ public class ReadersList extends javax.swing.JFrame {
     
     
     private void showList(String query) {
-        ArrayList<DataReaders> list = getListByQuery(query);
+        ArrayList<ReaderModel> list = getListByQuery(query);
         
         DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Имя", "Отчество", "Фамилия", "Номер билета", "Телефон", "Дата рождения", "Адрес"}, 0);
         jTable1.setModel(modelTable);
@@ -52,9 +52,9 @@ public class ReadersList extends javax.swing.JFrame {
         });
     }
     
-    private ArrayList<DataReaders> getListByQuery(String query) {
-        ArrayList<DataReaders> list = GetReaders();
-        ArrayList<DataReaders> result = new ArrayList<>();
+    private ArrayList<ReaderModel> getListByQuery(String query) {
+        ArrayList<ReaderModel> list = GetReaders();
+        ArrayList<ReaderModel> result = new ArrayList<>();
         
         list.forEach((data) -> {
             if(data.isMathByQuery(query)) result.add(data);
@@ -63,18 +63,18 @@ public class ReadersList extends javax.swing.JFrame {
         return result; 
     }
     
-    private DataReaders getSelectedReader() {
+    private ReaderModel getSelectedReader() {
         int selectedRow = jTable1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         Vector data = model.getDataVector();
         Vector r = (Vector) data.elementAt(selectedRow);
         int number_bilet = (int) r.get(3);
-        ArrayList<DataReaders> list = getListByQuery("");
-        return DataReaders.getFromListByNumberBilet(number_bilet, list);
+        ArrayList<ReaderModel> list = getListByQuery("");
+        return ReaderModel.getFromListByNumberBilet(number_bilet, list);
     }
     
     private void editSeletedReader() {
-        DataReaders reader = getSelectedReader();  
+        ReaderModel reader = getSelectedReader();  
         RegisterReader.showDialog(reader, () -> {
             showList("");
         });
@@ -198,16 +198,8 @@ public class ReadersList extends javax.swing.JFrame {
         readerList.setTitle("Читатели");
     }
 
-    ArrayList<DataReaders> GetReaders() {
-        try {
-            return DataSaver.DataReadersSaver.readObject();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ReadersList.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ReadersList.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return new ArrayList<>();
+    ArrayList<ReaderModel> GetReaders() {
+        return DataSaver.ReadersModelSaver.getInstance().readObject();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

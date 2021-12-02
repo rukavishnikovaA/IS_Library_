@@ -59,7 +59,11 @@
                       <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="labelSettings" min="-2" pref="118" max="-2" attributes="0"/>
-                          <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelIssueBooks" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -123,7 +127,10 @@
                       <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                       <Component id="labelSettings" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelBooksIssued" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelIssueBooks" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -271,6 +278,11 @@
     <Component class="javax.swing.JLabel" name="labelSelectedDateBirth">
     </Component>
     <Component class="javax.swing.JTextField" name="textFieldSelectedDate">
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelIssueBooks">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel1"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
