@@ -8,6 +8,8 @@ package islibrary.models;
 import islibrary.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -56,4 +58,14 @@ public class DataReaders implements Serializable {
                 || Integer.toString(issuedBook).contains(query)
                 || Util.longToDateString(dateOfBirth).contains(query);
     }
+    
+    public static DataReaders getFromListByNumberBilet(int number, ArrayList<DataReaders> list) {
+        for(DataReaders r: list) {
+            if(r.numberBilet == number) return r;
+        }
+        
+        return null;
+    }
+            
+
 }

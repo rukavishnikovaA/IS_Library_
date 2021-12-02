@@ -11,6 +11,7 @@ import islibrary.util.Util;
 import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -61,6 +62,23 @@ public class ReadersList extends javax.swing.JFrame {
         
         return result; 
     }
+    
+    private DataReaders getSelectedReader() {
+        int selectedRow = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Vector data = model.getDataVector();
+        Vector r = (Vector) data.elementAt(selectedRow);
+        int number_bilet = (int) r.get(3);
+        ArrayList<DataReaders> list = getListByQuery("");
+        return DataReaders.getFromListByNumberBilet(number_bilet, list);
+    }
+    
+    private void editSeletedReader() {
+        DataReaders reader = getSelectedReader();  
+        RegisterReader.showDialog(reader, () -> {
+            showList("");
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +124,12 @@ public class ReadersList extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        buttonCoice.setText("Выбрать");
+        buttonCoice.setText("Изменить");
+        buttonCoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCoiceActionPerformed(evt);
+            }
+        });
 
         buttonCancel.setText("Отмена");
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +187,10 @@ public class ReadersList extends javax.swing.JFrame {
         String query = textFieldSearchReaders.getText();
         showList(query);
     }//GEN-LAST:event_buttonSearchActionPerformed
+
+    private void buttonCoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCoiceActionPerformed
+        editSeletedReader();
+    }//GEN-LAST:event_buttonCoiceActionPerformed
     public static void showDialog() {
         ReadersList readerList = new ReadersList();
         readerList.setVisible(true);

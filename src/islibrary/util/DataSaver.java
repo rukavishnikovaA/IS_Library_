@@ -21,20 +21,23 @@ import java.util.function.Consumer;
 /**
  *
  * @author Vladi
- */
+     */
 public class DataSaver {
 
     public static class DataReadersSaver {
 
         static public void writeObject(DataReaders obj) throws IOException, ClassNotFoundException {
             ArrayList<DataReaders> list = readObject();
+            
+            DataReaders oldReader = DataReaders.getFromListByNumberBilet(obj.numberBilet, list);
+            
+            if(oldReader != null) list.remove(oldReader);
+            
             list.add(obj);
             writeObjects(list);
         }
 
         static public void writeObjects(ArrayList<DataReaders> list) throws IOException, ClassNotFoundException {
-
-
             //Create FileOutputStream to write file
             File file = new File("dataReaders.txt");
             if (file.exists()) {

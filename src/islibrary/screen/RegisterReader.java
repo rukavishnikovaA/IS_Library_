@@ -24,13 +24,38 @@ import javax.swing.JFrame;
 public class RegisterReader extends javax.swing.JFrame {
 
     long date;
-
+    Callabck callback;
     /**
      * Creates new form RegisterReader
      */
     public RegisterReader() {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    public RegisterReader(DataReaders editReader, Callabck callback) {
+        this.callback = callback;
+        initComponents();
+        initComponents(editReader);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    
+    void initComponents(DataReaders editReader) {
+        textFieldNumberBilet.setEditable(false);
+        
+        date = editReader.dateOfBirth;
+        textFieldNumberBilet.setText(Integer.toString(editReader.numberBilet));
+        textFieldLomit.setText(Integer.toString(editReader.limit));
+        textFieldFirstName.setText(editReader.firstName);
+        textFieldSecondName.setText(editReader.lastName);
+        textFieldFather.setText(editReader.secondName);
+        textFieldAdress.setText(editReader.adress);
+        textFieldPhoneNumber.setText(editReader.numberPhone);
+        textFieldSelectedDate.setText(Util.longToDateString(editReader.dateOfBirth));
+    }
+    
+    boolean isEditMode() {
+        return callback != null;
     }
 
     /**
@@ -260,11 +285,19 @@ public class RegisterReader extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_buttonSelectDateBirthActionPerformed
+    
     public static void showDialog() {
         RegisterReader dialog = new RegisterReader();
         dialog.setVisible(true);
         dialog.setSize(640, 480);
         dialog.setTitle("Регистрация читателя");
+    }
+    
+    public static void showDialog(DataReaders reader, Callabck callback) {
+        RegisterReader dialog = new RegisterReader(reader, callback);
+        dialog.setVisible(true);
+        dialog.setSize(640, 480);
+        dialog.setTitle("Редактирование читателя");
     }
 
     void saveReader() {
@@ -331,6 +364,7 @@ public class RegisterReader extends javax.swing.JFrame {
         
         try {
             DataSaver.DataReadersSaver.writeObject(data);
+            if(isEditMode()) callback.onReaderEdited();
             dispose();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(RegisterReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -343,6 +377,10 @@ public class RegisterReader extends javax.swing.JFrame {
 
     boolean limitIsValid() {
         return Util.isInteger(textFieldLomit.getText());
+    }
+    
+    public interface Callabck {
+        void onReaderEdited();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

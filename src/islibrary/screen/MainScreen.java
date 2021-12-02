@@ -62,7 +62,7 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     private void deleteSelectedBook() {
-        int selectedRow = jTable1.getSelectedColumn();
+        int selectedRow = jTable1.getSelectedRow();
         Vector book = ((DefaultTableModel) jTable1.getModel()).getDataVector().elementAt(selectedRow);
         int bookNumber = (int) book.get(0);
         
