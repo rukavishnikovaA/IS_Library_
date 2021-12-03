@@ -5,6 +5,7 @@
  */
 package islibrary.screen;
 
+import adapter.TableAdapter;
 import islibrary.models.ReaderModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
@@ -22,12 +23,15 @@ import javax.swing.table.DefaultTableModel;
  * @author АРИНА
  */
 public class ReadersList extends javax.swing.JFrame {
+    
+    TableAdapter<ReaderModel> adapter;
 
     /**
      * Creates new form ReadersList
      */
     public ReadersList() {
         initComponents();
+        adapter = new TableAdapter(jTable1);
         showList("");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -37,19 +41,20 @@ public class ReadersList extends javax.swing.JFrame {
         ArrayList<ReaderModel> list = getListByQuery(query);
         
         DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Имя", "Отчество", "Фамилия", "Номер билета", "Телефон", "Дата рождения", "Адрес"}, 0);
-        jTable1.setModel(modelTable);
 
-        list.forEach(data -> {
-            modelTable.addRow(new Object[]{
-                data.firstName,
-                data.secondName,
-                data.lastName,
-                data.numberBilet,
-                data.numberPhone, 
-                Util.longToDateString(data.dateOfBirth) ,
-                data.adress
-            });
+        adapter.initItems(list, modelTable, (ReaderModel model) -> {
+            return new Object[]{
+                model.firstName,
+                model.secondName,
+                model.lastName,
+                model.numberBilet,
+                model.numberPhone, 
+                Util.longToDateString(model.dateOfBirth) ,
+                model.adress
+            };
         });
+        
+        jTable1.setModel(modelTable);
     }
     
     private ArrayList<ReaderModel> getListByQuery(String query) {
@@ -63,21 +68,17 @@ public class ReadersList extends javax.swing.JFrame {
         return result; 
     }
     
-    private ReaderModel getSelectedReader() {
-        int selectedRow = jTable1.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        Vector data = model.getDataVector();
-        Vector r = (Vector) data.elementAt(selectedRow);
-        int number_bilet = (int) r.get(3);
-        ArrayList<ReaderModel> list = getListByQuery("");
-        return ReaderModel.getFromListByNumberBilet(number_bilet, list);
-    }
-    
     private void editSeletedReader() {
-        ReaderModel reader = getSelectedReader();  
+        ReaderModel reader = adapter.getSelectedModel();
         RegisterReader.showDialog(reader, () -> {
             showList("");
         });
+    }
+    
+    void deleteSelectedReader() {
+        ReaderModel reader = adapter.getSelectedModel();
+        DataSaver.ReadersModelSaver.getInstance().deleteReader(reader);
+        showList("");
     }
 
     /**
@@ -97,6 +98,7 @@ public class ReadersList extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         buttonCoice = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
+        buttonDelete = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -138,6 +140,13 @@ public class ReadersList extends javax.swing.JFrame {
             }
         });
 
+        buttonDelete.setText("Удалить");
+        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,6 +163,8 @@ public class ReadersList extends javax.swing.JFrame {
                         .addComponent(buttonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonCoice)
                         .addGap(15, 15, 15)
                         .addComponent(buttonCancel)))
@@ -172,7 +183,8 @@ public class ReadersList extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCoice)
-                    .addComponent(buttonCancel))
+                    .addComponent(buttonCancel)
+                    .addComponent(buttonDelete))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -191,6 +203,10 @@ public class ReadersList extends javax.swing.JFrame {
     private void buttonCoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCoiceActionPerformed
         editSeletedReader();
     }//GEN-LAST:event_buttonCoiceActionPerformed
+
+    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+       deleteSelectedReader();
+    }//GEN-LAST:event_buttonDeleteActionPerformed
     public static void showDialog() {
         ReadersList readerList = new ReadersList();
         readerList.setVisible(true);
@@ -205,6 +221,7 @@ public class ReadersList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonCoice;
+    private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonSearch;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

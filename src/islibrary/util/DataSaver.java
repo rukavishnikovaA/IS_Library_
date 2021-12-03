@@ -7,8 +7,8 @@ package islibrary.util;
 
 import islibrary.models.BookModel;
 import islibrary.models.ReaderModel;
-import islibrary.models.ReaderBookPair; 
-import java.util.ArrayList; 
+import islibrary.models.ReaderBookPair;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,9 +21,34 @@ public class DataSaver {
         public ReadersModelSaver(String fileName) {
             super(fileName);
         }
+        
+        
+        public void deleteReaderByNumber(int number) {
+            ArrayList<ReaderModel> list = readObject();
 
-       @Override
-       public void writeObject(ReaderModel obj) {
+            list.forEach((ReaderModel reader) -> {
+                if (reader.numberBilet == number) {
+                    deleteReader(reader);
+                    return;
+                }
+            });
+        }
+        
+        public void deleteReader(ReaderModel reader) {
+            ArrayList<ReaderModel> list = readObject();
+            ArrayList<ReaderModel> saveList = new ArrayList<>();
+
+            list.forEach((b) -> {
+                if (b.numberBilet != reader.numberBilet) {
+                    saveList.add(b);
+                }
+            });
+
+            writeObjects(saveList);
+        }
+
+        @Override
+        public void writeObject(ReaderModel obj) {
             ArrayList<ReaderModel> list = readObject();
 
             ReaderModel oldReader = ReaderModel.getFromListByNumberBilet(obj.numberBilet, list);
@@ -34,27 +59,27 @@ public class DataSaver {
 
             list.add(obj);
             writeObjects(list);
-       }
-       
-       static ReadersModelSaver instance;
-       public static ReadersModelSaver getInstance() {
-           if(instance == null) {
-               instance = new ReadersModelSaver("ReaderModel.txt");
-           }
-           
-           return instance;
-       }
+        }
+
+        static ReadersModelSaver instance;
+
+        public static ReadersModelSaver getInstance() {
+            if (instance == null) {
+                instance = new ReadersModelSaver("ReaderModel.txt");
+            }
+
+            return instance;
+        }
     }
-    
-    
+
     public static class BookSaver extends IDataSaver<BookModel> {
 
         public BookSaver(String fileName) {
             super(fileName);
         }
-        
+
         @Override
-       public void writeObject(BookModel obj) {
+        public void writeObject(BookModel obj) {
             ArrayList<BookModel> list = readObject();
 
             BookModel oldBook = BookModel.getFromListByNumber(obj.number, list);
@@ -65,8 +90,8 @@ public class DataSaver {
 
             list.add(obj);
             writeObjects(list);
-       }
-        
+        }
+
         public void deleteBookByNumber(Integer number) {
             ArrayList<BookModel> list = readObject();
 
@@ -90,23 +115,30 @@ public class DataSaver {
 
             writeObjects(saveList);
         }
-        
+
         static BookSaver instance;
+
         public static BookSaver getInstance() {
-           if(instance == null) instance = new BookSaver("BookSaver.txt");
-           return instance;
+            if (instance == null) {
+                instance = new BookSaver("BookSaver.txt");
+            }
+            return instance;
         }
     }
 
-    public static class ReaderBookPairSaver extends IDataSaver<ReaderBookPair>  {
+    public static class ReaderBookPairSaver extends IDataSaver<ReaderBookPair> {
+
         public ReaderBookPairSaver(String fileName) {
             super(fileName);
         }
-              
+
         static ReaderBookPairSaver instance;
+
         public static ReaderBookPairSaver getInstance() {
-           if(instance == null) instance = new ReaderBookPairSaver("ReaderBookPair.txt");
-           return instance;
+            if (instance == null) {
+                instance = new ReaderBookPairSaver("ReaderBookPair.txt");
+            }
+            return instance;
         }
     }
 }
