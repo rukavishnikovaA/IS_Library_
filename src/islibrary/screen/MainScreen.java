@@ -251,7 +251,9 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemIssueBookActionPerformed
 
     private void menuItemIssuedBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssuedBooksActionPerformed
-        IssuedBooks.showDialog();
+        IssuedBooks.showDialog(() -> {
+            setListByQuery("");
+        });
     }//GEN-LAST:event_menuItemIssuedBooksActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed

@@ -9,6 +9,7 @@ import islibrary.models.ReaderModel;
 import islibrary.util.Util;
 import islibrary.dialog.DialogCalendar;
 import islibrary.dialog.DialogMessage;
+import islibrary.models.BookModel;
 import islibrary.util.DataSaver;
 import javax.swing.JFrame;
 
@@ -16,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author АРИНА
  */
-public class RegisterReader extends javax.swing.JFrame {
+public final class RegisterReader extends javax.swing.JFrame {
 
     long date;
     Callabck callback;
@@ -50,12 +51,13 @@ public class RegisterReader extends javax.swing.JFrame {
         if(!isEdit) {
             labaelBiletNumberValue.setText(Integer.toString(ReaderModel.getActualBiletNumber()));
         }
+        
+        labelBookLimitValue.setText(Integer.toString(BookModel.bookLimit));
     }
     
     void initEditMode(ReaderModel editReader) {        
         date = editReader.dateOfBirth;
         labaelBiletNumberValue.setText(Integer.toString(editReader.numberBilet));
-        textFieldLomit.setText(Integer.toString(editReader.limit));
         textFieldFirstName.setText(editReader.firstName);
         textFieldSecondName.setText(editReader.lastName);
         textFieldFather.setText(editReader.secondName);
@@ -93,7 +95,6 @@ public class RegisterReader extends javax.swing.JFrame {
         textFieldPhoneNumber = new javax.swing.JTextField();
         labelDateOfBirth = new javax.swing.JLabel();
         labelLimit = new javax.swing.JLabel();
-        textFieldLomit = new javax.swing.JTextField();
         labelSettings = new javax.swing.JLabel();
         labelBooksIssued = new javax.swing.JLabel();
         labelFather = new javax.swing.JLabel();
@@ -105,6 +106,7 @@ public class RegisterReader extends javax.swing.JFrame {
         textFieldSelectedDate = new javax.swing.JTextField();
         labelIssueBooks = new javax.swing.JLabel();
         labaelBiletNumberValue = new javax.swing.JLabel();
+        labelBookLimitValue = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
 
@@ -171,6 +173,8 @@ public class RegisterReader extends javax.swing.JFrame {
 
         labaelBiletNumberValue.setText("1");
 
+        labelBookLimitValue.setText("10");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,9 +195,9 @@ public class RegisterReader extends javax.swing.JFrame {
                             .addComponent(textFieldSecondName, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(textFieldAdress)
                             .addComponent(textFieldPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(textFieldLomit, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(textFieldFather, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(buttonSelectDateBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(buttonSelectDateBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelBookLimitValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -273,9 +277,9 @@ public class RegisterReader extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textFieldLomit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonSave)
-                            .addComponent(buttonCancel))
+                            .addComponent(buttonCancel)
+                            .addComponent(labelBookLimitValue))
                         .addContainerGap())))
         );
 
@@ -328,19 +332,6 @@ public class RegisterReader extends javax.swing.JFrame {
             DialogMessage.showMessage("Не была введенна дата!");
             return;
         }
-        int limit;
-        if (limitIsValid()) {
-            limit = Integer.parseInt(textFieldLomit.getText());
-        } else {
-            DialogMessage.showMessage("Неправильно задан лимит!");
-            return;
-        }
-        
-        if(limit > 20) {
-            DialogMessage.showMessage("Лимит книг не должен превышать 20!");
-            return;
-        }
-        
         if(!Util.stringIsLetters(textFieldFirstName.getText())) {
             DialogMessage.showMessage("Введите корректное имя!");
             return;
@@ -374,7 +365,6 @@ public class RegisterReader extends javax.swing.JFrame {
                 textFieldAdress.getText(),
                 textFieldPhoneNumber.getText(),
                 date,
-                limit,
                 0
         );
 
@@ -384,10 +374,6 @@ public class RegisterReader extends javax.swing.JFrame {
 
     }
 
-    boolean limitIsValid() {
-        return Util.isInteger(textFieldLomit.getText());
-    }
-    
     public interface Callabck {
         void onReaderEdited();
     }
@@ -403,6 +389,7 @@ public class RegisterReader extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labaelBiletNumberValue;
     private javax.swing.JLabel labelAdress;
+    private javax.swing.JLabel labelBookLimitValue;
     private javax.swing.JLabel labelBooksIssued;
     private javax.swing.JLabel labelDateOfBirth;
     private javax.swing.JLabel labelFather;
@@ -417,7 +404,6 @@ public class RegisterReader extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldAdress;
     private javax.swing.JTextField textFieldFather;
     private javax.swing.JTextField textFieldFirstName;
-    private javax.swing.JTextField textFieldLomit;
     private javax.swing.JTextField textFieldPhoneNumber;
     private javax.swing.JTextField textFieldSecondName;
     private javax.swing.JTextField textFieldSelectedDate;

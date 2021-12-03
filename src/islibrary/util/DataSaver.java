@@ -22,7 +22,18 @@ public class DataSaver {
             super(fileName);
         }
         
-        
+        public ReaderModel findreaderByNumber(int number) {
+            ArrayList<ReaderModel> list = readObject();
+
+            for(ReaderModel reader: list) {
+                if (reader.numberBilet == number) {
+                    return reader;
+                }
+            }
+            
+            return null;
+        }
+
         public void deleteReaderByNumber(int number) {
             ArrayList<ReaderModel> list = readObject();
 
@@ -33,7 +44,7 @@ public class DataSaver {
                 }
             });
         }
-        
+
         public void deleteReader(ReaderModel reader) {
             ArrayList<ReaderModel> list = readObject();
             ArrayList<ReaderModel> saveList = new ArrayList<>();
@@ -92,7 +103,19 @@ public class DataSaver {
             writeObjects(list);
         }
 
-        public void deleteBookByNumber(Integer number) {
+        public BookModel findBookByNumber(int number) {
+            ArrayList<BookModel> list = readObject();
+            
+            for(BookModel book: list) {
+                if (book.number == number) {
+                    return book;
+                }
+            }
+            
+            return null;
+        }
+        
+        public void deleteBookByNumber(int number) {
             ArrayList<BookModel> list = readObject();
 
             list.forEach((BookModel book) -> {
@@ -130,6 +153,20 @@ public class DataSaver {
 
         public ReaderBookPairSaver(String fileName) {
             super(fileName);
+        }
+
+        @Override
+        public void writeObject(ReaderBookPair obj) {
+            ArrayList<ReaderBookPair> list = readObject();
+
+            ReaderBookPair oldPair = ReaderBookPair.findTargetInList(list, obj.bookNumber, obj.readerNumber);
+
+            if (oldPair != null) {
+                list.remove(oldPair);
+            }
+
+            list.add(obj);
+            writeObjects(list);
         }
 
         static ReaderBookPairSaver instance;

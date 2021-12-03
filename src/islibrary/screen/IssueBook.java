@@ -59,7 +59,7 @@ public class IssueBook extends javax.swing.JFrame {
 
         ReaderModel reader = adapter.getSelectedItem();
 
-        if (reader.issuedBook == reader.limit) {
+        if (reader.issuedBook == BookModel.bookLimit) {
             DialogMessage.showMessage("У читателя превышен лимит выднных книг!");
             return;
         }
@@ -77,7 +77,7 @@ public class IssueBook extends javax.swing.JFrame {
 
         long currentTime = Util.getCurrentDate();
 
-        ReaderBookPair pair = new ReaderBookPair(reader, book, returnDate, currentTime, 0);
+        ReaderBookPair pair = new ReaderBookPair(reader.numberBilet, book.number, returnDate, currentTime, 0);
         if (pair.isExist()) {
             DialogMessage.showMessage("У читателя уже имеется данная книга!");
             return;

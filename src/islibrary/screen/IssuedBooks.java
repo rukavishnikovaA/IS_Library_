@@ -5,6 +5,13 @@
  */
 package islibrary.screen;
 
+import adapter.TableAdapter;
+import islibrary.models.BookModel;
+import islibrary.models.ReaderBookPair;
+import islibrary.models.ReaderModel;
+import islibrary.util.DataSaver;
+import islibrary.util.Util;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,14 +21,80 @@ import javax.swing.table.DefaultTableModel;
  */
 public class IssuedBooks extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IssuedBooks
-     */
-    public IssuedBooks() {
+    TableAdapter<ReaderBookPair> adapter;
+    OnIssueCallback callback;
+
+    public IssuedBooks(OnIssueCallback callback) {
+        this.callback = callback;
         initComponents();
-        DefaultTableModel modelTable = new DefaultTableModel(new Object[]{"Билет","ФИО", "Дата выдачи" ,"Дата возврата", "Возвращена"},8);
-        jTable1.setModel(modelTable);
+
+        adapter = new TableAdapter(jTable1);
+        init();
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    ArrayList<ReaderBookPair> getPairList() {
+        return DataSaver.ReaderBookPairSaver.getInstance().readObject();
+    }
+
+    final void init() {
+        DefaultTableModel modelTable = new DefaultTableModel(new Object[]{
+            "Билет",
+            "ФИО",
+            "Дата выдачи",
+            "Дата возврата",
+            "Возвращена"
+        }, 0);
+
+        ArrayList<ReaderBookPair> list = getPairList();
+
+        adapter.initItems(list, modelTable, (ReaderBookPair model) -> {
+            String isIssuedString;
+            if (model.wasIssued()) {
+                isIssuedString = Util.longToDateString(model.isIssueDate);
+            } else {
+                isIssuedString = "-";
+            }
+            
+            ReaderModel reader = DataSaver.ReadersModelSaver.getInstance().findreaderByNumber(model.readerNumber);
+
+            return new Object[]{
+                model.bookNumber,
+                reader.getFullname(),
+                Util.longToDateString(model.issueDate),
+                Util.longToDateString(model.returnDate),
+                isIssuedString
+            };
+        });
+
+        jTable1.setModel(modelTable);
+    }
+
+    void issueSelectedPair() {
+        ReaderBookPair selectedPair = adapter.getSelectedModel();
+        selectedPair.isIssueDate = System.currentTimeMillis();
+        DataSaver.ReaderBookPairSaver.getInstance().writeObject(selectedPair);
+        
+        BookModel targetBook = DataSaver.BookSaver.getInstance().findBookByNumber(selectedPair.bookNumber);
+        targetBook.count++;
+        DataSaver.BookSaver.getInstance().writeObject(targetBook);
+        
+        callback.onBookIssued();
+
+        init();
+    }
+
+    public static void showDialog(OnIssueCallback callback) {
+        IssuedBooks issuedBooks = new IssuedBooks(callback);
+        issuedBooks.setVisible(true);
+        issuedBooks.setSize(700, 400);
+        issuedBooks.setTitle("Абонементы");
+    }
+
+    interface OnIssueCallback {
+
+        void onBookIssued();
     }
 
     /**
@@ -57,8 +130,18 @@ public class IssuedBooks extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Вернуть экземпляр");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Закрыть");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,12 +176,14 @@ public class IssuedBooks extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public static void showDialog() {
-    IssuedBooks issuedBooks = new IssuedBooks();
-    issuedBooks.setVisible(true);
-    issuedBooks.setSize(700, 400);
-    issuedBooks.setTitle("Абонементы");
-}
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        issueSelectedPair();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

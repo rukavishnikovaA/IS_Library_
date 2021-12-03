@@ -23,7 +23,6 @@ public class ReaderModel implements Serializable {
     public String adress;
     public String numberPhone;
     public long dateOfBirth;
-    public int limit;
     public int issuedBook;
 
     public ReaderModel(int numberBilet,
@@ -33,14 +32,12 @@ public class ReaderModel implements Serializable {
             String adress,
             String numberPhone,
             long dateOfBirth,
-            int limit,
             int issuedBook) {
         this.adress = adress;
         this.dateOfBirth = dateOfBirth;
         this.firstName = firstName;
         this.issuedBook = issuedBook;
         this.lastName = lastName;
-        this.limit = limit;
         this.numberBilet = numberBilet;
         this.numberPhone = numberPhone;
         this.secondName = secondName;
@@ -53,7 +50,6 @@ public class ReaderModel implements Serializable {
                 || adress.contains(query)
                 || numberPhone.contains(query)
                 || Integer.toString(numberBilet).contains(query)
-                || Integer.toString(limit).contains(query)
                 || Integer.toString(issuedBook).contains(query)
                 || Util.longToDateString(dateOfBirth).contains(query);
     }

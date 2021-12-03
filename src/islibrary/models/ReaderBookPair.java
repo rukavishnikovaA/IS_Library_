@@ -11,31 +11,54 @@ import java.util.ArrayList;
 
 public class ReaderBookPair implements Serializable {
 
-    ReaderModel reader;
-    BookModel book;
-    long returnDate;
-    long issueDate;
-    long isIssueDate;
+    public int readerNumber;
+    public int bookNumber;
+    public long returnDate;
+    public long issueDate;
+    public long isIssueDate;
     
     public ReaderBookPair(
-        ReaderModel reader, 
-        BookModel book,
+        int readerNumber, 
+        int bookNumber,
         long returnDate,
         long issueDate,
         long isIssueDate
     ) {
-        this.book = book;
-        this.reader = reader;
+        this.readerNumber = readerNumber;
+        this.bookNumber = bookNumber;
+        this.returnDate = returnDate;
+        this.issueDate = issueDate;
+        this.isIssueDate = isIssueDate;
     }
     
     public boolean isExist() {
         ArrayList<ReaderBookPair> list = DataSaver.ReaderBookPairSaver.getInstance().readObject();
         for(ReaderBookPair pair: list) {
-            if(pair.reader.numberBilet == reader.numberBilet && pair.book.number == book.number) {
-                return true;
+            if(pair.readerNumber == readerNumber && pair.bookNumber == bookNumber) {
+                return !pair.wasIssued();
             }
         }
         
         return false;
     }
+    
+    public boolean wasIssued() {
+        return isIssueDate != 0;
+    }
+
+    public static ReaderBookPair findTargetInList(
+            ArrayList<ReaderBookPair> list,
+            int bookNumber,
+            int readerNumber
+    ) {
+        for(ReaderBookPair pair: list) {
+            if(pair.bookNumber == bookNumber && pair.readerNumber == readerNumber) {
+                return pair;
+            }
+        }
+        
+        return null;
+    }
+    
+
 }

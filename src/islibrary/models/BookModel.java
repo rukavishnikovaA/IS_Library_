@@ -70,5 +70,6 @@ public class BookModel implements Serializable {
             return maxNumber + 1;
         }
     }
-
+    
+    public static int bookLimit = 10;
 }
