@@ -9,9 +9,6 @@ import islibrary.dialog.DialogMessage;
 import islibrary.models.BookModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -28,8 +25,14 @@ public final class AddBook extends javax.swing.JFrame {
      */
     public AddBook(Callback callback) {
         this.callback = callback;
-        initComponents();
+        initComponents();        
+        init();      
 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    
+    void init() {
+        
         comboBoxGenre.removeAllItems();
         for (String item : getGenryList()) {
             comboBoxGenre.addItem(item);
@@ -39,9 +42,9 @@ public final class AddBook extends javax.swing.JFrame {
         for (String item : getLanguagesList()) {
             jComboBox3.addItem(item);
         }
-        //comboBoxGenre.setEditable(true);
-
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        labelBookNumberValue.setText(Integer.toString(BookModel.getActualNumber()));
+        
     }
 
     public String[] getGenryList() {
@@ -66,17 +69,6 @@ public final class AddBook extends javax.swing.JFrame {
 
     private void addNewBook() {
 
-        if (!Util.isInteger(textFieldBookNumber.getText())) {
-            DialogMessage.showMessage("Номер книги должен быть корретным!");
-            return;
-        }
-
-        int number = Integer.parseInt(textFieldBookNumber.getText());
-        if (number < 0) {
-            DialogMessage.showMessage("Номер книги должен быть больше 0!");
-            return;
-        }
-
         if (textFieldAutor.getText().isBlank()) {
             DialogMessage.showMessage("Поле Автор не может быть пустым!");
             return;
@@ -96,14 +88,9 @@ public final class AddBook extends javax.swing.JFrame {
             DialogMessage.showMessage("Количество книг должно быть больше нуля!");
             return;
         }
-        
-        if(!DataSaver.BookSaver.getInstance().bookNumberIsUnique(number)) {
-            DialogMessage.showMessage("Книга с данным номером уже существует!!!");
-            return;
-        }
 
         BookModel book = new BookModel(
-                number,
+                BookModel.getActualNumber(),
                 textFieldNameOfBook.getText(),
                 textFieldAutor.getText(),
                 textFieldPublish.getText(),
@@ -153,7 +140,7 @@ public final class AddBook extends javax.swing.JFrame {
         buttonSave = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
         labeBookNumber = new javax.swing.JLabel();
-        textFieldBookNumber = new javax.swing.JTextField();
+        labelBookNumberValue = new javax.swing.JLabel();
 
         jTextField5.setText("jTextField5");
 
@@ -201,6 +188,8 @@ public final class AddBook extends javax.swing.JFrame {
 
         labeBookNumber.setText("Номер");
 
+        labelBookNumberValue.setText("1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -225,7 +214,7 @@ public final class AddBook extends javax.swing.JFrame {
                             .addComponent(textFieldAutor)
                             .addComponent(textFieldPublish, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                             .addComponent(textFieldYearBook, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textFieldBookNumber)))
+                            .addComponent(labelBookNumberValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(labelNumberPages)
@@ -253,10 +242,10 @@ public final class AddBook extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labeBookNumber)
-                    .addComponent(textFieldBookNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelBookNumberValue))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNameOfBook)
@@ -293,7 +282,7 @@ public final class AddBook extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonSave)
                     .addComponent(buttonCancel))
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         pack();
@@ -333,6 +322,7 @@ comboBoxGenre.setEditable(true);
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel labeBookNumber;
     private javax.swing.JLabel labelAutor;
+    private javax.swing.JLabel labelBookNumberValue;
     private javax.swing.JLabel labelGenre;
     private javax.swing.JLabel labelNameOfBook;
     private javax.swing.JLabel labelNumberBook;
@@ -341,7 +331,6 @@ comboBoxGenre.setEditable(true);
     private javax.swing.JLabel labelYearBook;
     private javax.swing.JSpinner spinnerNumberBook;
     private javax.swing.JTextField textFieldAutor;
-    private javax.swing.JTextField textFieldBookNumber;
     private javax.swing.JTextField textFieldNameOfBook;
     private javax.swing.JTextField textFieldNumberPages;
     private javax.swing.JTextField textFieldPublish;

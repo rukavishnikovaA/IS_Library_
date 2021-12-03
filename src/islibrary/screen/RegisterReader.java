@@ -10,11 +10,6 @@ import islibrary.util.Util;
 import islibrary.dialog.DialogCalendar;
 import islibrary.dialog.DialogMessage;
 import islibrary.util.DataSaver;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -37,8 +32,7 @@ public class RegisterReader extends javax.swing.JFrame {
     public RegisterReader(ReaderModel editReader, Callabck callback) {
         this.callback = callback;
         initComponents();
-        initComponents(editReader);
-        
+        initEditMode(editReader);
         
         init();
         labelIssueBooks.setText(Integer.toString(editReader.issuedBook));
@@ -52,13 +46,15 @@ public class RegisterReader extends javax.swing.JFrame {
         labelBooksIssued.setVisible(isEdit);
         labelSettings.setVisible(isEdit);
         labelIssueBooks.setVisible(isEdit);
+        
+        if(!isEdit) {
+            labaelBiletNumberValue.setText(Integer.toString(ReaderModel.getActualBiletNumber()));
+        }
     }
     
-    void initComponents(ReaderModel editReader) {
-        textFieldNumberBilet.setEditable(false);
-        
+    void initEditMode(ReaderModel editReader) {        
         date = editReader.dateOfBirth;
-        textFieldNumberBilet.setText(Integer.toString(editReader.numberBilet));
+        labaelBiletNumberValue.setText(Integer.toString(editReader.numberBilet));
         textFieldLomit.setText(Integer.toString(editReader.limit));
         textFieldFirstName.setText(editReader.firstName);
         textFieldSecondName.setText(editReader.lastName);
@@ -87,7 +83,6 @@ public class RegisterReader extends javax.swing.JFrame {
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jCalendar2 = new com.toedter.calendar.JCalendar();
         labelNumberBilet = new javax.swing.JLabel();
-        textFieldNumberBilet = new javax.swing.JTextField();
         labelFirstName = new javax.swing.JLabel();
         textFieldFirstName = new javax.swing.JTextField();
         labelSekondName = new javax.swing.JLabel();
@@ -109,6 +104,7 @@ public class RegisterReader extends javax.swing.JFrame {
         labelSelectedDateBirth = new javax.swing.JLabel();
         textFieldSelectedDate = new javax.swing.JTextField();
         labelIssueBooks = new javax.swing.JLabel();
+        labaelBiletNumberValue = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
 
@@ -171,7 +167,9 @@ public class RegisterReader extends javax.swing.JFrame {
             }
         });
 
-        labelIssueBooks.setText("jLabel1");
+        labelIssueBooks.setText("1");
+
+        labaelBiletNumberValue.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,17 +178,6 @@ public class RegisterReader extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelBooksIssued)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelIssueBooks))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(labelFather, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -216,9 +203,22 @@ public class RegisterReader extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSelectedDateBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelNumberBilet, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldNumberBilet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(labelNumberBilet, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labaelBiletNumberValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelBooksIssued)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelIssueBooks)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -229,10 +229,10 @@ public class RegisterReader extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelNumberBilet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textFieldNumberBilet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labaelBiletNumberValue))
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                            .addComponent(labelFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(textFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -323,13 +323,7 @@ public class RegisterReader extends javax.swing.JFrame {
     }
 
     void saveReader() {
-        int NumberBilet;
-        if (numberBiletIsValid()) {
-            NumberBilet = Integer.parseInt(textFieldNumberBilet.getText());
-        } else {
-            DialogMessage.showMessage("Номер билета должен быть введенн корректно!");
-            return;
-        }
+
         if (date == 0) {
             DialogMessage.showMessage("Не была введенна дата!");
             return;
@@ -373,7 +367,7 @@ public class RegisterReader extends javax.swing.JFrame {
         }
         
         ReaderModel data = new ReaderModel(
-                NumberBilet,
+                ReaderModel.getActualBiletNumber(),
                 textFieldFirstName.getText(),
                 textFieldFather.getText(),
                 textFieldSecondName.getText(),
@@ -388,10 +382,6 @@ public class RegisterReader extends javax.swing.JFrame {
         if(isEditMode()) callback.onReaderEdited();
         dispose();
 
-    }
-
-    boolean numberBiletIsValid() {
-        return Util.isInteger(textFieldNumberBilet.getText());
     }
 
     boolean limitIsValid() {
@@ -411,6 +401,7 @@ public class RegisterReader extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel labaelBiletNumberValue;
     private javax.swing.JLabel labelAdress;
     private javax.swing.JLabel labelBooksIssued;
     private javax.swing.JLabel labelDateOfBirth;
@@ -427,7 +418,6 @@ public class RegisterReader extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldFather;
     private javax.swing.JTextField textFieldFirstName;
     private javax.swing.JTextField textFieldLomit;
-    private javax.swing.JTextField textFieldNumberBilet;
     private javax.swing.JTextField textFieldPhoneNumber;
     private javax.swing.JTextField textFieldSecondName;
     private javax.swing.JTextField textFieldSelectedDate;

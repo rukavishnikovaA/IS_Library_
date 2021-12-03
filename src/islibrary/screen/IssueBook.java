@@ -27,7 +27,7 @@ public class IssueBook extends javax.swing.JFrame {
     Callback callback;
     BookModel book;
 
-    long date;
+    long returnDate;
 
     public IssueBook(Callback callback, BookModel book) {
         this.callback = callback;
@@ -52,23 +52,41 @@ public class IssueBook extends javax.swing.JFrame {
     }
 
     void issueBook() {
-        if (date == 0) {
+        if (returnDate == 0) {
             DialogMessage.showMessage("Не выбрана дата!");
             return;
         }
 
         ReaderModel reader = adapter.getSelectedItem();
+
+        if (reader.issuedBook == reader.limit) {
+            DialogMessage.showMessage("У читателя превышен лимит выднных книг!");
+            return;
+        }
+
         reader.issuedBook++;
         DataSaver.ReadersModelSaver.getInstance().writeObject(reader);
+
+        if (book.count <= 0) {
+            DialogMessage.showMessage("Книг больше не осталось!");
+            return;
+        }
 
         book.count--;
         DataSaver.BookSaver.getInstance().writeObject(book);
 
-        ReaderBookPair pair = new ReaderBookPair(reader, book, date);
-        DataSaver.ReaderBookPairSaver.getInstance().writeObject(pair);
+        long currentTime = Util.getCurrentDate();
 
+        ReaderBookPair pair = new ReaderBookPair(reader, book, returnDate, currentTime, 0);
+        if (pair.isExist()) {
+            DialogMessage.showMessage("У читателя уже имеется данная книга!");
+            return;
+        }
+
+        DataSaver.ReaderBookPairSaver.getInstance().writeObject(pair);
         callback.onBookIssued();
         close();
+
     }
 
     /**
@@ -195,7 +213,7 @@ public class IssueBook extends javax.swing.JFrame {
 
     private void buttonSelectDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectDateActionPerformed
         DialogCalendar.pickdate((long Date) -> {
-            date = Date;
+            returnDate = Date;
             labelReturnDate.setText(Util.longToDateString(Date));
         });
     }//GEN-LAST:event_buttonSelectDateActionPerformed

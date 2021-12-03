@@ -5,6 +5,7 @@
  */
 package islibrary.models;
 
+import islibrary.util.DataSaver;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -54,6 +55,20 @@ public class BookModel implements Serializable {
         }
         
         return null;
+    }
+    
+    public static int getActualNumber() {
+        ArrayList<BookModel> books = DataSaver.BookSaver.getInstance().readObject();
+        if(books.isEmpty()) return 0;
+        else {
+            int maxNumber = 0;
+            
+            for(BookModel book: books) {
+                if(book.number > maxNumber) maxNumber = book.number;
+            }
+            
+            return maxNumber + 1;
+        }
     }
 
 }

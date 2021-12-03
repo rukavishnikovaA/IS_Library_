@@ -66,17 +66,6 @@ public class DataSaver {
             list.add(obj);
             writeObjects(list);
        }
-
-        public boolean bookNumberIsUnique(int number) {
-            ArrayList<BookModel> list = readObject();
-            
-            for(BookModel book: list) {
-                if (book.number == number) {
-                    return false;
-                } 
-            }
-            return true;
-        }
         
         public void deleteBookByNumber(Integer number) {
             ArrayList<BookModel> list = readObject();

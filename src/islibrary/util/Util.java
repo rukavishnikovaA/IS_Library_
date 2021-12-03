@@ -54,4 +54,9 @@ public class Util {
         String regexStr = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";
         return s.matches(regexStr);
     }
+    
+        
+    public static long getCurrentDate() {
+        return System.currentTimeMillis();
+    }
 }

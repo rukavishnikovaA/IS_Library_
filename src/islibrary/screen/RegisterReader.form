@@ -53,20 +53,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="labelFirstName" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textFieldFirstName" min="-2" pref="120" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelSettings" min="-2" pref="118" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="labelIssueBooks" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="labelFather" max="32767" attributes="0"/>
                           <Component id="labelLimit" alignment="1" max="32767" attributes="0"/>
@@ -95,9 +81,27 @@
                       <Component id="labelSelectedDateBirth" min="-2" pref="127" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="labelNumberBilet" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textFieldNumberBilet" min="-2" pref="120" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelNumberBilet" min="-2" pref="88" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labaelBiletNumberValue" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="labelFirstName" min="-2" pref="88" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="textFieldFirstName" min="-2" pref="120" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelSettings" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="labelBooksIssued" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelIssueBooks" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -112,11 +116,11 @@
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="textFieldNumberBilet" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="labaelBiletNumberValue" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelFirstName" pref="36" max="32767" attributes="0"/>
+                          <Component id="labelFirstName" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="textFieldFirstName" min="-2" pref="24" max="-2" attributes="0"/>
@@ -185,8 +189,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x41d;&#x43e;&#x43c;&#x435;&#x440; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="textFieldNumberBilet">
     </Component>
     <Component class="javax.swing.JLabel" name="labelFirstName">
       <Properties>
@@ -281,7 +283,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelIssueBooks">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel1"/>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labaelBiletNumberValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
       </Properties>
     </Component>
   </SubComponents>

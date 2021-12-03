@@ -5,6 +5,7 @@
  */
 package islibrary.models;
 
+import islibrary.util.DataSaver;
 import islibrary.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class ReaderModel implements Serializable {
         this.numberPhone = numberPhone;
         this.secondName = secondName;
     }
-    
+
     public boolean isMathByQuery(String query) {
         return firstName.contains(query)
                 || secondName.contains(query)
@@ -56,18 +57,36 @@ public class ReaderModel implements Serializable {
                 || Integer.toString(issuedBook).contains(query)
                 || Util.longToDateString(dateOfBirth).contains(query);
     }
-    
+
     public String getFullname() {
         return firstName + " " + secondName + " " + lastName;
     }
-    
+
     public static ReaderModel getFromListByNumberBilet(int number, ArrayList<ReaderModel> list) {
-        for(ReaderModel r: list) {
-            if(r.numberBilet == number) return r;
+        for (ReaderModel r : list) {
+            if (r.numberBilet == number) {
+                return r;
+            }
         }
-        
+
         return null;
     }
-            
+
+    public static int getActualBiletNumber() {
+        ArrayList<ReaderModel> list = DataSaver.ReadersModelSaver.getInstance().readObject();
+        if (list.isEmpty()) {
+            return 0;
+        } else {
+            int maxNumber = 0;
+            for (ReaderModel reader : list) {
+                if (reader.numberBilet > maxNumber) {
+                    maxNumber = reader.numberBilet;
+                }
+            }
+
+            return maxNumber + 1;
+        }
+
+    }
 
 }
