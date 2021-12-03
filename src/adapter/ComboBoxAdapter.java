@@ -30,9 +30,13 @@ public class ComboBoxAdapter<I> {
         int index = comboBox.getSelectedIndex();
         return list.get(index);
     }
+
+    public void setSelectedItem(I item) {
+        int index = list.indexOf(item);
+        if(index >= 0) comboBox.setSelectedIndex(index);
+    }
     
     public interface InitListLambda<I> {
         String getString(I item);
     }
-    
 }

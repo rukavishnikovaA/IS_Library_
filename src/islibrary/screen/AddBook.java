@@ -5,10 +5,13 @@
  */
 package islibrary.screen;
 
+import adapter.ComboBoxAdapter;
 import islibrary.dialog.DialogMessage;
 import islibrary.models.BookModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -17,63 +20,86 @@ import javax.swing.JFrame;
  */
 public final class AddBook extends javax.swing.JFrame {
 
-    Callback callback;
+    AddBookCallback addBookCallback;
+    ChangeBookCallback changeBookCallback;
+
+    ComboBoxAdapter<String> genryAdapter;
+    ComboBoxAdapter<String> languageAdapter;
 
     /**
      * Creates new form AddBook
+     *
      * @param callback
      */
-    public AddBook(Callback callback) {
-        this.callback = callback;
-        initComponents();        
-        init();      
+    public AddBook(AddBookCallback callback) {
+        this.addBookCallback = callback;
+        initComponents();
+        init();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-    
+
+    public AddBook(ChangeBookCallback callback, BookModel model) {
+        this.changeBookCallback = callback;
+        initComponents();
+        init();
+        initComponents(model);
+
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
     void init() {
-        
-        comboBoxGenre.removeAllItems();
-        for (String item : getGenryList()) {
-            comboBoxGenre.addItem(item);
-        }
+        genryAdapter = new ComboBoxAdapter(comboBoxGenre);
+        languageAdapter = new ComboBoxAdapter(comboBoxLanguage);
 
-        jComboBox3.removeAllItems();
-        for (String item : getLanguagesList()) {
-            jComboBox3.addItem(item);
-        }
-        
+        genryAdapter.initItems(getGenryList(), (item) -> {
+            return item;
+        });
+        languageAdapter.initItems(getLanguagesList(), (item) -> {
+            return item;
+        });
+
         labelBookNumberValue.setText(Integer.toString(BookModel.getActualNumber()));
-        
     }
 
-    public String[] getGenryList() {
-        return new String[]{
-            "Роман",
-            "Повесть",
-            "Рассказ",
-            "Комедия",
-            "Трагедия",
-            "Драма",
-            "Поэма",
-            "Пьеса"
+    void initComponents(BookModel model) {
+        textFieldNameOfBook.setText(model.name);
+        textFieldAutor.setText(model.author);
+        textFieldPublish.setText(model.publis);
+        textFieldYearBook.setText(model.yearBook);
 
-        };
+        genryAdapter.setSelectedItem(model.genery);
+        languageAdapter.setSelectedItem(model.language);
+
+        spinnerNumberBook.setValue(model.count);
+        textFieldNumberPages.setText(Integer.toString(model.pages));
+        labelBookNumberValue.setText(Integer.toString(model.number));
     }
 
-    public String[] getLanguagesList() {
-        return new String[]{
-            "Русский", "Английский", "Французский", "Немецкий"
-        };
+    public ArrayList<String> getGenryList() {
+        return new ArrayList<>(List.of(
+                "Роман",
+                "Повесть",
+                "Рассказ",
+                "Комедия",
+                "Трагедия",
+                "Драма",
+                "Поэма",
+                "Пьеса"
+        ));
     }
 
-    private void addNewBook() {
+    public ArrayList<String> getLanguagesList() {
+        return new ArrayList<>(List.of(
+                "Русский", "Английский", "Французский", "Немецкий"
+        ));
+    }
 
+    private void saveBook() {
         if (textFieldAutor.getText().isBlank()) {
             DialogMessage.showMessage("Поле Автор не может быть пустым!");
             return;
         }
-
         if (!Util.isInteger(textFieldNumberPages.getText())) {
             DialogMessage.showMessage("Введите корректно количество страниц!");
             return;
@@ -84,31 +110,76 @@ public final class AddBook extends javax.swing.JFrame {
             return;
         }
         int spinValue = (int) spinnerNumberBook.getValue();
-        if (spinValue <= 0) {
-            DialogMessage.showMessage("Количество книг должно быть больше нуля!");
-            return;
+
+        if (isEditMode()) {
+            if (spinValue < 0) {
+                DialogMessage.showMessage("Количество книг должно быть больше или равно 0!");
+                return;
+            }
+        } else {
+            if (spinValue <= 0) {
+                DialogMessage.showMessage("Количество книг должно быть больше нуля!");
+                return;
+            }
+        }
+        
+        int number;
+        if(isEditMode()) {
+            number = Integer.parseInt(labelBookNumberValue.getText());
+        } else {
+            number = BookModel.getActualNumber();
         }
 
         BookModel book = new BookModel(
-                BookModel.getActualNumber(),
+                number,
                 textFieldNameOfBook.getText(),
                 textFieldAutor.getText(),
                 textFieldPublish.getText(),
                 textFieldYearBook.getText(),
                 comboBoxGenre.getSelectedItem().toString(),
-                jComboBox3.getSelectedItem().toString(),
+                comboBoxLanguage.getSelectedItem().toString(),
                 spinValue,
                 pages
         );
 
         DataSaver.BookSaver.getInstance().writeObject(book);
         dispose();
-        callback.onAddNewBook();
-        callback = null;
+
+        if (isEditMode()) {
+            changeBookCallback.onBookChanged();
+            changeBookCallback = null;
+        } else {
+            addBookCallback.onAddNewBook();
+            addBookCallback = null;
+        }
     }
 
-    public interface Callback {
+    boolean isEditMode() {
+        return addBookCallback == null;
+    }
+
+    public static void showDialog(AddBookCallback callback) {
+        AddBook dialog = new AddBook(callback);
+        dialog.setVisible(true);
+        dialog.setSize(550, 360);
+        dialog.setTitle("Добавление новой книги");
+    }
+
+    public static void showDialog(BookModel book, ChangeBookCallback callback) {
+        AddBook dialog = new AddBook(callback, book);
+        dialog.setVisible(true);
+        dialog.setSize(550, 360);
+        dialog.setTitle("Изменение книги");
+    }
+
+    public interface AddBookCallback {
+
         void onAddNewBook();
+    }
+
+    public interface ChangeBookCallback {
+
+        void onBookChanged();
     }
 
     /**
@@ -132,7 +203,7 @@ public final class AddBook extends javax.swing.JFrame {
         labelGenre = new javax.swing.JLabel();
         comboBoxGenre = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        comboBoxLanguage = new javax.swing.JComboBox<>();
         labelNumberBook = new javax.swing.JLabel();
         spinnerNumberBook = new javax.swing.JSpinner();
         labelNumberPages = new javax.swing.JLabel();
@@ -160,7 +231,7 @@ public final class AddBook extends javax.swing.JFrame {
 
         jLabel7.setText("Язык");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelNumberBook.setText("Количество");
 
@@ -198,10 +269,6 @@ public final class AddBook extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelNumberBook)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spinnerNumberBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(labelYearBook, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelPublish, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -215,6 +282,10 @@ public final class AddBook extends javax.swing.JFrame {
                             .addComponent(textFieldPublish, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                             .addComponent(textFieldYearBook, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelBookNumberValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelNumberBook)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spinnerNumberBook, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(labelNumberPages)
@@ -229,7 +300,7 @@ public final class AddBook extends javax.swing.JFrame {
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(6, 6, 6)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jComboBox3, 0, 139, Short.MAX_VALUE)
+                                .addComponent(comboBoxLanguage, 0, 139, Short.MAX_VALUE)
                                 .addComponent(comboBoxGenre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -269,7 +340,7 @@ public final class AddBook extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNumberBook)
@@ -287,12 +358,7 @@ public final class AddBook extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- public static void showDialog(Callback callback) {
-        AddBook dialog = new AddBook(callback);
-        dialog.setVisible(true);
-        dialog.setSize(550, 360);
-        dialog.setTitle("Добавление новой книги");
-    }
+
     private void textFieldNumberPagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNumberPagesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldNumberPagesActionPerformed
@@ -302,22 +368,15 @@ public final class AddBook extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        addNewBook();
+        saveBook();
     }//GEN-LAST:event_buttonSaveActionPerformed
-    /*String[] items = {
-    "Элемент списка 1",
-    "Элемент списка 2",
-    "Элемент списка 3"
-};
-comboBoxGenre editComboBox = new comboBoxGenre(items);
-comboBoxGenre.setEditable(true);
-     */
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonSave;
     private javax.swing.JComboBox<String> comboBoxGenre;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> comboBoxLanguage;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel labeBookNumber;
