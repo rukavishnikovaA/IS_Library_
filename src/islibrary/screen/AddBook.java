@@ -77,26 +77,31 @@ public final class AddBook extends javax.swing.JFrame {
     }
 
     public ArrayList<String> getGenryList() {
-        return new ArrayList<>(List.of(
-                "Роман",
-                "Повесть",
-                "Рассказ",
-                "Комедия",
-                "Трагедия",
-                "Драма",
-                "Поэма",
-                "Пьеса"
-        ));
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Роман");
+        list.add("Повесть");
+        list.add("Рассказ");
+        list.add("Комедия");
+        list.add("Трагедия");
+        list.add("Драма");
+        list.add("Поэма");
+        list.add("Пьеса");
+        
+        return list;
     }
 
     public ArrayList<String> getLanguagesList() {
-        return new ArrayList<>(List.of(
-                "Русский", "Английский", "Французский", "Немецкий"
-        ));
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Русский");
+        list.add("Английский");
+        list.add("Французский");
+        list.add("Немецкий");
+
+        return list;
     }
 
     private void saveBook() {
-        if (textFieldAutor.getText().isBlank()) {
+        if (textFieldAutor.getText().isEmpty()) {
             DialogMessage.showMessage("Поле Автор не может быть пустым!");
             return;
         }
@@ -122,9 +127,9 @@ public final class AddBook extends javax.swing.JFrame {
                 return;
             }
         }
-        
+
         int number;
-        if(isEditMode()) {
+        if (isEditMode()) {
             number = Integer.parseInt(labelBookNumberValue.getText());
         } else {
             number = BookModel.getActualNumber();
