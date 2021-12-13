@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class DataSaver {
 
-    static public class ReadersModelSaver extends IDataSaver<ReaderModel> {
+    static public final class ReadersModelSaver extends BaseDataSaver<ReaderModel> {
 
         public ReadersModelSaver(String fileName) {
             super(fileName);
@@ -26,9 +26,7 @@ public class DataSaver {
             ArrayList<ReaderModel> list = readObject();
 
             for(ReaderModel reader: list) {
-                if (reader.numberBilet == number) {
-                    return reader;
-                }
+                if (reader.numberBilet == number) return reader;
             }
             
             return null;
@@ -36,13 +34,13 @@ public class DataSaver {
 
         public void deleteReaderByNumber(int number) {
             ArrayList<ReaderModel> list = readObject();
-
-            list.forEach((ReaderModel reader) -> {
+            
+            for(ReaderModel reader: list) {
                 if (reader.numberBilet == number) {
                     deleteReader(reader);
                     return;
                 }
-            });
+            }
         }
 
         public void deleteReader(ReaderModel reader) {
@@ -63,11 +61,7 @@ public class DataSaver {
             ArrayList<ReaderModel> list = readObject();
 
             ReaderModel oldReader = ReaderModel.getFromListByNumberBilet(obj.numberBilet, list);
-
-            if (oldReader != null) {
-                list.remove(oldReader);
-            }
-
+            if (oldReader != null) list.remove(oldReader);
             list.add(obj);
             writeObjects(list);
         }
@@ -83,7 +77,7 @@ public class DataSaver {
         }
     }
 
-    public static class BookSaver extends IDataSaver<BookModel> {
+    public static final class BookSaver extends BaseDataSaver<BookModel> {
 
         public BookSaver(String fileName) {
             super(fileName);
@@ -118,12 +112,12 @@ public class DataSaver {
         public void deleteBookByNumber(int number) {
             ArrayList<BookModel> list = readObject();
 
-            list.forEach((BookModel book) -> {
-                if (book.number == number) {
+            for(BookModel book: list) {
+              if (book.number == number) {
                     deleteBook(book);
                     return;
-                }
-            });
+                }  
+            }
         }
 
         public void deleteBook(BookModel book) {
@@ -131,9 +125,7 @@ public class DataSaver {
             ArrayList<BookModel> saveList = new ArrayList<>();
 
             list.forEach((b) -> {
-                if (b.number != book.number) {
-                    saveList.add(b);
-                }
+                if (b.number != book.number) saveList.add(b);
             });
 
             writeObjects(saveList);
@@ -149,7 +141,7 @@ public class DataSaver {
         }
     }
 
-    public static class ReaderBookPairSaver extends IDataSaver<ReaderBookPair> {
+    public static final class ReaderBookPairSaver extends BaseDataSaver<ReaderBookPair> {
 
         public ReaderBookPairSaver(String fileName) {
             super(fileName);
@@ -161,9 +153,7 @@ public class DataSaver {
 
             ReaderBookPair oldPair = ReaderBookPair.findTargetInList(list, obj.bookNumber, obj.readerNumber);
 
-            if (oldPair != null) {
-                list.remove(oldPair);
-            }
+            if (oldPair != null) list.remove(oldPair);
 
             list.add(obj);
             writeObjects(list);

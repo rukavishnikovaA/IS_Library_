@@ -76,6 +76,13 @@ public class MainScreen extends javax.swing.JFrame {
         mainScreen.setSize(680, 420);
         mainScreen.setTitle("Библиотека");
     }
+    
+    void editSelectedBook() {
+        BookModel book = tableAdapter.getSelectedModel();
+        AddBook.showDialog(book, () -> {
+            setListByQuery("");
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -266,10 +273,7 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        BookModel book = tableAdapter.getSelectedModel();
-        AddBook.showDialog(book, () -> {
-            setListByQuery("");
-        });
+        editSelectedBook();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

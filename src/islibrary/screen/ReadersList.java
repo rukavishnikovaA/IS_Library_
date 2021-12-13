@@ -9,12 +9,7 @@ import adapter.TableAdapter;
 import islibrary.models.ReaderModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
-import java.awt.List;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
