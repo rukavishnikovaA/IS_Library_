@@ -5,6 +5,8 @@
  */
 package islibrary.models;
 
+import islibrary.data.ReaderModel;
+import datasource.ReadersDataSource;
 import islibrary.util.DataSaver;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -45,7 +47,7 @@ public class ReaderModelTest {
     @Test
     public void testGetActualBiletNumber() {
         System.out.println("getActualBiletNumber");
-        DataSaver.ReadersModelSaver readerSaver = DataSaver.ReadersModelSaver.getInstance();
+        ReadersDataSource readerSaver = DataSaver.getInstance().readersDataSource;
         readerSaver.deleteAll();
         
         int expResult = 0;

@@ -62,6 +62,5 @@ public class UtilTest {
         boolean result = Util.stringIsNumberPhone(s);
         assertEquals(true, result);
     }
-
     
 }

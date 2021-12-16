@@ -5,12 +5,12 @@
  */
 package islibrary.util;
 
-import islibrary.models.BookModel;
-import islibrary.models.ReaderBookPair;
-import islibrary.models.ReaderModel;
-import islibrary.util.DataSaver.BookSaver;
-import islibrary.util.DataSaver.ReaderBookPairSaver;
-import islibrary.util.DataSaver.ReadersModelSaver;
+import datasource.BookDataSource;
+import datasource.ReaderBookPairSource;
+import datasource.ReadersDataSource;
+import islibrary.data.BookModel;
+import islibrary.data.ReaderBookPair;
+import islibrary.data.ReaderModel;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -21,9 +21,9 @@ import org.junit.Test;
  */
 public class DataSaverTest {
 
-    ReadersModelSaver readersSaver = ReadersModelSaver.getInstance();
-    BookSaver bookSaver = BookSaver.getInstance();
-    ReaderBookPairSaver readerBookPairSaver = ReaderBookPairSaver.getInstance();
+    ReadersDataSource readersSaver = DataSaver.getInstance().readersDataSource;
+    BookDataSource bookSaver = DataSaver.getInstance().bookDataSource;
+    ReaderBookPairSource readerBookPairSaver = DataSaver.getInstance().readerBookPairSource;
 
     @Test
     public void testSaveReaders() {

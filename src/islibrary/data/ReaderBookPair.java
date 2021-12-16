@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary.models;
+package islibrary.data;
 
 import islibrary.util.DataSaver;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ReaderBookPair implements Serializable {
+public class ReaderBookPair implements Serializable, Unique {
 
     public int readerNumber;
     public int bookNumber;
@@ -32,7 +32,7 @@ public class ReaderBookPair implements Serializable {
     }
     
     public boolean isExist() {
-        ArrayList<ReaderBookPair> list = DataSaver.ReaderBookPairSaver.getInstance().readObject();
+        ArrayList<ReaderBookPair> list = DataSaver.getInstance().readerBookPairSource.readObject();
         for(ReaderBookPair pair: list) {
             if(pair.readerNumber == readerNumber && pair.bookNumber == bookNumber) {
                 return !pair.wasIssued();
@@ -59,6 +59,10 @@ public class ReaderBookPair implements Serializable {
         
         return null;
     }
-    
+
+    @Override
+    public String getUniqueNumber() {
+        return readerNumber + "-" + readerNumber;
+    }
 
 }

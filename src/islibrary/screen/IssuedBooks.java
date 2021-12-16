@@ -5,10 +5,10 @@
  */
 package islibrary.screen;
 
-import adapter.TableAdapter;
-import islibrary.models.BookModel;
-import islibrary.models.ReaderBookPair;
-import islibrary.models.ReaderModel;
+import islibrary.adapter.TableAdapter;
+import islibrary.data.BookModel;
+import islibrary.data.ReaderBookPair;
+import islibrary.data.ReaderModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
 import java.util.ArrayList;
@@ -28,14 +28,14 @@ public class IssuedBooks extends javax.swing.JFrame {
         this.callback = callback;
         initComponents();
 
-        adapter = new TableAdapter(jTable1);
+        adapter = new TableAdapter<ReaderBookPair>(jTable1);
         init();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     ArrayList<ReaderBookPair> getPairList() {
-        return DataSaver.ReaderBookPairSaver.getInstance().readObject();
+        return DataSaver.getInstance().readerBookPairSource.readObject();
     }
 
     final void init() {
@@ -57,7 +57,7 @@ public class IssuedBooks extends javax.swing.JFrame {
                 isIssuedString = "-";
             }
             
-            ReaderModel reader = DataSaver.ReadersModelSaver.getInstance().findreaderByNumber(model.readerNumber);
+            ReaderModel reader = DataSaver.getInstance().readersDataSource.findModelByNumber(Integer.toString(model.readerNumber));
 
             return new Object[]{
                 model.bookNumber,
@@ -74,11 +74,11 @@ public class IssuedBooks extends javax.swing.JFrame {
     void issueSelectedPair() {
         ReaderBookPair selectedPair = adapter.getSelectedModel();
         selectedPair.isIssueDate = System.currentTimeMillis();
-        DataSaver.ReaderBookPairSaver.getInstance().writeObject(selectedPair);
+        DataSaver.getInstance().readerBookPairSource.writeObject(selectedPair);
         
-        BookModel targetBook = DataSaver.BookSaver.getInstance().findBookByNumber(selectedPair.bookNumber);
+        BookModel targetBook = DataSaver.getInstance().bookDataSource.findModelByNumber(Integer.toString(selectedPair.bookNumber));
         targetBook.count++;
-        DataSaver.BookSaver.getInstance().writeObject(targetBook);
+        DataSaver.getInstance().bookDataSource.writeObject(targetBook);
         
         callback.onBookIssued();
 
@@ -92,8 +92,7 @@ public class IssuedBooks extends javax.swing.JFrame {
         issuedBooks.setTitle("Абонементы");
     }
 
-    interface OnIssueCallback {
-
+    public interface OnIssueCallback {
         void onBookIssued();
     }
 

@@ -5,11 +5,11 @@
  */
 package islibrary.screen;
 
-import islibrary.models.ReaderModel;
+import islibrary.data.ReaderModel;
 import islibrary.util.Util;
 import islibrary.dialog.DialogCalendar;
 import islibrary.dialog.DialogMessage;
-import islibrary.models.BookModel;
+import islibrary.data.BookModel;
 import islibrary.util.DataSaver;
 import javax.swing.JFrame;
 
@@ -303,12 +303,9 @@ public final class RegisterReader extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSelectDateBirthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectDateBirthActionPerformed
-        DialogCalendar.pickdate(new DialogCalendar.DateCallback() {
-            @Override
-            public void onSelectDate(long Date) {
-                     date = Date;
-                textFieldSelectedDate.setText(Util.longToDateString(Date));
-            }
+        DialogCalendar.pickdate((long Date) -> {
+            date = Date;
+            textFieldSelectedDate.setText(Util.longToDateString(Date));
         });
     }//GEN-LAST:event_buttonSelectDateBirthActionPerformed
     
@@ -327,7 +324,6 @@ public final class RegisterReader extends javax.swing.JFrame {
     }
 
     void saveReader() {
-
         if (date == 0) {
             DialogMessage.showMessage("Не была введенна дата!");
             return;
@@ -368,7 +364,7 @@ public final class RegisterReader extends javax.swing.JFrame {
                 0
         );
 
-        DataSaver.ReadersModelSaver.getInstance().writeObject(data);
+        DataSaver.getInstance().readersDataSource.writeObject(data);
         if(isEditMode()) callback.onReaderEdited();
         dispose();
 

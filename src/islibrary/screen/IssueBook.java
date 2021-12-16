@@ -5,12 +5,12 @@
  */
 package islibrary.screen;
 
-import adapter.ComboBoxAdapter;
+import islibrary.adapter.ComboBoxAdapter;
 import islibrary.dialog.DialogCalendar;
 import islibrary.dialog.DialogMessage;
-import islibrary.models.BookModel;
-import islibrary.models.ReaderBookPair;
-import islibrary.models.ReaderModel;
+import islibrary.data.BookModel;
+import islibrary.data.ReaderBookPair;
+import islibrary.data.ReaderModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class IssueBook extends javax.swing.JFrame {
 
         initComponents();
 
-        adapter = new ComboBoxAdapter(comboBoxReaders);
+        adapter = new ComboBoxAdapter<ReaderModel>(comboBoxReaders);
 
         initComboBox();
 
@@ -65,7 +65,7 @@ public class IssueBook extends javax.swing.JFrame {
         }
 
         reader.issuedBook++;
-        DataSaver.ReadersModelSaver.getInstance().writeObject(reader);
+        DataSaver.getInstance().readersDataSource.writeObject(reader);
 
         if (book.count <= 0) {
             DialogMessage.showMessage("Книг больше не осталось!");
@@ -73,7 +73,7 @@ public class IssueBook extends javax.swing.JFrame {
         }
 
         book.count--;
-        DataSaver.BookSaver.getInstance().writeObject(book);
+        DataSaver.getInstance().bookDataSource.writeObject(book);
 
         long currentTime = Util.getCurrentDate();
 
@@ -83,7 +83,7 @@ public class IssueBook extends javax.swing.JFrame {
             return;
         }
 
-        DataSaver.ReaderBookPairSaver.getInstance().writeObject(pair);
+        DataSaver.getInstance().readerBookPairSource.writeObject(pair);
         callback.onBookIssued();
         close();
 
@@ -224,7 +224,7 @@ public class IssueBook extends javax.swing.JFrame {
     }
 
     ArrayList<ReaderModel> getReaders() {
-        return DataSaver.ReadersModelSaver.getInstance().readObject();
+        return DataSaver.getInstance().readersDataSource.readObject();
     }
 
     public static void showDialog(BookModel book, Callback callback) {

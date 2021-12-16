@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package islibrary.models;
+package islibrary.data;
 
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author АРИНА
  */
-public class ReaderModel implements Serializable {
+public class ReaderModel implements Serializable, Unique {
 
     public int numberBilet;
     public String firstName;
@@ -69,7 +69,7 @@ public class ReaderModel implements Serializable {
     }
 
     public static int getActualBiletNumber() {
-        ArrayList<ReaderModel> list = DataSaver.ReadersModelSaver.getInstance().readObject();
+        ArrayList<ReaderModel> list = DataSaver.getInstance().readersDataSource.readObject();
         if (list.isEmpty()) {
             return 0;
         } else {
@@ -85,4 +85,10 @@ public class ReaderModel implements Serializable {
 
     }
 
+    @Override
+    public String getUniqueNumber() {
+        return Integer.toString(numberBilet);
+    }
+
+    
 }

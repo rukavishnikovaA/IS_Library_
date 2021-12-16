@@ -5,8 +5,8 @@
  */
 package islibrary.screen;
 
-import adapter.TableAdapter;
-import islibrary.models.ReaderModel;
+import islibrary.adapter.TableAdapter;
+import islibrary.data.ReaderModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ReadersList extends javax.swing.JFrame {
      */
     public ReadersList() {
         initComponents();
-        adapter = new TableAdapter(jTable1);
+        adapter = new TableAdapter<ReaderModel>(jTable1);
         showList("");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -53,7 +53,7 @@ public class ReadersList extends javax.swing.JFrame {
     }
     
     private ArrayList<ReaderModel> getListByQuery(String query) {
-        ArrayList<ReaderModel> list = GetReaders();
+        ArrayList<ReaderModel> list = getReaders();
         ArrayList<ReaderModel> result = new ArrayList<>();
         
         list.forEach((data) -> {
@@ -72,8 +72,12 @@ public class ReadersList extends javax.swing.JFrame {
     
     void deleteSelectedReader() {
         ReaderModel reader = adapter.getSelectedModel();
-        DataSaver.ReadersModelSaver.getInstance().deleteReader(reader);
+        DataSaver.getInstance().readersDataSource.deleteModel(reader);
         showList("");
+    }
+
+    ArrayList<ReaderModel> getReaders() {
+        return DataSaver.getInstance().readersDataSource.readObject();
     }
 
     /**
@@ -207,10 +211,6 @@ public class ReadersList extends javax.swing.JFrame {
         readerList.setVisible(true);
         readerList.setSize(700, 400);
         readerList.setTitle("Читатели");
-    }
-
-    ArrayList<ReaderModel> GetReaders() {
-        return DataSaver.ReadersModelSaver.getInstance().readObject();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

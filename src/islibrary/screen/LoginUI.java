@@ -5,7 +5,7 @@
  */
 package islibrary.screen;
 
-import islibrary.screen.MainScreen;
+import islibrary.controller.callback.AuthCallback;
 import islibrary.dialog.DialogMessage;
 
 /**
@@ -38,7 +38,6 @@ public class LoginUI extends javax.swing.JFrame {
         labelWorker = new javax.swing.JLabel();
         buttonLogin = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
-        skip = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,13 +69,6 @@ public class LoginUI extends javax.swing.JFrame {
             }
         });
 
-        skip.setText("skip");
-        skip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                skipActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,22 +77,20 @@ public class LoginUI extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(labelDostup, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                        .addComponent(labelDostup, javax.swing.GroupLayout.PREFERRED_SIZE, 9, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(labelWorker, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(124, 124, 124))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(buttonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonCancel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(skip))
+                                .addComponent(buttonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(labeLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(labelPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                                    .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,8 +115,7 @@ public class LoginUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonLogin)
-                    .addComponent(buttonCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(skip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buttonCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
 
@@ -134,20 +123,17 @@ public class LoginUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
-        login();
+
     }//GEN-LAST:event_buttonLoginActionPerformed
-    private void login() {
-        String login = textFieldLogin.getText();
-        String password = textFieldPassword.getText();
 
-        if (login.equals("Arina") && password.equals("123456")) {
-            goNext();       
-        } else {
-            DialogMessage.showMessage("Неверный логин или пароль");
-        }
-
+    public void subscribe(AuthCallback callback) {
+         buttonLogin.addActionListener((java.awt.event.ActionEvent evt) -> {
+            String login = textFieldLogin.getText();
+            String password = textFieldPassword.getText();
+            
+            callback.onAuth(login, password);
+         });
     }
-
 
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         dispose();
@@ -156,15 +142,7 @@ public class LoginUI extends javax.swing.JFrame {
     private void textFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldPasswordActionPerformed
-
-    private void skipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipActionPerformed
-        goNext();
-    }//GEN-LAST:event_skipActionPerformed
-    private void goNext() {
-        MainScreen.showModel();
-        dispose();
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonLogin;
@@ -172,7 +150,6 @@ public class LoginUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelDostup;
     private javax.swing.JLabel labelPassword;
     private javax.swing.JLabel labelWorker;
-    private javax.swing.JButton skip;
     private javax.swing.JTextField textFieldLogin;
     private javax.swing.JTextField textFieldPassword;
     // End of variables declaration//GEN-END:variables

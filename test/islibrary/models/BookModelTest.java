@@ -5,6 +5,8 @@
  */
 package islibrary.models;
 
+import islibrary.data.BookModel;
+import datasource.BookDataSource;
 import islibrary.util.DataSaver;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -34,7 +36,7 @@ public class BookModelTest {
     public void testGetActualNumber() {
         System.out.println("getActualNumber");
         
-        DataSaver.BookSaver bookSaver = DataSaver.BookSaver.getInstance();
+        BookDataSource bookSaver = DataSaver.getInstance().bookDataSource;
         bookSaver.deleteAll();
         
         int result = BookModel.getActualNumber();

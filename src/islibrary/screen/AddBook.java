@@ -5,13 +5,12 @@
  */
 package islibrary.screen;
 
-import adapter.ComboBoxAdapter;
+import islibrary.adapter.ComboBoxAdapter;
 import islibrary.dialog.DialogMessage;
-import islibrary.models.BookModel;
+import islibrary.data.BookModel;
 import islibrary.util.DataSaver;
 import islibrary.util.Util;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -49,8 +48,8 @@ public final class AddBook extends javax.swing.JFrame {
     }
 
     void init() {
-        genryAdapter = new ComboBoxAdapter(comboBoxGenre);
-        languageAdapter = new ComboBoxAdapter(comboBoxLanguage);
+        genryAdapter = new ComboBoxAdapter<String>(comboBoxGenre);
+        languageAdapter = new ComboBoxAdapter<String>(comboBoxLanguage);
 
         genryAdapter.initItems(getGenryList(), (item) -> {
             return item;
@@ -147,7 +146,7 @@ public final class AddBook extends javax.swing.JFrame {
                 pages
         );
 
-        DataSaver.BookSaver.getInstance().writeObject(book);
+        DataSaver.getInstance().bookDataSource.writeObject(book);
         dispose();
 
         if (isEditMode()) {

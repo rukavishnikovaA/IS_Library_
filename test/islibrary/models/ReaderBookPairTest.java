@@ -5,11 +5,9 @@
  */
 package islibrary.models;
 
-import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import islibrary.data.ReaderBookPair;
+import datasource.ReaderBookPairSource;
+import islibrary.util.DataSaver;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,8 +24,10 @@ public class ReaderBookPairTest {
     public void testIsExist() {
         System.out.println("isExist");
         ReaderBookPair instance = new ReaderBookPair(0, 0, 0, 0, 0);
+        ReaderBookPairSource source = DataSaver.getInstance().readerBookPairSource;
+        source.writeObject(instance);
         boolean result = instance.isExist();
-        assertEquals(false, result);
+        assertEquals(true, result);
     }
 
     /**

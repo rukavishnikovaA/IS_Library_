@@ -5,12 +5,11 @@
  */
 package islibrary.screen;
 
-import adapter.TableAdapter;
-import islibrary.dialog.DialogMessage;
-import islibrary.models.BookModel;
-import islibrary.util.DataSaver;
+import islibrary.adapter.TableAdapter;
+import islibrary.data.BookModel;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import islibrary.controller.callback.IMainScreenController;
 
 /**
  *
@@ -19,19 +18,20 @@ import javax.swing.table.DefaultTableModel;
 public class MainScreen extends javax.swing.JFrame {
 
     TableAdapter<BookModel> tableAdapter;
+    
+    IMainScreenController controller;
 
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
-        tableAdapter = new TableAdapter(jTable1);
-
-        setListByQuery("");
+        tableAdapter = new TableAdapter<>(jTable1);
+        
+        controller.resetList();
     }
-
-    private void setListByQuery(String query) {
-        ArrayList<BookModel> list = getListByQuery(query);
+    
+    public void showList(ArrayList<BookModel> list) {
         DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"№", "Наименование", "Автор", "Год", "Количетво страниц", "Издательство", "Количество"}, 0);
 
         tableAdapter.initItems(list, tableModel, (BookModel model) -> new Object[]{
@@ -45,43 +45,6 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         jTable1.setModel(tableModel);
-    }
-
-    private ArrayList<BookModel> getListByQuery(String query) {
-        ArrayList<BookModel> list = getList();
-        ArrayList<BookModel> result = new ArrayList<>();
-
-        list.forEach((book) -> {
-            if (book.isMatchByQuery(query)) {
-                result.add(book);
-            }
-        });
-
-        return result;
-    }
-
-    private ArrayList<BookModel> getList() {
-        return DataSaver.BookSaver.getInstance().readObject();
-    }
-
-    private void deleteSelectedBook() {
-        int bookNumber = tableAdapter.getSelectedModel().number;
-        DataSaver.BookSaver.getInstance().deleteBookByNumber(bookNumber);
-        setListByQuery("");
-    }
-
-    public static void showModel() {
-        MainScreen mainScreen = new MainScreen();
-        mainScreen.setVisible(true);
-        mainScreen.setSize(680, 420);
-        mainScreen.setTitle("Библиотека");
-    }
-    
-    void editSelectedBook() {
-        BookModel book = tableAdapter.getSelectedModel();
-        AddBook.showDialog(book, () -> {
-            setListByQuery("");
-        });
     }
 
     /**
@@ -235,45 +198,39 @@ public class MainScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        AddBook.showDialog(() -> {
-            setListByQuery("");
-        });
+        controller.addBook();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRegisterActionPerformed
-        RegisterReader.showDialog();
+        controller.registerReader();
     }//GEN-LAST:event_menuRegisterActionPerformed
 
     private void menuReadersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReadersActionPerformed
-        ReadersList.showDialog();
+        controller.showReadersList();
     }//GEN-LAST:event_menuReadersActionPerformed
 
     private void menuItemIssueBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssueBookActionPerformed
         BookModel book = tableAdapter.getSelectedModel();
-        if(book.count > 0) {
-            IssueBook.showDialog(book, () -> { setListByQuery(""); });
-        } else {
-            DialogMessage.showMessage("Книг больше не осталось!");
-        }
+        controller.issueBook(book);
     }//GEN-LAST:event_menuItemIssueBookActionPerformed
 
     private void menuItemIssuedBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIssuedBooksActionPerformed
-        IssuedBooks.showDialog(() -> {
-            setListByQuery("");
-        });
+        controller.showIssuedBooks();
     }//GEN-LAST:event_menuItemIssuedBooksActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
         String query = textFieldSearchBooks.getText();
-        setListByQuery(query);
+        controller.onQuery(query);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        deleteSelectedBook();
+        int bookNumber = tableAdapter.getSelectedModel().number;
+        controller.deleteBook(bookNumber);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        editSelectedBook();
+        BookModel book = tableAdapter.getSelectedModel();
+        controller.editBook(book);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
