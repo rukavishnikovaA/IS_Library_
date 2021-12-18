@@ -9,10 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.GregorianCalendar;
 
-/**
- *
- * @author АРИНА
- */
+
 public class DialogCalendar extends javax.swing.JFrame {
 
     

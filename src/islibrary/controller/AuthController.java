@@ -14,15 +14,12 @@ public class AuthController implements AuthCallback {
     LoginUI view;
     Callback callback;
     
-    public AuthController(AuthModel model, LoginUI view) {
+    public AuthController(AuthModel model, LoginUI view, Callback callback) {
         this.view = view;
         this.model = model;
+        this.callback = callback;
         
         view.subscribe(this);
-    }
-
-    void registerCallback(Callback callback) {
-        this.callback = callback;
     }
     
     public void showUi() {
@@ -41,14 +38,14 @@ public class AuthController implements AuthCallback {
         }
     }
     
-    public static AuthController create()  {
+    public static AuthController create(Callback callback)  {
         LoginUI view = new LoginUI();
         AuthModel model = new AuthModel();
         
-        return new AuthController(model, view);
+        return new AuthController(model, view, callback);
     }
    
-    static interface Callback {
+    public static interface Callback {
         void goNext();
         void showMessage(String msg);
     }

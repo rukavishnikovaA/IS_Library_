@@ -11,7 +11,6 @@ import islibrary.screen.MainScreen;
 import java.util.ArrayList;
 import islibrary.controller.callback.IMainScreenController;
 import islibrary.screen.AddBook;
-import islibrary.screen.IssueBook;
 import islibrary.screen.IssuedBooks;
 
 
@@ -21,9 +20,17 @@ public class MainScreenController implements IMainScreenController {
     MainScreenModel model;
     Callback callback;
 
-    public MainScreenController(MainScreen view, MainScreenModel model) {
+    public MainScreenController(
+        MainScreen view, 
+        MainScreenModel model,
+        Callback callback
+    ) {
         this.view = view;
         this.model = model;
+        this.callback = callback;
+        
+        view.subscibe(this);
+        resetList();
     }
     
     @Override
@@ -46,7 +53,7 @@ public class MainScreenController implements IMainScreenController {
     @Override
     public void issueBook(BookModel book) {
         if(book.count > 0) {
-            callback.showIssueBook(book, () -> { resetList(); });
+            callback.showIssueBook(book);
         } else {
             callback.showMessage("Книг больше не осталось!");
         }
@@ -82,11 +89,11 @@ public class MainScreenController implements IMainScreenController {
         this.callback = callback;
     }
     
-    static MainScreenController create() {
+    static MainScreenController create(Callback callback) {
         MainScreen mainScreen = new MainScreen();
         MainScreenModel mainScreenModel = new MainScreenModel();
         
-        return new MainScreenController(mainScreen, mainScreenModel);
+        return new MainScreenController(mainScreen, mainScreenModel, callback);
     }
 
     void showUi() {
@@ -98,7 +105,7 @@ public class MainScreenController implements IMainScreenController {
     static public interface Callback {
         void showMessage(String string);
         
-        void showIssueBook(BookModel book, IssueBook.Callback callback);
+        void showIssueBook(BookModel book);
         
         void showEditBook(BookModel book, AddBook.ChangeBookCallback callback);
         

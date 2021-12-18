@@ -6,7 +6,7 @@
 package islibrary.models;
 
 public class AuthModel {
-    private final String mLogin = "Arina";
+    private final String mLogin = "admin";
     private final String mPassword = "123456";
     
     public boolean checkAuth(String login, String password) {

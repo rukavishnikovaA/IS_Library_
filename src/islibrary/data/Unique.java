@@ -5,10 +5,6 @@
  */
 package islibrary.data;
 
-/**
- *
- * @author Vladi
- */
 public interface Unique {
     public String getUniqueNumber();
 }

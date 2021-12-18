@@ -10,10 +10,7 @@ import islibrary.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- *
- * @author АРИНА
- */
+
 public class ReaderModel implements Serializable, Unique {
 
     public int numberBilet;

@@ -6,8 +6,6 @@
 package islibrary.screen;
 
 import islibrary.controller.callback.AuthCallback;
-import islibrary.dialog.DialogMessage;
-
 /**
  *
  * @author АРИНА

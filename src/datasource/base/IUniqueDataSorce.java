@@ -7,10 +7,7 @@ package datasource.base;
 
 import islibrary.data.Unique;
 
-/**
- *
- * @author Vladi
- */
+
 public abstract class IUniqueDataSorce<M extends Unique> implements IDataSource<M> {
     abstract public M findModelByNumber(String number);
     abstract public void deleteByNumber(String number);

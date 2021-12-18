@@ -9,10 +9,7 @@ import datasource.BookDataSource;
 import datasource.ReaderBookPairSource;
 import datasource.ReadersDataSource;
 
-/**
- *
- * @author Vladi
- */
+
 public class DataSaver {
 
     public BookDataSource bookDataSource = new BookDataSource();

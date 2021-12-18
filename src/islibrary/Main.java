@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
-            AppController controll = AppController.create();
+            AppController controll = new AppController();
             controll.start();
         });
     }

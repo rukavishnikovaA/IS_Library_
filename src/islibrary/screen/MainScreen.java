@@ -27,8 +27,10 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         tableAdapter = new TableAdapter<>(jTable1);
-        
-        controller.resetList();
+    }
+    
+    public void subscibe(IMainScreenController callback) {
+        this.controller = callback;
     }
     
     public void showList(ArrayList<BookModel> list) {
@@ -250,4 +252,5 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuRegister;
     private javax.swing.JTextField textFieldSearchBooks;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Vladi
- */
+
 public class TableAdapter<M> {
     JTable table;
     ArrayList<M> list;

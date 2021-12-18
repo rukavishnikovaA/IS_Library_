@@ -7,12 +7,13 @@ package islibrary.models;
 
 import datasource.BookDataSource;
 import islibrary.data.BookModel;
+import islibrary.util.DataSaver;
 import java.util.ArrayList;
 
 
 public class MainScreenModel {
     
-    BookDataSource bookDataSource;
+    BookDataSource bookDataSource = DataSaver.getInstance().bookDataSource;
     
     public ArrayList<BookModel> getList() {
         return bookDataSource.readObject();
@@ -29,5 +30,13 @@ public class MainScreenModel {
         });
 
         return result;
+    }
+
+    public void deleteBook() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void deleteBook(int bookNumber) {
+        bookDataSource.deleteByNumber(Integer.toString(bookNumber));
     }
 }

@@ -5,10 +5,14 @@
  */
 package islibrary.controller.callback;
 
+import islibrary.data.ReaderBookPair;
+
 /**
  *
  * @author Vladi
  */
-public class IssuBookCallback {
+public interface IIssuBookController {
+
+    public void saveNewPair(ReaderBookPair pair);
     
 }

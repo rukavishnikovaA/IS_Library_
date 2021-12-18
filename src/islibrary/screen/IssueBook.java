@@ -6,6 +6,7 @@
 package islibrary.screen;
 
 import islibrary.adapter.ComboBoxAdapter;
+import islibrary.controller.callback.IIssuBookController;
 import islibrary.dialog.DialogCalendar;
 import islibrary.dialog.DialogMessage;
 import islibrary.data.BookModel;
@@ -23,21 +24,18 @@ import javax.swing.JFrame;
 public class IssueBook extends javax.swing.JFrame {
 
     ComboBoxAdapter<ReaderModel> adapter;
-
-    Callback callback;
     BookModel book;
+    
+    IIssuBookController issuBookController;
 
     long returnDate;
 
-    public IssueBook(Callback callback, BookModel book) {
-        this.callback = callback;
+    public IssueBook(BookModel book) {
         this.book = book;
 
         initComponents();
 
-        adapter = new ComboBoxAdapter<ReaderModel>(comboBoxReaders);
-
-        initComboBox();
+        adapter = new ComboBoxAdapter<>(comboBoxReaders);
 
         labelBookName.setText(book.name);
 
@@ -46,7 +44,6 @@ public class IssueBook extends javax.swing.JFrame {
 
     void close() {
         adapter = null;
-        callback = null;
 
         dispose();
     }
@@ -78,15 +75,10 @@ public class IssueBook extends javax.swing.JFrame {
         long currentTime = Util.getCurrentDate();
 
         ReaderBookPair pair = new ReaderBookPair(reader.numberBilet, book.number, returnDate, currentTime, 0);
-        if (pair.isExist()) {
-            DialogMessage.showMessage("У читателя уже имеется данная книга!");
-            return;
-        }
-
-        DataSaver.getInstance().readerBookPairSource.writeObject(pair);
-        callback.onBookIssued();
+        
+        issuBookController.saveNewPair(pair);
+        
         close();
-
     }
 
     /**
@@ -218,25 +210,8 @@ public class IssueBook extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_buttonSelectDateActionPerformed
 
-    final void initComboBox() {
-        ArrayList<ReaderModel> list = getReaders();
+    public void showList(ArrayList<ReaderModel> list) {
         adapter.initItems(list, (ReaderModel item) -> item.getFullname());
-    }
-
-    ArrayList<ReaderModel> getReaders() {
-        return DataSaver.getInstance().readersDataSource.readObject();
-    }
-
-    public static void showDialog(BookModel book, Callback callback) {
-        IssueBook issueBook = new IssueBook(callback, book);
-        issueBook.setVisible(true);
-        issueBook.setSize(500, 250);
-        issueBook.setTitle("Выдача книги");
-    }
-
-    public interface Callback {
-
-        void onBookIssued();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

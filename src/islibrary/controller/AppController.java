@@ -8,28 +8,18 @@ package islibrary.controller;
 import islibrary.data.BookModel;
 import islibrary.dialog.DialogMessage;
 import islibrary.screen.AddBook;
-import islibrary.screen.IssueBook;
 import islibrary.screen.IssuedBooks;
 
-
 public class AppController {
-    
+
     AddBookController addBookController;
     AuthController authController;
-    IssueBookController issueBookController;
     MainScreenController mainScreenController;
     ReadersListController readersListController;
     RegisterReaderController registerReaderController;
-    
-    AppController(
-            AuthController authController,
-            MainScreenController mainScreenController
-    ) {
-        this.authController = authController;
-        this.mainScreenController = mainScreenController;
-        
-        //------
-        authController.registerCallback(new AuthController.Callback() {
+
+    public AppController() {
+        authController = AuthController.create(new AuthController.Callback() {
             @Override
             public void goNext() {
                 mainScreen();
@@ -39,58 +29,70 @@ public class AppController {
             public void showMessage(String msg) {
                 showMsg(msg);
             }
-            
         });
         
-        mainScreenController.registerCallback(new MainScreenController.Callback() {
+        mainScreenController = MainScreenController.create(new MainScreenController.Callback() {
             @Override
             public void showMessage(String string) {
                 showMsg(string);
             }
 
             @Override
-            public void showIssueBook(BookModel book, IssueBook.Callback callback) {
-                
+            public void showIssueBook(BookModel book) {
+                issueBook(book);
             }
 
             @Override
             public void showEditBook(BookModel book, AddBook.ChangeBookCallback callback) {
-                
+
             }
 
             @Override
             public void showIssuedBooks(IssuedBooks.OnIssueCallback callback) {
-                
+
             }
 
             @Override
             public void showRegisterReder() {
-                
+
             }
 
             @Override
             public void showReadersList() {
-                
+
             }
         });
+        
+
     }
-    
+
     public void start() {
         authController.showUi();
     }
-    
+
     void showMsg(String msg) {
         DialogMessage.showMessage(msg);
     }
-    
+
     void mainScreen() {
         mainScreenController.showUi();
     }
-    
-    public static AppController create() {
-        AuthController authController = AuthController.create();
-        MainScreenController mainScreenController = MainScreenController.create();
-        
-        return new AppController(authController, mainScreenController);
+
+    void issueBook(BookModel model) {
+        IssueBookController issueBookController = IssueBookController.create(
+            model,
+            new IssueBookController.Callback() {
+                @Override
+                public void showMessage(String msg) {
+                    showMsg(msg);
+                }
+
+                @Override
+                public void onBookIssued() {
+                    mainScreenController.resetList();
+                }
+        });
+
+        issueBookController.showUi();
     }
 }

@@ -5,10 +5,7 @@
  */
 package islibrary.dialog;
 
-/**
- *
- * @author АРИНА
- */
+
 public class DialogMessage extends javax.swing.JFrame {
 
     /**

@@ -9,10 +9,7 @@ import islibrary.util.DataSaver;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- *
- * @author Vladi
- */
+
 public class BookModel implements Serializable, Unique {
 
     public int number;
@@ -76,8 +73,5 @@ public class BookModel implements Serializable, Unique {
     @Override
     public String getUniqueNumber() {
         return Integer.toString(number);
-    }
-
-
-    
+    }    
 }

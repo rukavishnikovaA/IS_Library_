@@ -18,10 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Vladi
- */
+
 public class BaseDataSourceImpl<M>  implements IDataSource<M> {
 
     private String TAG = BaseDataSourceImpl.class.getName();

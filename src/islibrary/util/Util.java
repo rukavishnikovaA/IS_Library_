@@ -8,10 +8,7 @@ package islibrary.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- *
- * @author АРИНА
- */
+
 public class Util {
 
     public static boolean isInteger(String s) {
