@@ -5,6 +5,7 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.java.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -111,6 +112,11 @@ object Api {
 
     val client = HttpClient(Java) {
         install(ContentNegotiation) { json(Serialization.json) }
+        install(Logging) {
+            logger = Logger.DEFAULT
+            level = LogLevel.ALL
+        }
+
         defaultRequest {
             contentType(ContentType.Application.Json)
             url {
