@@ -1,4 +1,6 @@
-/New Folder/ISLibrary/nbproject/private/
-/nbproject/private/
-/build/
-/dist/
+*build/
+
+.DS_Store
+
+.gradle
+.idea/
