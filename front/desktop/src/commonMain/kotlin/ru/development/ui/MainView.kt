@@ -1,4 +1,4 @@
-package ru.development
+package ru.development.ui
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.development.MainViewTab.Books
-import ru.development.MainViewTab.Readers
+import ru.development.ui.MainViewTab.Books
+import ru.development.ui.MainViewTab.Readers
 import ru.development.models.BookRegistrar
 import ru.development.models.LibraryWorker
 import ru.development.models.User

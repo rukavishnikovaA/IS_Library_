@@ -1,7 +1,6 @@
-package ru.development
+package ru.development.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -16,7 +15,6 @@ import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.launch
 import ru.development.models.Reader
 import ru.development.models.User
-import ru.development.models.UserType
 import ru.development.network.Api
 import ru.development.network.NotFoundError
 

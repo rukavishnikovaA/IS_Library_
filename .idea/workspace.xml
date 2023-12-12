@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c3cd597-f40a-488f-9b2c-0311acbbc1b7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/AuthView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/AuthView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/BooksListView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/BooksListView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/RadersListView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/RadersListView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/Root.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/Root.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +67,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Gradle.Main [jvm]">
     <configuration name="LoginUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="LoginUI" />
       <module name="ISLibrary" />
@@ -78,8 +82,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main [jvm]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-DmainClass=ru.development.MainKt --quiet" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jvmRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.development.ApplicationKt" />
+      <module name="IS_Library.back.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Main [jvm]" />
+        <item itemvalue="Kotlin.ApplicationKt" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.LoginUI" />
       </list>
