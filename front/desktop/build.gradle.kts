@@ -36,9 +36,10 @@ compose.desktop {
     application {
         mainClass = "ru.development.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "ru.development"
             packageVersion = "1.0.0"
+            modules("java.net.http")
         }
 
         buildTypes.release.proguard {

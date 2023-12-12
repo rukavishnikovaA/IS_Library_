@@ -17,7 +17,7 @@ import ru.development.models.LibraryWorker
 import ru.development.models.User
 
 enum class MainViewTab(val title: String, val id: Int) {
-    Books("Книги", 0), Readers("Читатлеи", 1),
+    Books("Книги", 0), Readers("Читатели", 1),
 }
 
 private val tabsForLibraryWorker = listOf(Books, Readers)

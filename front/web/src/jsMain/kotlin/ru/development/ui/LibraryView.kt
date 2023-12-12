@@ -30,7 +30,7 @@ fun LibraryView() {
         }) {
             TableHeader("Название книги", "Автор", "Год", "Описание", "В наличии в библиотеке")
             items.forEach { item ->
-                TableItem(item.name, item.author, item.year, item.description, item.isExist.toString())
+                TableItem(item.name, item.author, item.year, item.description, (item.count > 0).toString())
             }
         }
     }

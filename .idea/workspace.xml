@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1c3cd597-f40a-488f-9b2c-0311acbbc1b7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Routing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Routing.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/desktop/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/LibraryView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/LibraryView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/webpack.config.d/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/webpack.config.d/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,12 +28,36 @@
         <task path="$PROJECT_DIR$/front/desktop">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/back">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/front/web">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="IS_Library" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="IS_Library" type="f1a62948:ProjectNode" />
+                <item name="back" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="IS_Library" type="f1a62948:ProjectNode" />
+                <item name="back" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="IS_Library" type="f1a62948:ProjectNode" />
+                <item name="back" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="distribution" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -87,10 +115,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.Build IS_Library_.executor": "Run",
+    "Gradle.IS_Library_:back [distZip].executor": "Run",
     "Gradle.IS_Library_:front:desktop [createDistributable].executor": "Run",
+    "Gradle.IS_Library_:front:desktop [packageMsi].executor": "Run",
     "Gradle.IS_Library_:front:desktop [packageReleaseExe].executor": "Run",
+    "Gradle.IS_Library_:front:desktop [packageReleaseMsi].executor": "Run",
     "Gradle.IS_Library_:front:desktop [runRelease].executor": "Run",
     "Gradle.IS_Library_:front:desktop [run].executor": "Run",
+    "Gradle.IS_Library_:front:web [jsBrowserDistribution].executor": "Run",
+    "Gradle.IS_Library_:front:web [jsBrowserRun].executor": "Run",
+    "Gradle.Main [jvm].executor": "Run",
+    "Kotlin.ApplicationKt.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "new",
     "last_opened_file_path": "/Users/vladi/Documents/GitHub/IS_Library_"
@@ -104,11 +140,11 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.IS_Library_:front:desktop [packageReleaseExe]">
-    <configuration name="IS_Library_:front:desktop [createDistributable]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.IS_Library_:back [distZip]">
+    <configuration name="IS_Library_:back [distZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -116,7 +152,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="createDistributable" />
+            <option value="distZip" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -127,7 +163,7 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="IS_Library_:front:desktop [packageReleaseDmg]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="IS_Library_:front:desktop [packageMsi]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
@@ -138,7 +174,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="packageReleaseDmg" />
+            <option value="packageMsi" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -149,7 +185,7 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="IS_Library_:front:desktop [packageReleaseExe]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="IS_Library_:front:desktop [packageReleaseMsi]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
@@ -160,7 +196,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="packageReleaseExe" />
+            <option value="packageReleaseMsi" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -171,10 +207,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="IS_Library_:front:desktop [runRelease]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="IS_Library_:front:web [jsBrowserDistribution]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/front/web" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -182,7 +218,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="runRelease" />
+            <option value="jsBrowserDistribution" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -193,35 +229,20 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="IS_Library_:front:desktop [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
+    <configuration name="ApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.development.ApplicationKt" />
+      <module name="IS_Library.back.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.IS_Library_:front:desktop [packageReleaseExe]" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [run]" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [createDistributable]" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [runRelease]" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [packageReleaseDmg]" />
+        <item itemvalue="Gradle.IS_Library_:back [distZip]" />
+        <item itemvalue="Kotlin.ApplicationKt" />
+        <item itemvalue="Gradle.IS_Library_:front:desktop [packageMsi]" />
+        <item itemvalue="Gradle.IS_Library_:front:desktop [packageReleaseMsi]" />
+        <item itemvalue="Gradle.IS_Library_:front:web [jsBrowserDistribution]" />
       </list>
     </recent_temporary>
   </component>
