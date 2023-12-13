@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1c3cd597-f40a-488f-9b2c-0311acbbc1b7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Routing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Routing.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/desktop/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/LibraryView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/LibraryView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/web/webpack.config.d/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/webpack.config.d/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/books.json" beforeDir="false" afterPath="$PROJECT_DIR$/books.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/models/News.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/models/News.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/network/Api.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/network/Api.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userToCredentialRef.json" beforeDir="false" afterPath="$PROJECT_DIR$/userToCredentialRef.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/users.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,46 +44,28 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="back" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="back" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="back" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="distribution" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
                 <item name="front" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="IS_Library" type="f1a62948:ProjectNode" />
                 <item name="front" type="2d1252cf:ModuleNode" />
-                <item name="desktop" type="2d1252cf:ModuleNode" />
+                <item name="web" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="IS_Library" type="f1a62948:ProjectNode" />
                 <item name="front" type="2d1252cf:ModuleNode" />
-                <item name="desktop" type="2d1252cf:ModuleNode" />
+                <item name="web" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="IS_Library" type="f1a62948:ProjectNode" />
                 <item name="front" type="2d1252cf:ModuleNode" />
-                <item name="desktop" type="2d1252cf:ModuleNode" />
+                <item name="web" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="compose desktop" type="c8890929:TasksNode$1" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -117,6 +99,7 @@
   "keyToString": {
     "Gradle.Build IS_Library_.executor": "Run",
     "Gradle.IS_Library_:back [distZip].executor": "Run",
+    "Gradle.IS_Library_:back [shadowDistZip].executor": "Run",
     "Gradle.IS_Library_:front:desktop [createDistributable].executor": "Run",
     "Gradle.IS_Library_:front:desktop [packageMsi].executor": "Run",
     "Gradle.IS_Library_:front:desktop [packageReleaseExe].executor": "Run",
@@ -127,12 +110,17 @@
     "Gradle.IS_Library_:front:web [jsBrowserRun].executor": "Run",
     "Gradle.Main [jvm].executor": "Run",
     "Kotlin.ApplicationKt.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "new",
-    "last_opened_file_path": "/Users/vladi/Documents/GitHub/IS_Library_"
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/rukav/Documents/GitHub/IS_Library_"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rukav\Documents\GitHub\IS_Library_" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui" />
     </key>
@@ -140,7 +128,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.IS_Library_:back [distZip]">
+  <component name="RunManager" selected="Gradle.IS_Library_:front:web [jsBrowserRun]">
     <configuration name="IS_Library_:back [distZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -163,10 +151,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="IS_Library_:front:desktop [packageMsi]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="IS_Library_:back [shadowDistZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -174,29 +162,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="packageMsi" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="IS_Library_:front:desktop [packageReleaseMsi]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="packageReleaseMsi" />
+            <option value="shadowDistZip" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -229,6 +195,28 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="IS_Library_:front:web [jsBrowserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/front/web" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="ApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.development.ApplicationKt" />
       <module name="IS_Library.back.main" />
@@ -238,13 +226,20 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.IS_Library_:back [distZip]" />
+        <item itemvalue="Gradle.IS_Library_:front:web [jsBrowserRun]" />
         <item itemvalue="Kotlin.ApplicationKt" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [packageMsi]" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [packageReleaseMsi]" />
         <item itemvalue="Gradle.IS_Library_:front:web [jsBrowserDistribution]" />
+        <item itemvalue="Gradle.IS_Library_:back [distZip]" />
+        <item itemvalue="Gradle.IS_Library_:back [shadowDistZip]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-8336523bb0d9-93b19daf" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

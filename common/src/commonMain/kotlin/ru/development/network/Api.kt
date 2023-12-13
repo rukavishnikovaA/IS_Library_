@@ -18,7 +18,7 @@ class UnknownError(msg: String): Throwable(msg)
 object Api {
 
     suspend fun login(login: String, password: String): Result<User> = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/login") {
+        val response = client.post("http://localhost:8080/api/login") {
             setBody(mapOf("login" to login, "password" to password))
         }
 
@@ -30,7 +30,7 @@ object Api {
     }
 
     suspend fun changePassword(userId: Int, oldPassword: String, newPassword: String): Result<Unit> = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/changePassword") {
+        val response = client.post("http://localhost:8080/api/changePassword") {
             setBody(UserIdWithNewPassword(userId, oldPassword, newPassword))
         }
 
@@ -42,35 +42,35 @@ object Api {
     }
 
     suspend fun getBooks(): Result<List<BookInfo>> = runCatching {
-        val response = client.get("http://0.0.0.0:8080/api/books")
+        val response = client.get("http://localhost:8080/api/books")
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Не удалось получить список книг")
     }
 
     suspend fun getBookOrderList(userId: Int): Result<List<BookOrder>> = runCatching {
-        val response = client.get("http://0.0.0.0:8080/api/bookOrder/$userId")
+        val response = client.get("http://localhost:8080/api/bookOrder/$userId")
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Не удалось получить список выданных книг")
     }
 
     suspend fun getReadersWithCredential(): Result<List<RegisterCredential>> = runCatching {
-        val response = client.get("http://0.0.0.0:8080/api/readersWithCredential")
+        val response = client.get("http://localhost:8080/api/readersWithCredential")
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Ошибка получения списка читателей")
     }
 
     suspend fun getReaders(): Result<List<User>> = runCatching {
-        val response = client.get("http://0.0.0.0:8080/api/readers")
+        val response = client.get("http://localhost:8080/api/readers")
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Ошибка получения списка читателей")
     }
 
     suspend fun addBook(book: BookInfo): Result<Unit> = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/addBook") {
+        val response = client.post("http://localhost:8080/api/addBook") {
             setBody(book)
         }
 
@@ -79,7 +79,7 @@ object Api {
     }
 
     suspend fun register(credential: RegisterCredential): Result<Unit> = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/register") {
+        val response = client.post("http://localhost:8080/api/register") {
             setBody(credential)
         }
 
@@ -88,21 +88,21 @@ object Api {
     }
 
     suspend fun deleteBook(id: Int): Result<Unit> = runCatching {
-        val response = client.delete("http://0.0.0.0:8080/api/book/$id")
+        val response = client.delete("http://localhost:8080/api/book/$id")
 
         if (response.status == HttpStatusCode.OK) Unit
         else throw UnknownError(msg = "Ошибка удаления книги")
     }
 
     suspend fun deleteUser(id: Int): Result<Unit> = runCatching {
-        val response = client.delete("http://0.0.0.0:8080/api/user/$id")
+        val response = client.delete("http://localhost:8080/api/user/$id")
 
         if (response.status == HttpStatusCode.OK) Unit
         else throw UnknownError(msg = "Ошибка удаления читателя")
     }
 
     suspend fun createOrder(userOrder: UserIdToBookIdWithOrderRef) = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/createOrder") {
+        val response = client.post("http://localhost:8080/api/createOrder") {
             setBody(userOrder)
         }
 
@@ -111,7 +111,7 @@ object Api {
     }
 
     suspend fun removeOrder(orderId: Int): Result<Unit> = runCatching {
-        val response = client.delete("http://0.0.0.0:8080/api/removeOrder/$orderId")
+        val response = client.delete("http://localhost:8080/api/removeOrder/$orderId")
 
         if (response.status == HttpStatusCode.OK) Unit
         else throw UnknownError(msg = "Ошибка сдачи книги")
