@@ -53,6 +53,14 @@ fun Application.configureRest() {
             call.respond(HttpStatusCode.OK, res)
         }
 
+        post("/api/changePassword") {
+            val userIdWithNewPassword = call.receive<UserIdWithNewPassword>()
+
+            val res = Database.changePassword(userIdWithNewPassword.userId, userIdWithNewPassword.oldPassword, userIdWithNewPassword.newPassword)
+            if (res == null) call.respond(HttpStatusCode.NotFound)
+            else call.respond(HttpStatusCode.OK)
+        }
+
         // Create user
         post("/api/register") {
             val registerCredential = call.receive<RegisterCredential>()

@@ -9,13 +9,27 @@ import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 import ru.development.MainStyle
+import ru.development.models.User
 
 enum class MenuItem(val title: String) {
-    News("Главная"), Library("Библиотечный фонд"), MyBooks("Мои книги")
+    News("Главная"),
+    Library("Библиотечный фонд"),
+    MyBooks("Мои книги"),
+    Settings("Настройки")
 }
 
+val authedItems = listOf(MenuItem.News, MenuItem.Library, MenuItem.MyBooks, MenuItem.Settings)
+val notAuthedItems = listOf(MenuItem.News, MenuItem.Library)
+
 @Composable
-fun MenuView(selectedItem: MenuItem, onClick: (MenuItem) -> Unit, onExit: () -> Unit) {
+fun MenuView(
+    items: List<MenuItem>,
+    user: User?,
+    selectedItem: MenuItem,
+    onClick: (MenuItem) -> Unit,
+    onExit: () -> Unit,
+    onAuth: () -> Unit
+) {
     Div(attrs = {
         classes(MainStyle.row, MainStyle.menu)
 
@@ -26,7 +40,7 @@ fun MenuView(selectedItem: MenuItem, onClick: (MenuItem) -> Unit, onExit: () -> 
             marginLeft(30.px)
         }
     }) {
-        MenuItem.entries.forEach { item ->
+        items.forEach { item ->
             MenuItemView(
                 text = item.title,
                 isSelected = selectedItem == item,
@@ -36,9 +50,10 @@ fun MenuView(selectedItem: MenuItem, onClick: (MenuItem) -> Unit, onExit: () -> 
 
         Div(attrs = {
             style { flex(1) }
-        }) {  }
+        }) { }
 
-        MenuItemView(text = "Выход", isSelected = false, onClick = onExit)
+        if (user == null) MenuItemView(text = "Войти", isSelected = false, onClick = onAuth)
+        else MenuItemView(text = "Выход", isSelected = false, onClick = onExit)
     }
 }
 

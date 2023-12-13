@@ -1,16 +1,17 @@
 import androidx.compose.runtime.*
 import kotlinx.browser.document
+import kotlinx.browser.localStorage
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposableInBody
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.get
 import ru.development.MainStyle
-import ru.development.ui.AuthScreen
-import ru.development.ui.MainScreen
+import ru.development.Serialization
+import ru.development.models.User
 import ru.development.tools.Title
-import ru.development.ui.MenuItem
-import ru.development.ui.MenuView
+import ru.development.ui.*
 
 fun main() {
     document.addEventListener("DOMContentLoaded", {
@@ -20,11 +21,18 @@ fun main() {
     })
 }
 
-enum class Navigation(val path: String) {
-    Auth("auth"),
-    News("main"),
-    SystemAdmin("sysadmin")
+
+sealed class Navigation {
+    data object Auth : Navigation()
+    data class Main(val user: User?) : Navigation()
+    data object SysAdmin : Navigation()
 }
+
+//enum class Navigation(val path: String) {
+//    Auth("auth"),
+//    Main("main"),
+//    SystemAdmin("sysadmin")
+//}
 
 private fun handlePath(): Navigation {
     val path = window.location.pathname
@@ -36,73 +44,69 @@ private fun handlePath(): Navigation {
 
     console.log(pathArray)
 
-    if (pathArray.isEmpty()) return Navigation.Auth
+    val userJson = localStorage["user"]
+    val user: User? = if (userJson == null) null else Serialization.json.decodeFromString(userJson)
 
-    val firstLevel = pathArray.first()
+    return Navigation.Main(user)
 
-    console.log(firstLevel)
-
-    return Navigation.entries.find { it.path == firstLevel } ?: Navigation.Auth
+//    if (pathArray.isEmpty()) return Navigation.Main(null)
+//
+//    val firstLevel = pathArray.first()
+//
+//    console.log(firstLevel)
+//
+//    return Navigation.entries.find { it.path == firstLevel } ?: Navigation.Main(null)
 }
 
 @Composable
 fun Root() {
     Style(MainStyle)
 
-    var current: Navigation by remember { mutableStateOf(handlePath()) }
+    var currentDestination: Navigation by remember { mutableStateOf(handlePath()) }
 
-    when (current) {
-        Navigation.Auth -> AuthScreen(goNext = { current = Navigation.News })
-        Navigation.News -> MainScreen()
-        Navigation.SystemAdmin -> {
-            Div(attrs = { classes(MainStyle.column) }) {
-
-                Span(attrs = {
-                    style {
-                        fontSize(34.px)
-                        fontWeight(800)
-                    }
-                }) { Text("ПАНЕЛЬ СИСТЕМНОГО АДМИНИСТРАТОРА!") }
-                Div(attrs = {
-                    classes(MainStyle.row)
-                    style {
-                        alignItems(AlignItems.Center)
-                    }
-                }) {
-
-                    var isChecked by remember { mutableStateOf(false) }
-
-                    CheckboxInput(checked = isChecked) {
-                        onClick { isChecked = !isChecked }
-                    }
-                    Span { Text("я уебан") }
-                }
+    when (val current = currentDestination) {
+        Navigation.Auth -> AuthScreen(goNext = { currentDestination = Navigation.Main(it) })
+        is Navigation.Main -> MainScreen(
+            user = current.user,
+            goToAuth = { currentDestination = Navigation.Auth },
+            reload = { exit ->
+                if (exit) localStorage.clear()
+                window.location.reload()
             }
+        )
 
-        }
+        Navigation.SysAdmin -> SysAdminView()
     }
+
+    OverlayScopeProvider.render()
 }
 
 @Composable
 fun Container(
+    items: List<MenuItem>,
+    user: User?,
     selectedItem: MenuItem,
     onClick: ((MenuItem) -> Unit),
     onExit: (() -> Unit),
+    onAuth: (() -> Unit)?,
     content: ContentBuilder<HTMLDivElement>
 ) {
-    Container(onClick, selectedItem, onExit, content)
+    Container(items, user, onClick, selectedItem, onExit, onAuth, content)
 }
 
 @Composable
 fun Container(content: ContentBuilder<HTMLDivElement>) {
-    Container(null, null, null, content)
+    Container(null, null, null, null, null, null, content)
 }
 
 @Composable
 private fun Container(
+    items: List<MenuItem>?,
+    user: User?,
     onClick: ((MenuItem) -> Unit)?,
     selectedItem: MenuItem?,
     onExit: (() -> Unit)?,
+    onAuth: (() -> Unit)?,
     content: ContentBuilder<HTMLDivElement>
 ) {
     Div(attrs = {
@@ -120,7 +124,9 @@ private fun Container(
         Div(attrs = { classes(MainStyle.row) }) {
             Title("Государственная библиотека")
 
-            if (selectedItem != null && onExit != null && onClick != null) MenuView(selectedItem, onClick, onExit)
+            if (selectedItem != null && onExit != null && onClick != null && onAuth != null && items != null) {
+                MenuView(items, user, selectedItem, onClick, onExit, onAuth)
+            }
         }
 
         content(this)

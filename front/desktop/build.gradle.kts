@@ -19,12 +19,6 @@ kotlin {
                 implementation(compose.material)
                 implementation(compose.desktop.currentOs)
 
-                val ktorVersion = properties["ktor.version"]
-                implementation("io.ktor:ktor-client-java:$ktorVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-
                 implementation("ca.gosyer:compose-material-dialogs-datetime:0.9.4")
             }
         }

@@ -1,21 +1,37 @@
 package ru.development.ui
 
 import Container
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import kotlinx.browser.localStorage
+import kotlinx.coroutines.launch
+import kotlinx.datetime.internal.JSJoda.use
+import kotlinx.serialization.encodeToString
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
+import org.w3c.dom.set
 import ru.development.MainStyle
+import ru.development.Serialization
+import ru.development.displayErrorMessage
+import ru.development.models.User
+import ru.development.network.Api
 
 @Composable
-fun AuthScreen(goNext: () -> Unit) {
+fun AuthScreen(goNext: (User?) -> Unit) {
     Container {
         AuthInput(goNext)
     }
 }
 
 @Composable
-fun AuthInput(goNext: () -> Unit) {
+fun AuthInput(goNext: (User?) -> Unit) {
+    val scope = rememberCoroutineScope()
+
+    var login by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    var errMsg: String? by remember { mutableStateOf(null) }
+
     Div(attrs = {
         classes(MainStyle.authInput, MainStyle.column, MainStyle.fillAbsolute, MainStyle.fitContent)
     }) {
@@ -27,17 +43,37 @@ fun AuthInput(goNext: () -> Unit) {
             }
         }) { Text("Вход") }
 
-        InputWithTitle("Email", InputType.Email)
-        InputWithTitle("Пароль", InputType.Password)
+        InputWithTitle("Email", InputType.Email, onInput = { login = it })
+        InputWithTitle("Пароль", InputType.Password, onInput = { password = it })
 
-        Button(attrs = {
-            onClick { goNext() }
-        }) { Text("Click") }
+        Spacer(height = 20.px)
+
+        ButtonWithText("Войти", onClick = {
+            scope.launch {
+                val result = Api.login(login, password)
+
+                console.log(result)
+
+                if (result.isSuccess) {
+                    val user = result.getOrThrow()
+                    val userJson = Serialization.json.encodeToString(user)
+                    localStorage["user"] = userJson
+                    goNext(user)
+                }
+                else errMsg = result.displayErrorMessage
+            }
+        })
+
+        Spacer(height = 20.px)
+
+        ButtonWithText("Пропустить", onClick = { goNext(null) })
 
         RememberPasswordLink()
     }
 
+    errMsg?.let { MessageDialog(onDisposeRequest = { errMsg = null }, it) }
 }
+
 
 @Composable
 fun RememberPasswordLink() {
@@ -54,7 +90,7 @@ fun RememberPasswordLink() {
 }
 
 @Composable
-fun <T> InputWithTitle(title: String, type: InputType<T>) {
+fun <T> InputWithTitle(title: String, type: InputType<T>, onInput: (T) -> Unit) {
     Div(attrs = {
         classes(MainStyle.column, MainStyle.inputWithTitle)
     }) {
@@ -65,6 +101,32 @@ fun <T> InputWithTitle(title: String, type: InputType<T>) {
             }
         }) { Text(title) }
 
-        Input(type)
+        Input(type, attrs = {
+            onInput { event ->
+                onInput(event.value)
+            }
+        })
+    }
+}
+
+@Composable
+fun Spacer(height: CSSNumeric? = null, width: CSSNumeric? = null) {
+    Div(attrs = {
+        style {
+            height?.let { height(it) }
+            width?.let { width(it) }
+        }
+    })
+}
+
+
+@Composable
+fun MessageDialog(onDisposeRequest: () -> Unit, text: String) {
+    Dialog(onDisposeRequest = onDisposeRequest) {
+        Div(attrs = { classes(MainStyle.column) }) {
+            Text(text)
+            Spacer(height = 20.px)
+            ButtonWithText("ОК", onDisposeRequest)
+        }
     }
 }

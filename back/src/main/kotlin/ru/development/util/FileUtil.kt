@@ -77,6 +77,10 @@ object Database {
         return Serialization.json.decodeFromString(rawText)
     }
 
+    fun findUserToCredentialRefList(userId: Int): UserToCredentialRef? {
+        return getCredentialToUserRefList().find { it.userId == userId }
+    }
+
     fun addCredentialToUserRef(ref: UserToCredentialRef) {
         val list = getCredentialToUserRefList().filter { it.userId != ref.userId }
 
@@ -189,6 +193,24 @@ object Database {
                 addOrEditBook(newBook)
             } else throw RuntimeException("Выданная книга не найдена: orderId=$orderId")
         }
+    }
+
+    fun changePassword(userId: Int, oldPassword: String, newPassword: String): Unit? {
+        val userToCredentialRef = findUserToCredentialRefList(userId) ?: return null
+
+        if (userToCredentialRef.credential.password != oldPassword) return null
+
+        val oldCredential = userToCredentialRef.credential
+        val newCredential = userToCredentialRef.copy(userId, oldCredential.copy(login = oldCredential.login, password = newPassword))
+
+        val allCredentials = getCredentialToUserRefList()
+            .filter { it.userId != userId }
+        val total = allCredentials + newCredential
+
+        val totalJson = Serialization.json.encodeToString(total)
+
+        credentialToUserRefFile.rewrite(totalJson)
+        return Unit
     }
 
     private fun File.rewrite(data: String) {

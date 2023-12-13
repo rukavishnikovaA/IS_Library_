@@ -4,6 +4,19 @@ import org.jetbrains.compose.web.css.*
 
 object MainStyle : StyleSheet() {
 
+    val dialog by style {
+        padding(20.px)
+        borderRadius(40.px)
+        property("margin", "auto")
+
+        backgroundColor(Color.white)
+    }
+
+    val overlay by style {
+        property("z-index", "5")
+        backgroundColor(Color("#00000055"))
+    }
+
     val fillAbsolute by style {
         position(Position.Absolute)
         top(0.px)
@@ -11,6 +24,7 @@ object MainStyle : StyleSheet() {
         right(0.px)
         bottom(0.px)
     }
+
     val fitContent by style {
         property("width", "fit-content")
         property("height", "fit-content")
@@ -93,6 +107,12 @@ object MainStyle : StyleSheet() {
         marginBottom(50.px)
     }
 
+    val hovered by style {
+        self + hover style {
+            backgroundColor(Color("#00000033"))
+        }
+    }
+
     init {
         style(selector("input")) {
             height(60.px)
@@ -113,6 +133,12 @@ object MainStyle : StyleSheet() {
         style(child(selector("table"), selector("tr"))) {
             backgroundColor(Color.azure)
             padding(10.px, 20.px)
+        }
+
+        style(selector("button")) {
+            padding(10.px, 20.px)
+            property("width", "fit-content")
+            borderRadius(10.px)
         }
     }
 }

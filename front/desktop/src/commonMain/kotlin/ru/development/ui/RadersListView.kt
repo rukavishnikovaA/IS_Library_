@@ -22,6 +22,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
 import ru.development.models.*
+import ru.development.models.RegisterCredential.Companion.sortByFiledIndex
 import ru.development.network.Api
 import kotlin.time.Duration.Companion.days
 
@@ -102,7 +103,7 @@ fun ReadersListView(list: List<RegisterCredential>, onUpdateData: () -> Unit) {
         )
 
         Column(Modifier.weight(1F)) {
-            list.filter { filterReaderCondition(it.user.type as Reader, searchQuery) }
+            list.filter { Reader.filterCondition(it.user.type as Reader, searchQuery) }
                 .sortByFiledIndex(sortedIndex)
                 .forEach { credential ->
                     with((credential.user.type as Reader)) {
@@ -331,9 +332,7 @@ fun DataSelection(modifier: Modifier = Modifier, title: String, value: Birthday,
     }
 }
 
-fun filterReaderCondition(type: Reader, query: String): Boolean {
-    return type.toString().lowercase().contains(query.lowercase())
-}
+
 
 @Composable
 fun UserOrdersDialog(
@@ -369,7 +368,7 @@ fun UserOrdersDialog(
                 .height(200.dp)
                 .verticalScroll(scrollState)
         ) {
-            userOrders.filter { filterOrdersCondition(searchQuery, it) }.forEach { bookOrder ->
+            userOrders.filter { BookOrder.filterCondition(searchQuery, it) }.forEach { bookOrder ->
                 OrderView(
                     order = bookOrder,
                     giveUp = {
@@ -418,15 +417,7 @@ private suspend fun loadUserOrders(userId: Int, bookOrder: MutableList<BookOrder
 @Composable
 fun OrderView(order: BookOrder, giveUp: () -> Unit) {
 
-    val displayTime = remember {
-        val dateStartInS = order.info.dateStartInS
-        val dateEndInS = order.info.dateEndInS
-
-        val start = Instant.fromEpochSeconds(dateStartInS).toLocalDateTime(TimeZone.currentSystemDefault())
-        val end = Instant.fromEpochSeconds(dateEndInS).toLocalDateTime(TimeZone.currentSystemDefault())
-
-        "${start.year}.${start.monthNumber}.${start.dayOfMonth} - ${end.year}.${end.monthNumber}.${end.dayOfMonth}"
-    }
+    val displayTime = remember { order.info.displayFullTime }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = order.book.info)
@@ -560,33 +551,5 @@ fun SearchPanel(query: String, onValueChange: (String) -> Unit) {
     }
 }
 
-private fun filterOrdersCondition(query: String, bookOrder: BookOrder): Boolean {
-    return bookOrder.toString().lowercase().contains(query.lowercase())
-}
 
-private fun List<RegisterCredential>.sortByFiledIndex(index: Int?): List<RegisterCredential> {
-    if (index == null) return this
 
-    return when (index) {
-        0 -> sortedBy { (it.user.type as Reader).ticketNumber }
-        8 -> sortedBy { (it.user.type as Reader).limitOfBooks }
-        else -> sortedBy { credential ->
-            val user = credential.user
-            val type = user.type as Reader
-            val info = type.info
-
-            when (index) {
-                1 -> info.secondName
-                2 -> info.firstName
-                3 -> info.fatherName
-                4 -> info.address
-                5 -> info.phoneNumber
-                6 -> type.passportSerialNumber
-                7 -> info.birthday.toString()
-                else -> {
-                    throw RuntimeException("Неизвестный индекс '$index' для сортировки по полям!!")
-                }
-            }
-        }
-    }
-}

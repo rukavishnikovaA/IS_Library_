@@ -10,7 +10,7 @@ import org.jetbrains.compose.web.dom.Text
 import ru.development.MainStyle
 
 @Composable
-fun SearchView() {
+fun SearchView(onInput: (String) -> Unit) {
     Div(attrs = { classes(MainStyle.row, MainStyle.search) }) {
         Span(attrs = {
             style {
@@ -21,6 +21,8 @@ fun SearchView() {
             }
         }) { Text("Поиск") }
 
-        Input(InputType.Text)
+        Input(InputType.Text, attrs = {
+            onInput { onInput(it.value) }
+        })
     }
 }

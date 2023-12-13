@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.launch
 import ru.development.models.BookInfo
+import ru.development.models.BookInfo.Companion.sortedByFiledIndex
 import ru.development.network.Api
 
 @Composable
@@ -98,7 +99,7 @@ fun BooksListView(books: List<BookInfo>, isLibraryWorker: Boolean, isBookRegistr
                     else index
                 }
             )
-            books.filter { filterBookCondition(it, searchQuery) }
+            books.filter { BookInfo.filterCondition(it, searchQuery) }
                 .sortedByFiledIndex(sortedIndex)
                 .forEach { book ->
                     TableRow(
@@ -176,9 +177,6 @@ fun BooksListView(books: List<BookInfo>, isLibraryWorker: Boolean, isBookRegistr
     }
 }
 
-fun filterBookCondition(book: BookInfo, query: String): Boolean {
-    return book.toString().lowercase().contains(query.lowercase())
-}
 
 @Composable
 fun TableRow(
@@ -348,27 +346,6 @@ fun Counter(title: String, value: Int, onValueChange: (Int) -> Unit) {
             TextButton("+", { onValueChange(value + 1) })
             Spacer(Modifier.height(5.dp))
             TextButton("-", { onValueChange(value - 1) })
-        }
-    }
-}
-
-private fun List<BookInfo>.sortedByFiledIndex(index: Int?): List<BookInfo> {
-    if (index == null) return this
-
-    return when (index) {
-        7 -> sortedBy { it.count }
-        8 -> sortedBy { it.pageCount }
-        else -> return sortedBy { book ->
-            when (index) {
-                0 -> book.name
-                1 -> book.author
-                2 -> book.year
-                3 -> book.factory
-                4 -> book.description
-                5 -> book.janre
-                6 -> book.language
-                else -> throw RuntimeException("Неизвестный индекс соритровки")
-            }
         }
     }
 }

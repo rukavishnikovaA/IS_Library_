@@ -12,6 +12,8 @@ application {
 }
 
 dependencies {
+    val ktorVersion = properties["ktor.version"]
+
     val logback_version = "1.4.11"
 
     implementation(project(":common"))
@@ -25,6 +27,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
+    implementation("io.ktor:ktor-server-cors:$ktorVersion")
     // https://mvnrepository.com/artifact/io.ktor/ktor-server-resources-jvm
     implementation("io.ktor:ktor-server-resources-jvm:2.3.0")
 }
