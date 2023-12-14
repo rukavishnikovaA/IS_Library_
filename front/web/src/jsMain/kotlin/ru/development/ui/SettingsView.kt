@@ -32,9 +32,9 @@ fun SettingsView(user: User) {
         }
     }) {
         Spacer(height = 20.px)
-        InputWithTitle("Старый пароль", InputType.Password, onInput = { oldPassword = it })
+        InputWithTitle("Старый пароль", oldPassword, InputType.Password, onInput = { oldPassword = it })
         Spacer(height = 20.px)
-        InputWithTitle("Новый пароль", InputType.Password, onInput = { newPassword = it })
+        InputWithTitle("Новый пароль", newPassword, InputType.Password, onInput = { newPassword = it })
         Spacer(height = 20.px)
         ButtonWithText("Сменить") {
             scope.launch {

@@ -5,12 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c3cd597-f40a-488f-9b2c-0311acbbc1b7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/back/site/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/site/js/web.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/Tools.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/DatabaseCopyView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/EditNewsView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/Application.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Rest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Rest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Routing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/plugins/Routing.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/desktop/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/util/FileUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/kotlin/ru/development/util/FileUtil.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/resources/test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/books.json" beforeDir="false" afterPath="$PROJECT_DIR$/database/books.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/models/News.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/models/News.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/models/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/models/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/network/Api.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/commonMain/kotlin/ru/development/network/Api.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/MainView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/LibraryView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/LibraryView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/RadersListView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui/RadersListView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/MainStyle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/MainStyle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/AuthScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/AuthScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/MainScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/MainScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/MenuView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/MenuView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/NewsView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/NewsView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/SettingsView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/SettingsView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/SysAdmin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/SysAdmin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/Tools.kt" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/src/jsMain/kotlin/ru/development/ui/Tools.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/web/webpack.config.d/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/web/webpack.config.d/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders.json" beforeDir="false" afterPath="$PROJECT_DIR$/database/orders.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userToCredentialRef.json" beforeDir="false" afterPath="$PROJECT_DIR$/database/userToCredentialRef.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/database/users.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,58 +58,15 @@
         <task path="$PROJECT_DIR$/front/web">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/common">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="back" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="back" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="back" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="distribution" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="front" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="front" type="2d1252cf:ModuleNode" />
-                <item name="desktop" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="front" type="2d1252cf:ModuleNode" />
-                <item name="desktop" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="IS_Library" type="f1a62948:ProjectNode" />
-                <item name="front" type="2d1252cf:ModuleNode" />
-                <item name="desktop" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="compose desktop" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -96,6 +77,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -129,11 +112,21 @@
     "Kotlin.ApplicationKt.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "new",
-    "last_opened_file_path": "/Users/vladi/Documents/GitHub/IS_Library_"
+    "last_opened_file_path": "/Users/vladi/Documents/GitHub/IS_Library_/back/site"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/back/site" />
+      <recent name="$PROJECT_DIR$/back" />
+      <recent name="$PROJECT_DIR$/site" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/back/src/main/resources/site" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/back/site/js" />
+      <recent name="$PROJECT_DIR$/back/src/main/resources" />
+      <recent name="$PROJECT_DIR$/back/src/main/resources/site" />
       <recent name="$PROJECT_DIR$/front/desktop/src/commonMain/kotlin/ru/development/ui" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -163,10 +156,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="IS_Library_:front:desktop [packageMsi]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="IS_Library_:back [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -174,29 +167,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="packageMsi" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="IS_Library_:front:desktop [packageReleaseMsi]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/front/desktop" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="packageReleaseMsi" />
+            <option value="run" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -229,6 +200,28 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="IS_Library_:front:web [jsBrowserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/front/web" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="ApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.development.ApplicationKt" />
       <module name="IS_Library.back.main" />
@@ -239,10 +232,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.IS_Library_:back [distZip]" />
+        <item itemvalue="Gradle.IS_Library_:back [run]" />
         <item itemvalue="Kotlin.ApplicationKt" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [packageMsi]" />
-        <item itemvalue="Gradle.IS_Library_:front:desktop [packageReleaseMsi]" />
         <item itemvalue="Gradle.IS_Library_:front:web [jsBrowserDistribution]" />
+        <item itemvalue="Gradle.IS_Library_:front:web [jsBrowserRun]" />
       </list>
     </recent_temporary>
   </component>
@@ -266,6 +259,24 @@
           </value>
         </entry>
       </map>
+    </option>
+  </component>
+  <component name="com.gk646.codestats.settings.Save">
+    <option name="genericTimePoints">
+      <list>
+        <TimePoint>
+          <option name="timestamp" value="1702506786855" />
+          <option name="linesCode" value="537390" />
+          <option name="totalLines" value="1600222" />
+          <option name="info" value="Dec 14, 2023" />
+        </TimePoint>
+        <TimePoint>
+          <option name="timestamp" value="1702567124969" />
+          <option name="linesCode" value="537402" />
+          <option name="totalLines" value="1600237" />
+          <option name="info" value="Dec 14, 2023" />
+        </TimePoint>
+      </list>
     </option>
   </component>
 </project>

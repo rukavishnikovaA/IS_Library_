@@ -37,25 +37,19 @@ sealed class Navigation {
 private fun handlePath(): Navigation {
     val path = window.location.pathname
 
-    console.log(path)
-
     var pathArray = path.split('/')
     if (pathArray.isNotEmpty()) pathArray = pathArray.drop(1)
-
-    console.log(pathArray)
 
     val userJson = localStorage["user"]
     val user: User? = if (userJson == null) null else Serialization.json.decodeFromString(userJson)
 
-    return Navigation.Main(user)
+    if (pathArray.isEmpty()) return Navigation.Main(user)
 
-//    if (pathArray.isEmpty()) return Navigation.Main(null)
-//
-//    val firstLevel = pathArray.first()
-//
-//    console.log(firstLevel)
-//
-//    return Navigation.entries.find { it.path == firstLevel } ?: Navigation.Main(null)
+    val firstLevel = pathArray.first()
+
+    if (firstLevel == "admin") return Navigation.SysAdmin
+
+    return Navigation.Main(user)
 }
 
 @Composable
