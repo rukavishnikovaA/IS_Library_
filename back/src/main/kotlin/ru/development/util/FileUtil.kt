@@ -259,7 +259,7 @@ object Database {
     }
 
     private fun File.rewrite(data: String) {
-        val writer = FileWriter(this)
+        val writer = FileWriter(this, Charsets.UTF_8)
         writer.write(data)
         writer.close()
     }
@@ -268,7 +268,7 @@ object Database {
         val time = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
         val name =
-            "backup_${time.year}-${time.monthNumber}-${time.dayOfMonth}-${time.dayOfWeek}-${time.hour}:${time.minute}"
+            "backup_${time.year}-${time.monthNumber}-${time.dayOfMonth}-${time.dayOfWeek}-${time.hour}-${time.minute}"
 
         val backupFile = File(backupsFile, name)
         if (!backupFile.exists()) backupFile.mkdir()

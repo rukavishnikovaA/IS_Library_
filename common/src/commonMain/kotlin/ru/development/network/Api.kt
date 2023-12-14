@@ -49,14 +49,14 @@ object Api {
     }
 
     suspend fun getNews(): Result<List<News>> = runCatching {
-        val response = client.get("http://0.0.0.0:8080/api/news")
+        val response = client.get("http://localhost:8080/api/news")
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Не удалось получить список новостей")
     }
 
     suspend fun addNews(news: News): Result<Unit> = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/addNews") {
+        val response = client.post("http://localhost:8080/api/addNews") {
             setBody(news)
         }
 
@@ -118,7 +118,7 @@ object Api {
     }
 
     suspend fun deleteNews(id: Int): Result<Unit> = runCatching {
-        val response = client.delete("http://0.0.0.0:8080/api/news/$id")
+        val response = client.delete("http://localhost:8080/api/news/$id")
 
         if (response.status == HttpStatusCode.OK) Unit
         else throw UnknownError(msg = "Ошибка удаления новости")
@@ -141,7 +141,7 @@ object Api {
     }
 
     suspend fun backupDatabase(id: Int): Result<Unit> = runCatching {
-        val response = client.post("http://0.0.0.0:8080/api/backupDatabase")
+        val response = client.post("http://localhost:8080/api/backupDatabase")
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Ошибка создания бэкапа :(")
