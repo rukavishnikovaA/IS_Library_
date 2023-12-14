@@ -2,7 +2,6 @@ package ru.development.ui
 
 import Container
 import androidx.compose.runtime.*
-import kotlinx.datetime.internal.JSJoda.use
 import ru.development.models.User
 import ru.development.ui.MenuItem.*
 
@@ -26,7 +25,8 @@ fun MainScreen(user: User?, goToAuth: () -> Unit, reload: (exit: Boolean) -> Uni
             Library -> LibraryView(user)
             MyBooks -> MyBooksView(user!!)
             Settings -> SettingsView(user!!)
+            EditNews -> throw IllegalStateException()
+            DatabaseCopy -> throw IllegalStateException()
         }
     }
 }
-

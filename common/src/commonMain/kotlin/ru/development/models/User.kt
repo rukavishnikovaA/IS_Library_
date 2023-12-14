@@ -18,6 +18,11 @@ sealed class UserType {
     abstract val typeName: String
 }
 
+@Serializable
+data class SysAdmin(override val typeName: String) : UserType() {
+    constructor() : this("SysAdmin")
+}
+
 // Просматривает взятые книги
 @Serializable
 data class Reader(
@@ -134,6 +139,7 @@ object ModuleSerializer : JsonContentPolymorphicSerializer<UserType>(UserType::c
             "Reader" -> Reader.serializer()
             "LibraryWorker" -> LibraryWorker.serializer()
             "BookRegistrar" -> BookRegistrar.serializer()
+            "SysAdmin" -> SysAdmin.serializer()
             else -> throw Exception("Unknown Module: key '$key' not found or does not matches any module type: $element")
         }
     }

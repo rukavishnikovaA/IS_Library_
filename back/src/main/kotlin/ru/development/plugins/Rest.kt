@@ -20,13 +20,6 @@ fun Application.configureRest() {
             else call.respond(HttpStatusCode.OK, user)
         }
 
-        // DEBUG
-        get("/debug/users") {
-            val users = Database.getUsers()
-
-            call.respond(HttpStatusCode.OK, users)
-        }
-
         get("/api/books") {
             val books = Database.getBookList()
 
@@ -36,6 +29,11 @@ fun Application.configureRest() {
         get("/api/readers") {
             val readers = Database.getUsers().filter { it.type is Reader }
 
+            call.respond(HttpStatusCode.OK, readers)
+        }
+
+        get("/api/news") {
+            val readers = Database.getNews()
             call.respond(HttpStatusCode.OK, readers)
         }
 
@@ -53,12 +51,26 @@ fun Application.configureRest() {
             call.respond(HttpStatusCode.OK, res)
         }
 
+        get("/api/news/{id}") {
+            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
+
+            val res = Database.getNewsById(id)
+            if (res == null) call.respond(HttpStatusCode.NotFound)
+            else call.respond(HttpStatusCode.OK, res)
+        }
+
         post("/api/changePassword") {
             val userIdWithNewPassword = call.receive<UserIdWithNewPassword>()
 
             val res = Database.changePassword(userIdWithNewPassword.userId, userIdWithNewPassword.oldPassword, userIdWithNewPassword.newPassword)
             if (res == null) call.respond(HttpStatusCode.NotFound)
             else call.respond(HttpStatusCode.OK)
+        }
+
+        post("/api/backupDatabase") {
+            Database.createBackup()
+
+            call.respond(HttpStatusCode.OK)
         }
 
         // Create user
@@ -76,6 +88,13 @@ fun Application.configureRest() {
             call.respond(HttpStatusCode.OK, book)
         }
 
+        post("/api/addNews") {
+            val news = call.receive<News>()
+            Database.addOrEditNews(news)
+
+            call.respond(HttpStatusCode.OK, news)
+        }
+
         post("/api/createOrder") {
             val userOrder = call.receive<UserIdToBookIdWithOrderRef>()
 
@@ -87,6 +106,13 @@ fun Application.configureRest() {
         delete("/api/book/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
             Database.deleteBook(id)
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        delete("/api/news/{id}") {
+            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
+            Database.deleteNews(id)
 
             call.respond(HttpStatusCode.OK)
         }

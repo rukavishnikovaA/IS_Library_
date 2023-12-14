@@ -52,8 +52,3 @@ fun BoxScope.MainView(user: User) {
         }
     }
 }
-
-@Composable
-fun TextButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Button(onClick, modifier) { Text(text) }
-}

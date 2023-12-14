@@ -535,21 +535,5 @@ fun UserInfoView(reader: User, onClick: () -> Unit, isSelected: Boolean) {
     }
 }
 
-@Composable
-fun SearchPanel(query: String, onValueChange: (String) -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text("Поиск")
-
-        Spacer(modifier = Modifier.width(20.dp))
-
-        OutlinedTextField(
-            value = query,
-            onValueChange = onValueChange,
-            singleLine = true,
-            modifier = Modifier.weight(1F).padding(0.dp)
-        )
-    }
-}
-
 
 

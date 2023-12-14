@@ -11,8 +11,8 @@ import io.ktor.serialization.kotlinx.json.*
 import ru.development.Serialization
 import ru.development.models.*
 
-class NotFoundError(msg: String): Throwable(msg)
-class UnknownError(msg: String): Throwable(msg)
+class NotFoundError(msg: String) : Throwable(msg)
+class UnknownError(msg: String) : Throwable(msg)
 
 
 object Api {
@@ -46,6 +46,22 @@ object Api {
 
         if (response.status == HttpStatusCode.OK) response.body()
         else throw UnknownError(msg = "Не удалось получить список книг")
+    }
+
+    suspend fun getNews(): Result<List<News>> = runCatching {
+        val response = client.get("http://0.0.0.0:8080/api/news")
+
+        if (response.status == HttpStatusCode.OK) response.body()
+        else throw UnknownError(msg = "Не удалось получить список новостей")
+    }
+
+    suspend fun addNews(news: News): Result<Unit> = runCatching {
+        val response = client.post("http://0.0.0.0:8080/api/addNews") {
+            setBody(news)
+        }
+
+        if (response.status == HttpStatusCode.OK) response.body()
+        else throw UnknownError(msg = "Не удалось сохранить новость")
     }
 
     suspend fun getBookOrderList(userId: Int): Result<List<BookOrder>> = runCatching {
@@ -101,6 +117,13 @@ object Api {
         else throw UnknownError(msg = "Ошибка удаления читателя")
     }
 
+    suspend fun deleteNews(id: Int): Result<Unit> = runCatching {
+        val response = client.delete("http://0.0.0.0:8080/api/news/$id")
+
+        if (response.status == HttpStatusCode.OK) Unit
+        else throw UnknownError(msg = "Ошибка удаления новости")
+    }
+
     suspend fun createOrder(userOrder: UserIdToBookIdWithOrderRef) = runCatching {
         val response = client.post("http://localhost:8080/api/createOrder") {
             setBody(userOrder)
@@ -115,6 +138,13 @@ object Api {
 
         if (response.status == HttpStatusCode.OK) Unit
         else throw UnknownError(msg = "Ошибка сдачи книги")
+    }
+
+    suspend fun backupDatabase(id: Int): Result<Unit> = runCatching {
+        val response = client.post("http://0.0.0.0:8080/api/backupDatabase")
+
+        if (response.status == HttpStatusCode.OK) response.body()
+        else throw UnknownError(msg = "Ошибка создания бэкапа :(")
     }
 
 

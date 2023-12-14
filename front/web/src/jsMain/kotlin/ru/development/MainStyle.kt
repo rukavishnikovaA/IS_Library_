@@ -105,6 +105,8 @@ object MainStyle : StyleSheet() {
         paddingBottom(64.px)
 
         marginBottom(50.px)
+
+        border(2.px, LineStyle.Solid, Color.black)
     }
 
     val hovered by style {

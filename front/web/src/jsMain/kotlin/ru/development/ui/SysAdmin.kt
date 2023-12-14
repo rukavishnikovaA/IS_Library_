@@ -1,36 +1,64 @@
 package ru.development.ui
 
+import Container
 import androidx.compose.runtime.*
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.CheckboxInput
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.Span
-import org.jetbrains.compose.web.dom.Text
-import ru.development.MainStyle
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
+import ru.development.models.SysAdmin
+import ru.development.models.User
+import ru.development.network.Api
+
 
 @Composable
 fun SysAdminView() {
-    Div(attrs = { classes(MainStyle.column) }) {
 
-        Span(attrs = {
-            style {
-                fontSize(34.px)
-                fontWeight(800)
-            }
-        }) { Text("ПАНЕЛЬ СИСТЕМНОГО АДМИНИСТРАТОРА!") }
-        Div(attrs = {
-            classes(MainStyle.row)
-            style {
-                alignItems(AlignItems.Center)
-            }
-        }) {
+    var user: User? by remember { mutableStateOf(null) }
 
-            var isChecked by remember { mutableStateOf(false) }
+    user?.let { SysAdminView(it) }
 
-            CheckboxInput(checked = isChecked) {
-                onClick { isChecked = !isChecked }
+    LaunchedEffect(Unit) {
+        val login = window.prompt("Введите логин","") ?: ""
+        val password = window.prompt("Введите пароль","") ?: ""
+
+        val result = Api.login(login, password)
+        if (result.isSuccess) {
+            val userResult = result.getOrThrow()
+            if (userResult.type is SysAdmin) user = result.getOrThrow()
+            else {
+                window.alert("Нет доступа!")
+                window.location.reload()
             }
-            Span { Text("я уебан") }
+        }
+        else {
+            window.alert("Данные введенны неправильно!")
+            window.location.reload()
+        }
+
+    }
+}
+
+@Composable
+fun SysAdminView(user: User) {
+    var selectedItem by remember { mutableStateOf(sysAdminMenuItems.first()) }
+
+    Container(
+        items = sysAdminMenuItems,
+        user = user,
+        selectedItem = selectedItem,
+        onClick = { selectedItem = it },
+        onExit = {
+            localStorage.clear()
+            window.location.reload()
+        },
+        onAuth = {}
+    ) {
+        when (selectedItem) {
+            MenuItem.News -> NewsView()
+            MenuItem.Library -> LibraryView(user)
+            MenuItem.MyBooks -> MyBooksView(user)
+            MenuItem.Settings -> SettingsView(user)
+            MenuItem.EditNews -> EditNewsView(user)
+            MenuItem.DatabaseCopy -> DatabaseCopyView(user)
         }
     }
 }

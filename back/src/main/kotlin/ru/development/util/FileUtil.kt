@@ -1,5 +1,8 @@
 package ru.development.util
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.encodeToString
 import ru.development.Serialization
 import ru.development.models.*
@@ -19,16 +22,25 @@ object FileUtil {
         return File(url.file)
     }
 
-    fun getOrCreateGlobalFile(path: String): File {
-        return File("./$path").also { if (!it.exists()) it.createNewFile() }
+    fun getOrCreateGlobalFile(parent: File, path: String): File {
+        return File(parent, "./$path").also { if (!it.exists()) it.createNewFile() }
     }
 }
 
 object Database {
-    val credentialToUserRefFile by lazy { FileUtil.getOrCreateGlobalFile("userToCredentialRef.json") }
-    val usersFile by lazy { FileUtil.getOrCreateGlobalFile("users.json") }
-    val bookListFile by lazy { FileUtil.getOrCreateGlobalFile("books.json") }
-    val userOrderListFile by lazy { FileUtil.getOrCreateGlobalFile("orders.json") }
+    private val databaseFile by lazy { File("./database/").also { if (!it.exists()) it.mkdirs() } }
+    private val backupsFile by lazy { File("./backups/").also { if (!it.exists()) it.mkdirs() } }
+
+    private val credentialToUserRefFile by lazy {
+        FileUtil.getOrCreateGlobalFile(
+            databaseFile,
+            "userToCredentialRef.json"
+        )
+    }
+    private val usersFile by lazy { FileUtil.getOrCreateGlobalFile(databaseFile, "users.json") }
+    private val bookListFile by lazy { FileUtil.getOrCreateGlobalFile(databaseFile, "books.json") }
+    private val userOrderListFile by lazy { FileUtil.getOrCreateGlobalFile(databaseFile, "orders.json") }
+    private val newsListFile by lazy { FileUtil.getOrCreateGlobalFile(databaseFile, "news.json") }
 
     fun generateId() = Random.nextInt(0, Int.MAX_VALUE)
 
@@ -88,6 +100,38 @@ object Database {
         val totalJson = Serialization.json.encodeToString(total)
 
         credentialToUserRefFile.rewrite(totalJson)
+    }
+
+    fun getNews(): List<News> {
+        val rawText = newsListFile.readText()
+        if (rawText.isBlank()) return emptyList()
+
+        return Serialization.json.decodeFromString(rawText)
+    }
+
+    fun addOrEditNews(news: News) {
+        val list = getNews().filter { it.id != news.id }
+
+        if (news.id == -1) news.id = generateId()
+
+        val total = list + news
+        val totalJson = Serialization.json.encodeToString(total)
+
+        newsListFile.rewrite(totalJson)
+    }
+
+    fun getNewsById(id: Int): News? {
+        return getNews().find { it.id == id }
+    }
+
+    fun deleteNews(id: Int) {
+        val list = getNews()
+        val target = list.find { it.id == id }
+
+        val total = list - target
+        val totalJson = Serialization.json.encodeToString(total)
+
+        newsListFile.rewrite(totalJson)
     }
 
     fun addOrEditBook(book: BookInfo) {
@@ -201,7 +245,8 @@ object Database {
         if (userToCredentialRef.credential.password != oldPassword) return null
 
         val oldCredential = userToCredentialRef.credential
-        val newCredential = userToCredentialRef.copy(userId, oldCredential.copy(login = oldCredential.login, password = newPassword))
+        val newCredential =
+            userToCredentialRef.copy(userId, oldCredential.copy(login = oldCredential.login, password = newPassword))
 
         val allCredentials = getCredentialToUserRefList()
             .filter { it.userId != userId }
@@ -217,5 +262,17 @@ object Database {
         val writer = FileWriter(this)
         writer.write(data)
         writer.close()
+    }
+
+    fun createBackup() {
+        val time = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+
+        val name =
+            "backup_${time.year}-${time.monthNumber}-${time.dayOfMonth}-${time.dayOfWeek}-${time.hour}:${time.minute}"
+
+        val backupFile = File(backupsFile, name)
+        if (!backupFile.exists()) backupFile.mkdir()
+
+        databaseFile.copyRecursively(backupFile, overwrite = true)
     }
 }

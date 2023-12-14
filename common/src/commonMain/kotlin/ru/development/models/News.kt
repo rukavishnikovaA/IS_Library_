@@ -3,7 +3,7 @@ package ru.development.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class News(val title: String, val title2: String, val imgSrc: String, val text: String) {
+data class News(var id: Int = -1, val title: String, val title2: String, val imgSrc: String, val text: String) {
     companion object {
         val default = News(
             title = "Новости и мероприятия",

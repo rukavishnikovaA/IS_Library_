@@ -15,11 +15,14 @@ enum class MenuItem(val title: String) {
     News("Главная"),
     Library("Библиотечный фонд"),
     MyBooks("Мои книги"),
-    Settings("Настройки")
+    Settings("Настройки"),
+    EditNews("Редактирование главной страницы"),
+    DatabaseCopy("Резервное копирование базы данных "),
 }
 
 val authedItems = listOf(MenuItem.News, MenuItem.Library, MenuItem.MyBooks, MenuItem.Settings)
 val notAuthedItems = listOf(MenuItem.News, MenuItem.Library)
+val sysAdminMenuItems = listOf(MenuItem.EditNews, MenuItem.DatabaseCopy)
 
 @Composable
 fun MenuView(

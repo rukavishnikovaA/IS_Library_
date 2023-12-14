@@ -43,8 +43,8 @@ fun AuthInput(goNext: (User?) -> Unit) {
             }
         }) { Text("Вход") }
 
-        InputWithTitle("Email", InputType.Email, onInput = { login = it })
-        InputWithTitle("Пароль", InputType.Password, onInput = { password = it })
+        InputWithTitle("Email", login, InputType.Email, onInput = { login = it })
+        InputWithTitle("Пароль", login, InputType.Password, onInput = { password = it })
 
         Spacer(height = 20.px)
 
@@ -77,20 +77,29 @@ fun AuthInput(goNext: (User?) -> Unit) {
 
 @Composable
 fun RememberPasswordLink() {
-    A(href = "", attrs = {
+    var showResetPasswordDialog by remember { mutableStateOf(false) }
+
+    A(attrs = {
         style {
             color(Color("#5057FF"))
             fontSize(20.px)
             fontWeight(500)
             marginTop(10.px)
         }
+
+        onClick { showResetPasswordDialog = true }
+
     }) {
-        Text("Не помнб пароль")
+        Text("Не помню пароль")
+    }
+
+    if (showResetPasswordDialog) Dialog(onDisposeRequest = { showResetPasswordDialog = false}) {
+        Text("На вашу почту выслана инструкция по восстановлению пароля!")
     }
 }
 
 @Composable
-fun <T> InputWithTitle(title: String, type: InputType<T>, onInput: (T) -> Unit) {
+fun <T> InputWithTitle(title: String, text: String, type: InputType<T>, onInput: (T) -> Unit) {
     Div(attrs = {
         classes(MainStyle.column, MainStyle.inputWithTitle)
     }) {
@@ -102,6 +111,7 @@ fun <T> InputWithTitle(title: String, type: InputType<T>, onInput: (T) -> Unit) 
         }) { Text(title) }
 
         Input(type, attrs = {
+            value(text)
             onInput { event ->
                 onInput(event.value)
             }
@@ -126,7 +136,12 @@ fun MessageDialog(onDisposeRequest: () -> Unit, text: String) {
         Div(attrs = { classes(MainStyle.column) }) {
             Text(text)
             Spacer(height = 20.px)
-            ButtonWithText("ОК", onDisposeRequest)
+            ButtonWithText("ОК", onClick = onDisposeRequest, attrs = {
+                style {
+                    property("margin-left", "auto")
+                    property("margin-right", "auto")
+                }
+            })
         }
     }
 }
