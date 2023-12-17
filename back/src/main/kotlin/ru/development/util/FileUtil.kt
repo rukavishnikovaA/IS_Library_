@@ -1,14 +1,6 @@
 package ru.development.util
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
-import kotlinx.serialization.encodeToString
-import ru.development.Serialization
-import ru.development.models.*
 import java.io.File
-import java.io.FileWriter
-import kotlin.random.Random
 
 object FileUtil {
     fun getSelfLocation(): String {
