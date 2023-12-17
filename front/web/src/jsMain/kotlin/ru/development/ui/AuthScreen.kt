@@ -44,7 +44,7 @@ fun AuthInput(goNext: (User?) -> Unit) {
         }) { Text("Вход") }
 
         InputWithTitle("Email", login, InputType.Email, onInput = { login = it })
-        InputWithTitle("Пароль", login, InputType.Password, onInput = { password = it })
+        InputWithTitle("Пароль", password, InputType.Password, onInput = { password = it })
 
         Spacer(height = 20.px)
 
