@@ -71,7 +71,9 @@ fun BooksListView(books: List<BookInfo>, isLibraryWorker: Boolean, isBookRegistr
 
     var errorMsg: String? by remember { mutableStateOf(null) }
 
-    var sortedIndex: Int? by remember { mutableStateOf(null) }
+    var sortedIndex: Int by remember { mutableStateOf(0) }
+
+    var descending by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.background(Color.White).padding(horizontal = 20.dp)) {
 
@@ -95,12 +97,15 @@ fun BooksListView(books: List<BookInfo>, isLibraryWorker: Boolean, isBookRegistr
                 "Количество страниц",
                 isSelected = false,
                 onClickCell = { index ->
-                    sortedIndex = if (index == sortedIndex) null
-                    else index
+                    if (index == sortedIndex) descending = !descending
+                    else {
+                        sortedIndex =  index
+                        descending = false
+                    }
                 }
             )
             books.filter { BookInfo.filterCondition(it, searchQuery) }
-                .sortedByFiledIndex(sortedIndex)
+                .sortedByFiledIndex(descending, sortedIndex)
                 .forEach { book ->
                     TableRow(
                         book.name,

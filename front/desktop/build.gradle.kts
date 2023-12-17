@@ -31,9 +31,19 @@ compose.desktop {
         mainClass = "ru.development.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "ru.development"
+            packageName = "ISLibrary"
             packageVersion = "1.0.0"
             modules("java.net.http")
+
+            macOS {
+                iconFile.set(project.file("icon.icns"))
+            }
+            windows {
+                iconFile.set(project.file("icon.ico"))
+            }
+            linux {
+                iconFile.set(project.file("icon.png"))
+            }
         }
 
         buildTypes.release.proguard {

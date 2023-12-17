@@ -20,7 +20,7 @@ fun Root(exit: () -> Unit) {
                 onSignIn = { user -> currentRoute = Route.Main(user) }
             )
 
-            is Route.Main -> MainView(route.user)
+            is Route.Main -> MainView(route.user, signOut = { currentRoute = Route.Auth })
         }
     }
 }

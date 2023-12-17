@@ -78,35 +78,6 @@ data class OrderInfo(var id: Int = -1, val dateStartInS: Long, val dateEndInS: L
 }
 
 @Serializable
-data class BookIdWithOrder(val bookId: Int, val info: OrderInfo)
-
-@Serializable
-data class BookOrder(val book: BookInfo, val info: OrderInfo) {
-    companion object {
-        fun filterCondition(query: String, bookOrder: BookOrder): Boolean {
-            return bookOrder.toString().lowercase().contains(query.lowercase())
-        }
-
-
-        fun List<BookOrder>.sortedByFiledIndex(index: Int?): List<BookOrder> {
-            if (index == null) return this
-
-           return sortedBy { order ->
-               when (index)  {
-                   0 -> order.book.name
-                   1 -> order.book.author
-                   2 -> order.book.year
-                   3 -> order.book.description
-                   4 -> order.info.displayDateStart
-                   5 -> order.info.displayDateEnd
-                   else -> throw RuntimeException("Неизвестный индекс соритровки")
-               }
-           }
-        }
-    }
-}
-
-@Serializable
 data class UserIdToBookIdWithOrderRef(val userId: Int, val order: BookIdWithOrder)
 
 @Serializable
@@ -131,6 +102,13 @@ data class Birthday(val year: Int, val month: Int, val day: Int) {
         return "$year $month $day"
     }
 }
+
+@Serializable
+data class UserToCredentialRef(val userId: Int, val credential: LoginCredential)
+
+@Serializable
+data class UserIdWithNewPassword(val userId: Int, val oldPassword: String, val newPassword: String)
+
 
 object ModuleSerializer : JsonContentPolymorphicSerializer<UserType>(UserType::class) {
     private val key = "typeName"

@@ -50,7 +50,8 @@ fun MyBooksView(user: User) {
 fun MyBooksView(items: List<BookOrder>) {
     var searchQuery by remember { mutableStateOf("") }
 
-    var sortedIndex: Int? by remember { mutableStateOf(null) }
+    var sortedIndex: Int by remember { mutableStateOf(0) }
+    var descending by remember { mutableStateOf(false) }
 
     SearchView(onInput = { searchQuery = it })
 
@@ -65,11 +66,17 @@ fun MyBooksView(items: List<BookOrder>) {
             "Когда выдана",
             "Срок сдачи",
             onClickCell = { index ->
-                sortedIndex = if (sortedIndex == index) null else index
+
+                if (index == sortedIndex) descending = !descending
+                else {
+                    sortedIndex = index
+                    descending = false
+                }
             }
         )
+
         items.filter { BookOrder.filterCondition(searchQuery, it) }
-            .sortedByFiledIndex(sortedIndex)
+            .sortedByFiledIndex(descending, sortedIndex)
             .forEach { item ->
                 TableRow(
                     item.book.name,

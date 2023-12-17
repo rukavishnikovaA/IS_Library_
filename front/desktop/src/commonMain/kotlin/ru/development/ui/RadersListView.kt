@@ -7,7 +7,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,10 +19,14 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import ru.development.models.*
 import ru.development.models.RegisterCredential.Companion.sortByFiledIndex
 import ru.development.network.Api
+import kotlin.random.Random
 import kotlin.time.Duration.Companion.days
 
 @Composable
@@ -81,7 +84,8 @@ fun ReadersListView(list: List<RegisterCredential>, onUpdateData: () -> Unit) {
 
     var showUserOrdersDialog by remember { mutableStateOf(false) }
 
-    var sortedIndex: Int? by remember { mutableStateOf(null) }
+    var sortedIndex: Int by remember { mutableStateOf(0) }
+    var descending by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.background(Color.White).padding(horizontal = 20.dp)) {
         Spacer(Modifier.height(20.dp))
@@ -99,12 +103,18 @@ fun ReadersListView(list: List<RegisterCredential>, onUpdateData: () -> Unit) {
             "Дата рождения",
             "Лимит",
             isSelected = false,
-            onClickCell = { index -> sortedIndex = index }
+            onClickCell = { index ->
+                if (index == sortedIndex) descending = !descending
+                else {
+                    sortedIndex =  index
+                    descending = false
+                }
+            }
         )
 
         Column(Modifier.weight(1F)) {
             list.filter { Reader.filterCondition(it.user.type as Reader, searchQuery) }
-                .sortByFiledIndex(sortedIndex)
+                .sortByFiledIndex(descending, sortedIndex)
                 .forEach { credential ->
                     with((credential.user.type as Reader)) {
                         TableRow(
@@ -178,6 +188,7 @@ fun ReadersListView(list: List<RegisterCredential>, onUpdateData: () -> Unit) {
 }
 
 
+@OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun AddUserDialog(
     onDismissRequest: () -> Unit,
@@ -208,7 +219,7 @@ fun AddUserDialog(
     }
 
     var login by remember { mutableStateOf(credential?.login ?: "") }
-    var password by remember { mutableStateOf(credential?.password ?: "") }
+    var password by remember { mutableStateOf(credential?.password ?: Random.nextInt().toHexString()) }
 
     var errorMsg: String? by remember { mutableStateOf(null) }
 
@@ -263,16 +274,31 @@ fun AddUserDialog(
         Divider()
         Spacer(Modifier.height(20.dp))
 
-        TitleWithInput(title = "Пароль", value = password, onValueChange = { password = it })
-        Spacer(Modifier.height(20.dp))
-        Divider()
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Пароль", modifier = Modifier.width(100.dp))
+            Spacer(Modifier.width(20.dp))
+            Text(password, modifier = Modifier.width(100.dp))
+        }
         Spacer(Modifier.height(20.dp))
 
         Row {
             TextButton(
                 text = "Сохранить",
-                onClick = {
+                onClick = click@{
+                    if (passportData.length != 8) {
+                        errorMsg = "Длина серии и номера паспорта должна быть ровна восьми символам!"
+                        return@click
+                    }
+
+                    val passportDataInt = passportData.toIntOrNull()
+                    if (passportDataInt == null) {
+                        errorMsg = "Серия и номера паспорта должна состоять из цифр!"
+                        return@click
+                    }
+
                     scope.launch {
+
+
                         val newReader = User(
                             id = user?.id ?: -1,
                             type = Reader(
@@ -331,7 +357,6 @@ fun DataSelection(modifier: Modifier = Modifier, title: String, value: Birthday,
         }
     }
 }
-
 
 
 @Composable

@@ -57,7 +57,8 @@ fun BooksTableView(user: User?, items: List<BookInfo>) {
     var searchQuery by remember { mutableStateOf("") }
     SearchView(onInput = { searchQuery = it })
 
-    var sortedIndex: Int? by remember { mutableStateOf(null) }
+    var sortedIndex: Int by remember { mutableStateOf(0) }
+    var descending by remember { mutableStateOf(false) }
 
     Table(attrs = {
         style { border(1.px) }
@@ -66,12 +67,15 @@ fun BooksTableView(user: User?, items: List<BookInfo>) {
 
         val headers = if (user == null) notAuthedItemsBook else authedItemsBook
 
-        TableHeader(headers = headers, onClickCell = {
-            sortedIndex = if (sortedIndex == it) null
-            else it
+        TableHeader(headers = headers, onClickCell = { index ->
+            if (index == sortedIndex) descending = !descending
+            else {
+                sortedIndex =  index
+                descending = false
+            }
         })
         items.filter { BookInfo.filterCondition(it, searchQuery) }
-            .sortedByFiledIndex(sortedIndex)
+            .sortedByFiledIndex(descending, sortedIndex)
             .forEach { item ->
                 val columns = if (user == null) arrayOf(
                     item.name,
